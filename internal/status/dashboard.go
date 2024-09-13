@@ -28,15 +28,15 @@ import (
 	"strings"
 	"time"
 
-	metrics2 "github.com/ServiceWeaver/weaver/internal/metrics"
-	"github.com/ServiceWeaver/weaver/internal/traceio"
-	"github.com/ServiceWeaver/weaver/runtime/logging"
-	"github.com/ServiceWeaver/weaver/runtime/metrics"
-	"github.com/ServiceWeaver/weaver/runtime/perfetto"
-	imetrics "github.com/ServiceWeaver/weaver/runtime/prometheus"
-	protos "github.com/ServiceWeaver/weaver/runtime/protos"
-	dtool "github.com/ServiceWeaver/weaver/runtime/tool"
-	"github.com/ServiceWeaver/weaver/runtime/traces"
+	metrics2 "github.com/XCWeaver/xcweaver/internal/metrics"
+	"github.com/XCWeaver/xcweaver/internal/traceio"
+	"github.com/XCWeaver/xcweaver/runtime/logging"
+	"github.com/XCWeaver/xcweaver/runtime/metrics"
+	"github.com/XCWeaver/xcweaver/runtime/perfetto"
+	imetrics "github.com/XCWeaver/xcweaver/runtime/prometheus"
+	protos "github.com/XCWeaver/xcweaver/runtime/protos"
+	dtool "github.com/XCWeaver/xcweaver/runtime/tool"
+	"github.com/XCWeaver/xcweaver/runtime/traces"
 	"github.com/pkg/browser"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 )
@@ -93,12 +93,12 @@ var (
 // commands on the dashboard so that users can copy and run them.
 type Command struct {
 	Label   string // e.g., cat logs
-	Command string // e.g., weaver single logs '--version=="12345678"'
+	Command string // e.g., xcweaver single logs '--version=="12345678"'
 }
 
 // DashboardSpec configures the command returned by DashboardCommand.
 type DashboardSpec struct {
-	Tool         string                                   // tool name (e.g., "weaver single")
+	Tool         string                                   // tool name (e.g., "xcweaver single")
 	PerfettoFile string                                   // perfetto database file
 	Registry     func(context.Context) (*Registry, error) // registry of deployments
 	Commands     func(deploymentId string) []Command      // commands for a deployment
@@ -157,9 +157,9 @@ Flags:
 	}
 }
 
-// dashboard implements the "weaver dashboard" HTTP server.
+// dashboard implements the "xcweaver dashboard" HTTP server.
 type dashboard struct {
-	spec     *DashboardSpec // e.g., "weaver multi" or "weaver single"
+	spec     *DashboardSpec // e.g., "xcweaver multi" or "xcweaver single"
 	registry *Registry      // registry of deployments
 	traceDB  *traces.DB     // database that stores trace data
 }

@@ -20,8 +20,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/ServiceWeaver/weaver/runtime"
-	"github.com/ServiceWeaver/weaver/runtime/codegen"
+	"github.com/XCWeaver/xcweaver/runtime"
+	"github.com/XCWeaver/xcweaver/runtime/codegen"
 	"github.com/google/go-cmp/cmp"
 )
 
@@ -45,7 +45,7 @@ func TestBinaryPath(t *testing.T) {
 	} {
 		t.Run(c.name, func(t *testing.T) {
 			spec := fmt.Sprintf("[serviceweaver]\nbinary = '%s'\n", c.binary)
-			cfgFile := filepath.Join(c.dir, "weaver.toml")
+			cfgFile := filepath.Join(c.dir, "xcweaver.toml")
 			cfg, err := runtime.ParseConfig(cfgFile, spec, codegen.ComponentConfigValidator)
 			if err != nil {
 				t.Fatalf("unexpected error %v", err)
@@ -131,7 +131,7 @@ colocate = [["a", "main", "a"]]
 [serviceweaver]
 name = "foo"
 
-["github.com/ServiceWeaver/weaver"]
+["github.com/XCWeaver/xcweaver"]
 binary = "/tmp/foo"
 `,
 			expectedError: "conflicting",
@@ -154,7 +154,7 @@ rollout = "hello"
 		},
 	} {
 		t.Run(c.name, func(t *testing.T) {
-			_, err := runtime.ParseConfig("weaver.toml", c.cfg, codegen.ComponentConfigValidator)
+			_, err := runtime.ParseConfig("xcweaver.toml", c.cfg, codegen.ComponentConfigValidator)
 			if err == nil {
 				t.Fatalf("unexpected success when expecting %q in\n%s", c.expectedError, c.cfg)
 			}

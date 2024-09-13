@@ -19,54 +19,54 @@ import (
 	"fmt"
 	"path/filepath"
 
-	"github.com/ServiceWeaver/weaver/internal/must"
-	"github.com/ServiceWeaver/weaver/internal/status"
-	itool "github.com/ServiceWeaver/weaver/internal/tool"
-	"github.com/ServiceWeaver/weaver/runtime"
-	"github.com/ServiceWeaver/weaver/runtime/logging"
-	"github.com/ServiceWeaver/weaver/runtime/tool"
+	"github.com/XCWeaver/xcweaver/internal/must"
+	"github.com/XCWeaver/xcweaver/internal/status"
+	itool "github.com/XCWeaver/xcweaver/internal/tool"
+	"github.com/XCWeaver/xcweaver/runtime"
+	"github.com/XCWeaver/xcweaver/runtime/logging"
+	"github.com/XCWeaver/xcweaver/runtime/tool"
 )
 
 var (
-	// The directories and files where "weaver multi" stores data.
+	// The directories and files where "xcweaver multi" stores data.
 	logDir       = filepath.Join(runtime.LogsDir(), "multi")
 	dataDir      = filepath.Join(must.Must(runtime.DataDir()), "multi")
 	registryDir  = filepath.Join(dataDir, "registry")
 	perfettoFile = filepath.Join(dataDir, "traces.DB")
 
 	dashboardSpec = &status.DashboardSpec{
-		Tool:         "weaver multi",
+		Tool:         "xcweaver multi",
 		PerfettoFile: perfettoFile,
 		Registry:     defaultRegistry,
 		Commands: func(deploymentId string) []status.Command {
 			return []status.Command{
-				{Label: "status", Command: "weaver multi status"},
-				{Label: "cat logs", Command: fmt.Sprintf("weaver multi logs 'version==%q'", logging.Shorten(deploymentId))},
-				{Label: "follow logs", Command: fmt.Sprintf("weaver multi logs --follow 'version==%q'", logging.Shorten(deploymentId))},
-				{Label: "profile", Command: fmt.Sprintf("weaver multi profile --duration=30s %s", deploymentId)},
+				{Label: "status", Command: "xcweaver multi status"},
+				{Label: "cat logs", Command: fmt.Sprintf("xcweaver multi logs 'version==%q'", logging.Shorten(deploymentId))},
+				{Label: "follow logs", Command: fmt.Sprintf("xcweaver multi logs --follow 'version==%q'", logging.Shorten(deploymentId))},
+				{Label: "profile", Command: fmt.Sprintf("xcweaver multi profile --duration=30s %s", deploymentId)},
 			}
 		},
 	}
 
 	purgeSpec = &tool.PurgeSpec{
-		Tool:  "weaver multi",
-		Kill:  "weaver multi (dashboard|deploy|logs|profile)",
+		Tool:  "xcweaver multi",
+		Kill:  "xcweaver multi (dashboard|deploy|logs|profile)",
 		Paths: []string{logDir, dataDir},
 	}
 
 	Commands = map[string]*tool.Command{
 		"deploy": &deployCmd,
 		"logs": tool.LogsCmd(&tool.LogsSpec{
-			Tool: "weaver multi",
+			Tool: "xcweaver multi",
 			Source: func(context.Context) (logging.Source, error) {
 				return logging.FileSource(logDir), nil
 			},
 		}),
 		"dashboard": status.DashboardCommand(dashboardSpec),
-		"status":    status.StatusCommand("weaver multi", defaultRegistry),
-		"metrics":   status.MetricsCommand("weaver multi", defaultRegistry),
-		"profile":   status.ProfileCommand("weaver multi", defaultRegistry),
+		"status":    status.StatusCommand("xcweaver multi", defaultRegistry),
+		"metrics":   status.MetricsCommand("xcweaver multi", defaultRegistry),
+		"profile":   status.ProfileCommand("xcweaver multi", defaultRegistry),
 		"purge":     tool.PurgeCmd(purgeSpec),
-		"version":   itool.VersionCmd("weaver multi"),
+		"version":   itool.VersionCmd("xcweaver multi"),
 	}
 )

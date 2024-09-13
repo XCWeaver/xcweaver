@@ -21,7 +21,7 @@
 package impl
 
 import (
-	protos "github.com/ServiceWeaver/weaver/runtime/protos"
+	protos "github.com/XCWeaver/xcweaver/runtime/protos"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"

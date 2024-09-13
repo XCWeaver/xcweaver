@@ -13,7 +13,7 @@
 // limitations under the License.
 
 // Package status contains code for implementing status related commands like
-// "weaver multi status" and "weaver single dashboard".
+// "xcweaver multi status" and "xcweaver single dashboard".
 package status
 
 import (
@@ -26,13 +26,13 @@ import (
 	"strings"
 	"syscall"
 
-	"github.com/ServiceWeaver/weaver/internal/files"
-	"github.com/ServiceWeaver/weaver/runtime/colors"
+	"github.com/XCWeaver/xcweaver/internal/files"
+	"github.com/XCWeaver/xcweaver/runtime/colors"
 )
 
 // A Registry is a persistent collection of Service Weaver application metadata.
 //
-// Tools like "weaver multi status" and "weaver multi dashboard" use the registry
+// Tools like "xcweaver multi status" and "xcweaver multi dashboard" use the registry
 // to know which applications are running and to fetch the status of the
 // running applications.
 type Registry struct {

@@ -30,9 +30,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ServiceWeaver/weaver/internal/net/call"
-	"github.com/ServiceWeaver/weaver/runtime/codegen"
-	"github.com/ServiceWeaver/weaver/runtime/logging"
+	"github.com/XCWeaver/xcweaver/internal/net/call"
+	"github.com/XCWeaver/xcweaver/runtime/codegen"
+	"github.com/XCWeaver/xcweaver/runtime/logging"
 )
 
 var (

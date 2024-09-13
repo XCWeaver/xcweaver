@@ -78,8 +78,8 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/ServiceWeaver/weaver/runtime/logging"
-	"github.com/ServiceWeaver/weaver/runtime/retry"
+	"github.com/XCWeaver/xcweaver/runtime/logging"
+	"github.com/XCWeaver/xcweaver/runtime/retry"
 	"go.opentelemetry.io/otel/codes"
 	"go.opentelemetry.io/otel/trace"
 )

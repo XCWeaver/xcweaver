@@ -23,9 +23,9 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/ServiceWeaver/weaver/internal/traceio"
-	"github.com/ServiceWeaver/weaver/runtime/protos"
-	"github.com/ServiceWeaver/weaver/runtime/traces"
+	"github.com/XCWeaver/xcweaver/internal/traceio"
+	"github.com/XCWeaver/xcweaver/runtime/protos"
+	"github.com/XCWeaver/xcweaver/runtime/traces"
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 	semconv "go.opentelemetry.io/otel/semconv/v1.4.0"
 	"go.opentelemetry.io/otel/trace"

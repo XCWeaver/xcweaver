@@ -21,9 +21,9 @@ import (
 	"testing"
 	"time"
 
+	"github.com/XCWeaver/xcweaver/internal/cond"
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
-	"github.com/ServiceWeaver/weaver/internal/cond"
 )
 
 // TestCancelledWait tests that a Wait on a cancelled context returns promptly

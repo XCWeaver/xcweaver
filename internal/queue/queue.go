@@ -18,7 +18,7 @@ import (
 	"context"
 	"sync"
 
-	"github.com/ServiceWeaver/weaver/internal/cond"
+	"github.com/XCWeaver/xcweaver/internal/cond"
 )
 
 // Queue is a thread-safe queue.

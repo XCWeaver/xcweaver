@@ -20,7 +20,7 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/ServiceWeaver/weaver/internal/heap"
+	"github.com/XCWeaver/xcweaver/internal/heap"
 )
 
 func Example_heapSort() {

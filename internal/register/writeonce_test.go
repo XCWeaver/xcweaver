@@ -19,7 +19,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ServiceWeaver/weaver/internal/register"
+	"github.com/XCWeaver/xcweaver/internal/register"
 	"golang.org/x/sync/errgroup"
 )
 

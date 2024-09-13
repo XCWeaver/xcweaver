@@ -62,16 +62,16 @@ func TestValidLabels(t *testing.T) {
 		E uint64
 	}
 	type t6 = struct {
-		X string `weaver:"x"`
-		Y bool   `weaver:"y"`
+		X string `xcweaver:"x"`
+		Y bool   `xcweaver:"y"`
 	}
 	type t7 = struct {
-		X int  `weaver:"X"`
-		Y int8 `weaver:"Y"`
+		X int  `xcweaver:"X"`
+		Y int8 `xcweaver:"Y"`
 	}
 	type t8 = struct {
-		X int16 `weaver:"Y"`
-		Y int32 `weaver:"X"`
+		X int16 `xcweaver:"Y"`
+		Y int32 `xcweaver:"X"`
 	}
 
 	type u1 t1
@@ -105,11 +105,11 @@ func TestInvalidLabels(t *testing.T) {
 	type t1 = string             // not a struct
 	type t2 = struct{ x string } //lint:ignore U1000 unexported field
 	type t3 = struct {           // duplicate field
-		X string `weaver:"Z"`
-		Y string `weaver:"Z"`
+		X string `xcweaver:"Z"`
+		Y string `xcweaver:"Z"`
 	}
 	type t4 = struct { // duplicate field
-		X string `weaver:"y"`
+		X string `xcweaver:"y"`
 		Y string
 	}
 	type String string
@@ -149,9 +149,9 @@ func TestInvalidLabels(t *testing.T) {
 
 func TestLabelExtractor(t *testing.T) {
 	type labels struct {
-		A string `weaver:"a"`
-		B bool   `weaver:"C"`
-		C int    `weaver:"B"`
+		A string `xcweaver:"a"`
+		B bool   `xcweaver:"C"`
+		C int    `xcweaver:"B"`
 		D uint
 	}
 	welltyped[labels](t)

@@ -19,7 +19,7 @@ import (
 	"crypto/sha256"
 	"fmt"
 
-	"github.com/ServiceWeaver/weaver/runtime/codegen"
+	"github.com/XCWeaver/xcweaver/runtime/codegen"
 )
 
 // MethodKey identifies a particular method on a component (formed by

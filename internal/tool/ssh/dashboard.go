@@ -17,19 +17,19 @@ package ssh
 import (
 	"fmt"
 
-	"github.com/ServiceWeaver/weaver/internal/status"
-	"github.com/ServiceWeaver/weaver/internal/tool/ssh/impl"
-	"github.com/ServiceWeaver/weaver/runtime/logging"
+	"github.com/XCWeaver/xcweaver/internal/status"
+	"github.com/XCWeaver/xcweaver/internal/tool/ssh/impl"
+	"github.com/XCWeaver/xcweaver/runtime/logging"
 )
 
 var dashboardSpec = &status.DashboardSpec{
-	Tool:         "weaver ssh",
+	Tool:         "xcweaver ssh",
 	PerfettoFile: impl.PerfettoFile,
 	Registry:     impl.DefaultRegistry,
 	Commands: func(deploymentId string) []status.Command {
 		return []status.Command{
-			{Label: "cat logs", Command: fmt.Sprintf("weaver ssh logs 'version==%q'", logging.Shorten(deploymentId))},
-			{Label: "follow logs", Command: fmt.Sprintf("weaver ssh logs --follow 'version==%q'", logging.Shorten(deploymentId))},
+			{Label: "cat logs", Command: fmt.Sprintf("xcweaver ssh logs 'version==%q'", logging.Shorten(deploymentId))},
+			{Label: "follow logs", Command: fmt.Sprintf("xcweaver ssh logs --follow 'version==%q'", logging.Shorten(deploymentId))},
 		}
 	},
 }

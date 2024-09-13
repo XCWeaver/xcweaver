@@ -22,8 +22,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/ServiceWeaver/weaver/internal/reflection"
-	"github.com/ServiceWeaver/weaver/runtime/codegen"
+	"github.com/XCWeaver/xcweaver/internal/reflection"
+	"github.com/XCWeaver/xcweaver/runtime/codegen"
 	"github.com/google/go-cmp/cmp"
 )
 

@@ -18,7 +18,7 @@ import (
 	"sort"
 	"testing"
 
-	"github.com/ServiceWeaver/weaver/runtime/graph"
+	"github.com/XCWeaver/xcweaver/runtime/graph"
 	"github.com/google/go-cmp/cmp"
 	"golang.org/x/exp/slices"
 )

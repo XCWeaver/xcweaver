@@ -18,7 +18,7 @@ import (
 	"math"
 	"time"
 
-	"github.com/ServiceWeaver/weaver/runtime/protos"
+	"github.com/XCWeaver/xcweaver/runtime/protos"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/codes"
 	"go.opentelemetry.io/otel/sdk/instrumentation"

@@ -19,28 +19,28 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/ServiceWeaver/weaver"
+	"github.com/XCWeaver/xcweaver"
 )
 
 func main() {
-	if err := weaver.Run(context.Background(), serve); err != nil {
+	if err := xcweaver.Run(context.Background(), serve); err != nil {
 		log.Fatal(err)
 	}
 }
 
-//go:generate ../../cmd/weaver/weaver generate
+//go:generate ../../cmd/xcweaver/xcweaver generate
 
 type app struct {
-	weaver.Implements[weaver.Main]
-	reverser weaver.Ref[Reverser]
-	hello    weaver.Listener
+	xcweaver.Implements[xcweaver.Main]
+	reverser xcweaver.Ref[Reverser]
+	hello    xcweaver.Listener
 }
 
 func serve(ctx context.Context, app *app) error {
 	fmt.Printf("hello listener available on %v\n", app.hello)
 
 	// Serve the /hello endpoint.
-	http.Handle("/hello", weaver.InstrumentHandlerFunc("hello",
+	http.Handle("/hello", xcweaver.InstrumentHandlerFunc("hello",
 		func(w http.ResponseWriter, r *http.Request) {
 			name := r.URL.Query().Get("name")
 			if name == "" {

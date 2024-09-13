@@ -20,7 +20,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/ServiceWeaver/weaver/runtime/profiling"
+	"github.com/XCWeaver/xcweaver/runtime/profiling"
 	"github.com/google/pprof/profile"
 )
 

@@ -23,7 +23,7 @@ import (
 	"path/filepath"
 	"sync"
 
-	"github.com/ServiceWeaver/weaver/internal/net/call"
+	"github.com/XCWeaver/xcweaver/internal/net/call"
 )
 
 // ServeComponents handles method calls made to the specified listener for the specified

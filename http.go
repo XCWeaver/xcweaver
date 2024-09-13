@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package weaver
+package xcweaver
 
 import (
 	"math/rand"
@@ -21,8 +21,8 @@ import (
 	"sync/atomic"
 	"time"
 
-	imetrics "github.com/ServiceWeaver/weaver/internal/metrics"
-	"github.com/ServiceWeaver/weaver/metrics"
+	imetrics "github.com/XCWeaver/xcweaver/internal/metrics"
+	"github.com/XCWeaver/xcweaver/metrics"
 	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 )
 
@@ -35,7 +35,7 @@ type httpLabels struct {
 	Host  string // URL host
 
 	// Is this a metric implicitly created by the framework?
-	Generated bool `weaver:"serviceweaver_generated"`
+	Generated bool `xcweaver:"serviceweaver_generated"`
 }
 
 type httpErrorLabels struct {
@@ -44,7 +44,7 @@ type httpErrorLabels struct {
 	Code  int    // HTTP status code (e.g., 404)
 
 	// Is this a metric implicitly created by the framework?
-	Generated bool `weaver:"serviceweaver_generated"`
+	Generated bool `xcweaver:"serviceweaver_generated"`
 }
 
 var (

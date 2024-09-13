@@ -15,8 +15,8 @@
 package metrics
 
 import (
-	"github.com/ServiceWeaver/weaver/runtime/metrics"
-	"github.com/ServiceWeaver/weaver/runtime/protos"
+	"github.com/XCWeaver/xcweaver/runtime/metrics"
+	"github.com/XCWeaver/xcweaver/runtime/protos"
 )
 
 // A Counter is a float-valued, monotonically increasing metric. For example,

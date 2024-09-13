@@ -20,7 +20,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ServiceWeaver/weaver/internal/versioned"
+	"github.com/XCWeaver/xcweaver/internal/versioned"
 )
 
 func TestLock(t *testing.T) {

@@ -77,7 +77,7 @@
 //	    Foo string
 //	    Bar string
 //	}
-//	var exampleLabeledCounter = weaver.NewCounterMap[labels](
+//	var exampleLabeledCounter = xcweaver.NewCounterMap[labels](
 //	    "example_labeled_counter",
 //	    `An example counter with labels "foo" and "bar"`,
 //	)
@@ -117,11 +117,11 @@
 // To adhere to popular metric naming conventions, the first letter of every
 // label is lowercased by default. The Foo label for example is exported as
 // "foo", not "Foo". You can override this behavior and provide a custom label
-// name using a weaver annotation.
+// name using a xcweaver annotation.
 //
 //	type labels struct {
 //	    Foo string                           // exported as "foo"
-//	    Bar string `weaver:"my_custom_name"` // exported as "my_custom_name"
+//	    Bar string `xcweaver:"my_custom_name"` // exported as "my_custom_name"
 //	}
 //
 // # Exporting Metrics

@@ -27,11 +27,11 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ServiceWeaver/weaver/internal/cond"
-	"github.com/ServiceWeaver/weaver/internal/heap"
-	"github.com/ServiceWeaver/weaver/runtime/colors"
-	"github.com/ServiceWeaver/weaver/runtime/protomsg"
-	"github.com/ServiceWeaver/weaver/runtime/protos"
+	"github.com/XCWeaver/xcweaver/internal/cond"
+	"github.com/XCWeaver/xcweaver/internal/heap"
+	"github.com/XCWeaver/xcweaver/runtime/colors"
+	"github.com/XCWeaver/xcweaver/runtime/protomsg"
+	"github.com/XCWeaver/xcweaver/runtime/protos"
 	"github.com/fsnotify/fsnotify"
 	"github.com/google/cel-go/cel"
 )

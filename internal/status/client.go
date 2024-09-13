@@ -18,8 +18,8 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/ServiceWeaver/weaver/runtime/protomsg"
-	protos "github.com/ServiceWeaver/weaver/runtime/protos"
+	"github.com/XCWeaver/xcweaver/runtime/protomsg"
+	protos "github.com/XCWeaver/xcweaver/runtime/protos"
 )
 
 // Client is an HTTP client to a status server. It's assumed the status server

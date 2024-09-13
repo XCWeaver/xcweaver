@@ -26,20 +26,20 @@ import (
 	"os"
 	"sync"
 
-	"github.com/ServiceWeaver/weaver/internal/control"
-	"github.com/ServiceWeaver/weaver/internal/net/call"
-	"github.com/ServiceWeaver/weaver/runtime"
-	"github.com/ServiceWeaver/weaver/runtime/codegen"
-	"github.com/ServiceWeaver/weaver/runtime/deployers"
-	"github.com/ServiceWeaver/weaver/runtime/metrics"
-	"github.com/ServiceWeaver/weaver/runtime/protomsg"
-	"github.com/ServiceWeaver/weaver/runtime/protos"
-	"github.com/ServiceWeaver/weaver/runtime/version"
+	"github.com/XCWeaver/xcweaver/internal/control"
+	"github.com/XCWeaver/xcweaver/internal/net/call"
+	"github.com/XCWeaver/xcweaver/runtime"
+	"github.com/XCWeaver/xcweaver/runtime/codegen"
+	"github.com/XCWeaver/xcweaver/runtime/deployers"
+	"github.com/XCWeaver/xcweaver/runtime/metrics"
+	"github.com/XCWeaver/xcweaver/runtime/protomsg"
+	"github.com/XCWeaver/xcweaver/runtime/protos"
+	"github.com/XCWeaver/xcweaver/runtime/version"
 	"go.opentelemetry.io/otel/trace"
 	"golang.org/x/sync/errgroup"
 
-	// We rely on the weaver.controller component registrattion entry.
-	_ "github.com/ServiceWeaver/weaver"
+	// We rely on the xcweaver.controller component registrattion entry.
+	_ "github.com/XCWeaver/xcweaver"
 )
 
 // EnvelopeHandler handles messages from the weavelet. Values passed to the

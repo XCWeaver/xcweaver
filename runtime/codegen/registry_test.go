@@ -20,9 +20,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/ServiceWeaver/weaver"
-	"github.com/ServiceWeaver/weaver/internal/reflection"
-	"github.com/ServiceWeaver/weaver/runtime/codegen"
+	"github.com/XCWeaver/xcweaver"
+	"github.com/XCWeaver/xcweaver/internal/reflection"
+	"github.com/XCWeaver/xcweaver/runtime/codegen"
 	"go.opentelemetry.io/otel/trace"
 )
 
@@ -90,7 +90,7 @@ type componentWithoutConfigImpl struct{}
 
 type componentWithConfig interface{}
 type componentWithConfigImpl struct {
-	weaver.WithConfig[testconfig]
+	xcweaver.WithConfig[testconfig]
 }
 
 type testconfig struct {
@@ -109,12 +109,12 @@ type A interface{}
 type B interface{}
 
 type aimpl struct {
-	weaver.Implements[A]
-	b weaver.Ref[B] //lint:ignore U1000 present just for call graph extraction
+	xcweaver.Implements[A]
+	b xcweaver.Ref[B] //lint:ignore U1000 present just for call graph extraction
 }
 
 type bimpl struct {
-	weaver.Implements[B]
+	xcweaver.Implements[B]
 }
 
 func register[Intf, Impl any](name string) {

@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package weaver
+package xcweaver
 
 import (
 	"context"
 	"fmt"
 
-	"github.com/ServiceWeaver/weaver/internal/control"
-	"github.com/ServiceWeaver/weaver/runtime/protos"
+	"github.com/XCWeaver/xcweaver/internal/control"
+	"github.com/XCWeaver/xcweaver/runtime/protos"
 )
 
 // weaveletControl is a component hosted in every weavelet. Deployers make calls to this component
@@ -28,7 +28,7 @@ type weaveletControl control.WeaveletControl
 
 // noopWeaveletControl is a no-op implementation of weaveletControl. It exists solely to cause
 // weaveletControl to be registered as a component. The actual implementation is provided
-// by internal/weaver/remoteweavelet.go
+// by internal/xcweaver/remoteweavelet.go
 type noopWeaveletControl struct {
 	Implements[weaveletControl]
 }

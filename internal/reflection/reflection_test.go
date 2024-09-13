@@ -20,7 +20,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/ServiceWeaver/weaver/internal/reflection"
+	"github.com/XCWeaver/xcweaver/internal/reflection"
 )
 
 func TestType(t *testing.T) {

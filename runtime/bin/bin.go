@@ -26,14 +26,14 @@ import (
 	"regexp"
 	"strconv"
 
-	"github.com/ServiceWeaver/weaver/runtime/codegen"
-	"github.com/ServiceWeaver/weaver/runtime/graph"
-	"github.com/ServiceWeaver/weaver/runtime/version"
+	"github.com/XCWeaver/xcweaver/runtime/codegen"
+	"github.com/XCWeaver/xcweaver/runtime/graph"
+	"github.com/XCWeaver/xcweaver/runtime/version"
 	"golang.org/x/exp/maps"
 	"golang.org/x/exp/slices"
 )
 
-// versionData exists to embed the weaver module version and deployer API
+// versionData exists to embed the xcweaver module version and deployer API
 // version into a Service Weaver binary. We split declaring and assigning
 // versionData to prevent the compiler from erasing it.
 //
@@ -104,7 +104,7 @@ func ReadComponentGraph(file string) ([]string, graph.Graph, error) {
 	es := codegen.ExtractEdges(data)
 
 	// Assign node numbers to components in some deterministic order.
-	const mainComponent = "github.com/ServiceWeaver/weaver/Main"
+	const mainComponent = "github.com/XCWeaver/xcweaver/Main"
 	// NOTE: initially, all node numbers are zero.
 	nodeMap := map[string]graph.Node{mainComponent: 0}
 	for _, e := range es {
@@ -174,7 +174,7 @@ func extractModuleVersion(filename string) (string, error) {
 	}
 
 	// Find the Service Weaver module.
-	const weaverModule = "github.com/ServiceWeaver/weaver"
+	const weaverModule = "github.com/XCWeaver/xcweaver"
 	for _, m := range append(info.Deps, &info.Main) {
 		if m.Path == weaverModule {
 			return m.Version, nil

@@ -17,13 +17,13 @@ package ssh
 import (
 	"context"
 
-	"github.com/ServiceWeaver/weaver/internal/tool/ssh/impl"
-	"github.com/ServiceWeaver/weaver/runtime/logging"
-	"github.com/ServiceWeaver/weaver/runtime/tool"
+	"github.com/XCWeaver/xcweaver/internal/tool/ssh/impl"
+	"github.com/XCWeaver/xcweaver/runtime/logging"
+	"github.com/XCWeaver/xcweaver/runtime/tool"
 )
 
 var logsSpec = tool.LogsSpec{
-	Tool: "weaver ssh",
+	Tool: "xcweaver ssh",
 	Source: func(context.Context) (logging.Source, error) {
 		return logging.FileSource(impl.LogDir), nil
 	},

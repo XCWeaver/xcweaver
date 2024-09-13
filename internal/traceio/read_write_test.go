@@ -21,8 +21,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ServiceWeaver/weaver/internal/traceio"
-	"github.com/ServiceWeaver/weaver/runtime/protos"
+	"github.com/XCWeaver/xcweaver/internal/traceio"
+	"github.com/XCWeaver/xcweaver/runtime/protos"
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/uuid"
 	"google.golang.org/protobuf/testing/protocmp"
@@ -220,15 +220,15 @@ func TestTracesReadWrite(t *testing.T) {
 		Scope: &protos.Span_Scope{
 			Name:      "serviceweaver",
 			Version:   "v2",
-			SchemaUrl: "serviceweaver://service.weaver",
+			SchemaUrl: "serviceweaver://service.xcweaver",
 		},
 		Library: &protos.Span_Library{
 			Name:      "serviceweaver",
 			Version:   "v2",
-			SchemaUrl: "serviceweaver://service.weaver",
+			SchemaUrl: "serviceweaver://service.xcweaver",
 		},
 		Resource: &protos.Span_Resource{
-			SchemaUrl: "serviceweaver://service.weaver",
+			SchemaUrl: "serviceweaver://service.xcweaver",
 			// Remove the invalid attribute, which cannot be passed into the
 			// trace.Resource type.
 			Attributes: testAttrs()[1:],

@@ -18,14 +18,14 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/ServiceWeaver/weaver"
-	"github.com/ServiceWeaver/weaver/internal/config"
+	"github.com/XCWeaver/xcweaver"
+	"github.com/XCWeaver/xcweaver/internal/config"
 )
 
 func TestConfigOnTypeWithConfig(t *testing.T) {
 	type testconfig struct{}
 	type withConfig struct {
-		weaver.WithConfig[testconfig]
+		xcweaver.WithConfig[testconfig]
 	}
 
 	got := config.Config(reflect.ValueOf(&withConfig{}))

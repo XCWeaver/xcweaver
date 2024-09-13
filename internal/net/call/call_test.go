@@ -34,10 +34,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ServiceWeaver/weaver/internal/cond"
-	"github.com/ServiceWeaver/weaver/internal/net/call"
-	"github.com/ServiceWeaver/weaver/internal/traceio"
-	"github.com/ServiceWeaver/weaver/runtime/logging"
+	"github.com/XCWeaver/xcweaver/internal/cond"
+	"github.com/XCWeaver/xcweaver/internal/net/call"
+	"github.com/XCWeaver/xcweaver/internal/traceio"
+	"github.com/XCWeaver/xcweaver/runtime/logging"
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 	"go.opentelemetry.io/otel/trace"
 )

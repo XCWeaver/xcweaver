@@ -27,7 +27,7 @@ const (
 // that will only store non-negative values.
 //
 // Note that these buckets are intended to be used only by the metrics generated
-// by the weaver runtime.
+// by the xcweaver runtime.
 var GeneratedBuckets = []float64{
 	// Adjacent buckets differ from each other by 2x or 2.5x.
 	1, 2, 5,

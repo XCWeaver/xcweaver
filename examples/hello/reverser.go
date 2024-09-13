@@ -16,7 +16,7 @@ package main
 import (
 	"context"
 
-	"github.com/ServiceWeaver/weaver"
+	"github.com/XCWeaver/xcweaver"
 )
 
 // Reverser component.
@@ -26,7 +26,7 @@ type Reverser interface {
 
 // Implementation of the Reverser component.
 type reverser struct {
-	weaver.Implements[Reverser]
+	xcweaver.Implements[Reverser]
 }
 
 func (r *reverser) Reverse(_ context.Context, s string) (string, error) {

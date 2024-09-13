@@ -20,10 +20,10 @@ import (
 	"log/slog"
 	"net/http"
 
-	"github.com/ServiceWeaver/weaver/runtime/metrics"
-	imetrics "github.com/ServiceWeaver/weaver/runtime/prometheus"
-	"github.com/ServiceWeaver/weaver/runtime/protomsg"
-	protos "github.com/ServiceWeaver/weaver/runtime/protos"
+	"github.com/XCWeaver/xcweaver/runtime/metrics"
+	imetrics "github.com/XCWeaver/xcweaver/runtime/prometheus"
+	"github.com/XCWeaver/xcweaver/runtime/protomsg"
+	protos "github.com/XCWeaver/xcweaver/runtime/protos"
 )
 
 const (

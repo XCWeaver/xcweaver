@@ -32,27 +32,27 @@ import (
 	"github.com/google/uuid"
 	"golang.org/x/exp/maps"
 
-	itool "github.com/ServiceWeaver/weaver/internal/tool"
-	"github.com/ServiceWeaver/weaver/internal/tool/config"
-	"github.com/ServiceWeaver/weaver/internal/tool/ssh/impl"
-	"github.com/ServiceWeaver/weaver/runtime"
-	"github.com/ServiceWeaver/weaver/runtime/bin"
-	"github.com/ServiceWeaver/weaver/runtime/codegen"
-	"github.com/ServiceWeaver/weaver/runtime/colors"
-	"github.com/ServiceWeaver/weaver/runtime/logging"
-	"github.com/ServiceWeaver/weaver/runtime/tool"
-	"github.com/ServiceWeaver/weaver/runtime/version"
+	itool "github.com/XCWeaver/xcweaver/internal/tool"
+	"github.com/XCWeaver/xcweaver/internal/tool/config"
+	"github.com/XCWeaver/xcweaver/internal/tool/ssh/impl"
+	"github.com/XCWeaver/xcweaver/runtime"
+	"github.com/XCWeaver/xcweaver/runtime/bin"
+	"github.com/XCWeaver/xcweaver/runtime/codegen"
+	"github.com/XCWeaver/xcweaver/runtime/colors"
+	"github.com/XCWeaver/xcweaver/runtime/logging"
+	"github.com/XCWeaver/xcweaver/runtime/tool"
+	"github.com/XCWeaver/xcweaver/runtime/version"
 )
 
 const (
-	configKey      = "github.com/ServiceWeaver/weaver/ssh"
+	configKey      = "github.com/XCWeaver/xcweaver/ssh"
 	shortConfigKey = "ssh"
 )
 
 var deployCmd = tool.Command{
 	Name:        "deploy",
 	Description: "Deploy a Service Weaver app",
-	Help:        "Usage:\n  weaver ssh deploy <configfile>",
+	Help:        "Usage:\n  xcweaver ssh deploy <configfile>",
 	Flags:       flag.NewFlagSet("deploy", flag.ContinueOnError),
 	Fn:          deploy,
 }
@@ -112,18 +112,18 @@ func deploy(ctx context.Context, args []string) error {
 		}
 		return fmt.Errorf(`
 ERROR: The binary you're trying to deploy (%q) was built with
-github.com/ServiceWeaver/weaver module version %s. However, the 'weaver
-ssh' binary you're using was built with weaver module version %s.
+github.com/XCWeaver/xcweaver module version %s. However, the 'xcweaver
+ssh' binary you're using was built with xcweaver module version %s.
 These versions are incompatible.
 
-We recommend updating both the weaver module your application is built with and
-updating the 'weaver ssh' command by running the following.
+We recommend updating both the xcweaver module your application is built with and
+updating the 'xcweaver ssh' command by running the following.
 
-    go get github.com/ServiceWeaver/weaver@latest
-    go install github.com/ServiceWeaver/weaver/cmd/weaver@latest
+    go get github.com/XCWeaver/xcweaver@latest
+    go install github.com/XCWeaver/xcweaver/cmd/xcweaver@latest
 
-Then, re-build your code and re-run 'weaver ssh deploy'. If the problem
-persists, please file an issue at https://github.com/ServiceWeaver/weaver/issues.`,
+Then, re-build your code and re-run 'xcweaver ssh deploy'. If the problem
+persists, please file an issue at https://github.com/XCWeaver/xcweaver/issues.`,
 			binary, versions.ModuleVersion, selfVersion)
 	}
 
@@ -274,7 +274,7 @@ func getAbsoluteFilePath(file string) (string, error) {
 }
 
 // getTmpDirs returns the path to the tmp directories where
-// the weaver binaries will be stored at each remote location.
+// the xcweaver binaries will be stored at each remote location.
 func getTmpDirs(locs []string, depId string) (map[string]string, error) {
 	tmpDirs := make(map[string]string, len(locs))
 	for _, loc := range locs {

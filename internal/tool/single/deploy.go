@@ -24,21 +24,21 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/ServiceWeaver/weaver/internal/tool/config"
-	"github.com/ServiceWeaver/weaver/runtime"
-	"github.com/ServiceWeaver/weaver/runtime/codegen"
-	"github.com/ServiceWeaver/weaver/runtime/tool"
+	"github.com/XCWeaver/xcweaver/internal/tool/config"
+	"github.com/XCWeaver/xcweaver/runtime"
+	"github.com/XCWeaver/xcweaver/runtime/codegen"
+	"github.com/XCWeaver/xcweaver/runtime/tool"
 )
 
 const (
-	ConfigKey      = "github.com/ServiceWeaver/weaver/single"
+	ConfigKey      = "github.com/XCWeaver/xcweaver/single"
 	ShortConfigKey = "single"
 )
 
 var deployCmd = tool.Command{
 	Name:        "deploy",
 	Description: "Deploy a Service Weaver app",
-	Help:        "Usage:\n  weaver single deploy <configfile>",
+	Help:        "Usage:\n  xcweaver single deploy <configfile>",
 	Flags:       flag.NewFlagSet("deploy", flag.ContinueOnError),
 	Fn:          deploy,
 }

@@ -18,7 +18,7 @@ import (
 	"fmt"
 	"math"
 
-	"github.com/ServiceWeaver/weaver/runtime/protos"
+	"github.com/XCWeaver/xcweaver/runtime/protos"
 	"golang.org/x/exp/maps"
 )
 

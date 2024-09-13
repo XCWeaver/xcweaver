@@ -23,14 +23,14 @@ import (
 	"text/template"
 	"time"
 
-	protos "github.com/ServiceWeaver/weaver/runtime/protos"
-	"github.com/ServiceWeaver/weaver/runtime/tool"
+	protos "github.com/XCWeaver/xcweaver/runtime/protos"
+	"github.com/XCWeaver/xcweaver/runtime/tool"
 	pprof "github.com/google/pprof/profile"
 )
 
-// TODO(mwhittaker): Right now, a user has to (1) run `weaver profile` to get a
+// TODO(mwhittaker): Right now, a user has to (1) run `xcweaver profile` to get a
 // profile and then (2) pass it to the `go pprof` command. Srdjan suggested we
-// have `weaver profile` wrap `pprof` to make this a single step instead of two.
+// have `xcweaver profile` wrap `pprof` to make this a single step instead of two.
 
 var (
 	profileFlags    = flag.NewFlagSet("profile", flag.ContinueOnError)

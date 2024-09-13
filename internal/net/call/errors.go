@@ -17,7 +17,7 @@ package call
 import (
 	"fmt"
 
-	"github.com/ServiceWeaver/weaver/runtime/codegen"
+	"github.com/XCWeaver/xcweaver/runtime/codegen"
 )
 
 type transportError int

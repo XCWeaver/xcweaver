@@ -14,14 +14,14 @@
 
 package codegen
 
-import "github.com/ServiceWeaver/weaver/runtime/version"
+import "github.com/XCWeaver/xcweaver/runtime/version"
 
 // The following types are used to check, at compile time, that every
 // weaver_gen.go file uses the codegen API version that is linked into the
 // binary.
 //
-// It is best explained via an example. Imagine 'weaver generate' is running
-// with codegen version 0.1.0. For every package, 'weaver generate' generates
+// It is best explained via an example. Imagine 'xcweaver generate' is running
+// with codegen version 0.1.0. For every package, 'xcweaver generate' generates
 // the following line:
 //
 //     var _ codegen.LatestVersion = codegen.Version[[0][1]struct{}]("...")

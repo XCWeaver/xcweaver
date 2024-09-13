@@ -24,8 +24,8 @@ import (
 	"runtime/debug"
 	"time"
 
-	imetrics "github.com/ServiceWeaver/weaver/internal/metrics"
-	"github.com/ServiceWeaver/weaver/metrics"
+	imetrics "github.com/XCWeaver/xcweaver/internal/metrics"
+	"github.com/XCWeaver/xcweaver/metrics"
 	"google.golang.org/protobuf/proto"
 )
 
@@ -59,7 +59,7 @@ type handlerLabels struct {
 	Path string // HTTP request URL path (e.g., "/manager/start_process")
 
 	// Is this a metric implicitly created by the framework?
-	Generated bool `weaver:"serviceweaver_generated"`
+	Generated bool `xcweaver:"serviceweaver_generated"`
 }
 
 type errorLabels struct {
@@ -76,7 +76,7 @@ type errorLabels struct {
 	Error string
 
 	// Is this a metric implicitly created by the framework?
-	Generated bool `weaver:"serviceweaver_generated"`
+	Generated bool `xcweaver:"serviceweaver_generated"`
 }
 
 // ProtoPointer[T] is an interface which asserts that *T is a proto.Message.

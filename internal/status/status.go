@@ -23,15 +23,15 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ServiceWeaver/weaver/runtime/colors"
-	"github.com/ServiceWeaver/weaver/runtime/logging"
-	dtool "github.com/ServiceWeaver/weaver/runtime/tool"
+	"github.com/XCWeaver/xcweaver/runtime/colors"
+	"github.com/XCWeaver/xcweaver/runtime/logging"
+	dtool "github.com/XCWeaver/xcweaver/runtime/tool"
 )
 
 // StatusCommand returns a "status" subcommand that pretty prints the status of
 // all active applications registered with the provided registry. tool is the
 // name of the command-line tool the returned subcommand runs as (e.g.,
-// "weaver single").
+// "xcweaver single").
 func StatusCommand(tool string, registry func(context.Context) (*Registry, error)) *dtool.Command {
 	return &dtool.Command{
 		Name:        "status",

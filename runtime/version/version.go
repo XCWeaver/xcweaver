@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Package version contains the version of the weaver module and its
+// Package version contains the version of the xcweaver module and its
 // constituent APIs (e.g., the pipe API, the codegen API).
 package version
 
@@ -41,7 +41,7 @@ const (
 
 	// The version of the codegen API. As with the deployer API, we assign a
 	// new version every time we change how code is generated, and we use
-	// weaver module versions.
+	// xcweaver module versions.
 	CodegenMajor = 0
 	CodegenMinor = 24
 )

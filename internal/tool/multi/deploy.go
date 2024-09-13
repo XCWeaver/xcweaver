@@ -24,27 +24,27 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/ServiceWeaver/weaver/internal/status"
-	itool "github.com/ServiceWeaver/weaver/internal/tool"
-	"github.com/ServiceWeaver/weaver/internal/tool/config"
-	"github.com/ServiceWeaver/weaver/runtime"
-	"github.com/ServiceWeaver/weaver/runtime/bin"
-	"github.com/ServiceWeaver/weaver/runtime/codegen"
-	"github.com/ServiceWeaver/weaver/runtime/retry"
-	"github.com/ServiceWeaver/weaver/runtime/tool"
-	"github.com/ServiceWeaver/weaver/runtime/version"
+	"github.com/XCWeaver/xcweaver/internal/status"
+	itool "github.com/XCWeaver/xcweaver/internal/tool"
+	"github.com/XCWeaver/xcweaver/internal/tool/config"
+	"github.com/XCWeaver/xcweaver/runtime"
+	"github.com/XCWeaver/xcweaver/runtime/bin"
+	"github.com/XCWeaver/xcweaver/runtime/codegen"
+	"github.com/XCWeaver/xcweaver/runtime/retry"
+	"github.com/XCWeaver/xcweaver/runtime/tool"
+	"github.com/XCWeaver/xcweaver/runtime/version"
 	"github.com/google/uuid"
 )
 
 const (
-	configKey      = "github.com/ServiceWeaver/weaver/multi"
+	configKey      = "github.com/XCWeaver/xcweaver/multi"
 	shortConfigKey = "multi"
 )
 
 var deployCmd = tool.Command{
 	Name:        "deploy",
 	Description: "Deploy a Service Weaver app",
-	Help:        "Usage:\n  weaver multi deploy <configfile>",
+	Help:        "Usage:\n  xcweaver multi deploy <configfile>",
 	Flags:       flag.NewFlagSet("deploy", flag.ContinueOnError),
 	Fn:          deploy,
 }
@@ -103,18 +103,18 @@ func deploy(ctx context.Context, args []string) error {
 		}
 		return fmt.Errorf(`
 ERROR: The binary you're trying to deploy (%q) was built with
-github.com/ServiceWeaver/weaver module version %s. However, the 'weaver
-multi' binary you're using was built with weaver module version %s.
+github.com/XCWeaver/xcweaver module version %s. However, the 'xcweaver
+multi' binary you're using was built with xcweaver module version %s.
 These versions are incompatible.
 
-We recommend updating both the weaver module your application is built with and
-updating the 'weaver multi' command by running the following.
+We recommend updating both the xcweaver module your application is built with and
+updating the 'xcweaver multi' command by running the following.
 
-    go get github.com/ServiceWeaver/weaver@latest
-    go install github.com/ServiceWeaver/weaver/cmd/weaver@latest
+    go get github.com/XCWeaver/xcweaver@latest
+    go install github.com/XCWeaver/xcweaver/cmd/xcweaver@latest
 
-Then, re-build your code and re-run 'weaver multi deploy'. If the problem
-persists, please file an issue at https://github.com/ServiceWeaver/weaver/issues.`,
+Then, re-build your code and re-run 'xcweaver multi deploy'. If the problem
+persists, please file an issue at https://github.com/XCWeaver/xcweaver/issues.`,
 			binary, versions.ModuleVersion, selfVersion)
 	}
 

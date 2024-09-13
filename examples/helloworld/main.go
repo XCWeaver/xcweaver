@@ -19,19 +19,19 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/ServiceWeaver/weaver"
+	"github.com/XCWeaver/xcweaver"
 )
 
-//go:generate ../../cmd/weaver/weaver generate ./...
+//go:generate ../../cmd/xcweaver/xcweaver generate ./...
 
 func main() {
-	if err := weaver.Run(context.Background(), run); err != nil {
+	if err := xcweaver.Run(context.Background(), run); err != nil {
 		log.Fatal(err)
 	}
 }
 
 type app struct {
-	weaver.Implements[weaver.Main]
+	xcweaver.Implements[xcweaver.Main]
 }
 
 func run(_ context.Context, app *app) error {
