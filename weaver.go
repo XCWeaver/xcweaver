@@ -26,6 +26,7 @@ package xcweaver
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"log/slog"
@@ -34,6 +35,7 @@ import (
 	"os"
 	"sync"
 
+	"github.com/XCWeaver/xcweaver/internal/antipode"
 	"github.com/XCWeaver/xcweaver/internal/reflection"
 	"github.com/XCWeaver/xcweaver/internal/xcweaver"
 	"github.com/XCWeaver/xcweaver/runtime"
@@ -134,6 +136,9 @@ func Run[T any, P PointerToMain[T]](ctx context.Context, app func(context.Contex
 	healthzInit.Do(func() {
 		http.HandleFunc(HealthzURL, HealthzHandler)
 	})
+
+	//add empty lineage to context
+	ctx = antipode.InitCtx(ctx)
 
 	bootstrap, err := runtime.GetBootstrap(ctx)
 	if err != nil {
@@ -582,3 +587,122 @@ func (AutoMarshal) WeaverMarshal(*codegen.Encoder)   {}
 func (AutoMarshal) WeaverUnmarshal(*codegen.Decoder) {}
 
 type NotRetriable interface{}
+
+var (
+	ErrNotFound = errors.New("key not found")
+)
+
+type Antipode struct {
+	Datastore_type antipode.Datastore_type
+	Datastore_ID   string
+}
+
+// Change for another name?
+type AntipodeObject struct {
+	Version string
+	Lineage []byte
+}
+
+func (a Antipode) String() string {
+	return a.Datastore_ID
+}
+
+// TO-DO
+// Test this method with values as string, bool, int and struct
+func (a Antipode) Write(ctx context.Context, table string, key string, value string) (context.Context, error) {
+
+	return antipode.Write(ctx, a.Datastore_type, a.Datastore_ID, table, key, value)
+}
+
+func (a Antipode) Read(ctx context.Context, table string, key string) (string, []byte, error) {
+
+	value, line, err := antipode.Read(ctx, a.Datastore_type, table, key)
+	if err == antipode.ErrNotFound {
+		return "", []byte{}, ErrNotFound
+	} else if err != nil {
+		return "", []byte{}, err
+	}
+
+	lineageBytes, err := json.Marshal(line)
+	if err != nil {
+		return "", []byte{}, err
+	}
+
+	return value, lineageBytes, nil
+}
+
+func (a Antipode) Consume(ctx context.Context, exchange string, key string, stop chan struct{}) (<-chan AntipodeObject, error) {
+
+	msgs, err := antipode.Consume(ctx, a.Datastore_type, exchange, key, stop)
+	if err != nil {
+		return nil, err
+	}
+
+	antipodeObjctsChan := make(chan AntipodeObject)
+
+	go func() {
+		defer close(antipodeObjctsChan)
+		//requeue non-processed messages
+		defer func(<-chan AntipodeObject) {
+			for d := range antipodeObjctsChan {
+				var lineage []antipode.WriteIdentifier
+				err := json.Unmarshal(d.Lineage, &lineage)
+				if err != nil {
+					return
+				}
+				obj := antipode.AntiObj{d.Version, lineage}
+				err = antipode.Requeue(ctx, a.Datastore_type, key, obj)
+				if err != nil {
+					return
+				}
+			}
+		}(antipodeObjctsChan)
+		select {
+		case <-stop:
+			return
+		default:
+			for d := range msgs {
+				lineageBytes, err := json.Marshal(d.Lineage)
+				if err != nil {
+					fmt.Println(err.Error())
+				}
+				antiObj := AntipodeObject{d.Version, lineageBytes}
+				antipodeObjctsChan <- antiObj
+			}
+		}
+
+	}()
+
+	return antipodeObjctsChan, nil
+}
+
+func (a Antipode) Barrier(ctx context.Context) error {
+
+	return antipode.Barrier(ctx, a.Datastore_type, a.Datastore_ID)
+}
+
+func Transfer(ctx context.Context, lineage []byte) (context.Context, error) {
+
+	var line []antipode.WriteIdentifier
+	err := json.Unmarshal(lineage, &line)
+	if err != nil {
+		return nil, err
+	}
+
+	return antipode.Transfer(ctx, line)
+}
+
+func GetLineage(ctx context.Context) ([]byte, error) {
+
+	line, err := antipode.GetLineage(ctx)
+	if err != nil {
+		return []byte{}, err
+	}
+
+	lineageBytes, err := json.Marshal(line)
+	if err != nil {
+		return []byte{}, err
+	}
+
+	return lineageBytes, nil
+}

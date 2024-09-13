@@ -67,6 +67,11 @@ func (*localDeployerControl) GetListenerAddress(context.Context, *protos.GetList
 	return nil, fmt.Errorf("localDeployerControl.GetListenerAddress not implemented")
 }
 
+// GetAntipodeAgentInfo implements the control.DeployerControl interface.
+func (*localDeployerControl) GetAntipodeAgentInfo(_ context.Context, request *protos.GetAntipodeAgentInfoRequest) (*protos.GetAntipodeAgentInfoReply, error) {
+	return nil, fmt.Errorf("localDeployerControl.GetAntipodeAgentInfo not implemented")
+}
+
 // ExportListener implements the control.DeployerControl interface.
 func (*localDeployerControl) ExportListener(context.Context, *protos.ExportListenerRequest) (*protos.ExportListenerReply, error) {
 	return nil, fmt.Errorf("localDeployerControl.ExportListener not implemented")

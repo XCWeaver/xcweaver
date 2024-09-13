@@ -70,6 +70,21 @@ func validateRegistrations(regs []*codegen.Registration) error {
 					err := fmt.Errorf("component implementation struct %v has a listener field %v, but listener %v hasn't been registered; maybe you forgot to run 'xcweaver generate'", reg.Impl, name, name)
 					errs = append(errs, err)
 				}
+			case f.Type == reflection.Type[Antipode]():
+				// f is a xcweaver.Antipode.
+				name := f.Name
+				if tag, ok := f.Tag.Lookup("xcweaver"); ok {
+					if !isValidListenerName(tag) {
+						err := fmt.Errorf("component implementation struct %v has invalid antipode agent tag %q", reg.Impl, tag)
+						errs = append(errs, err)
+						continue
+					}
+					name = tag
+				}
+				if !slices.Contains(reg.AntipodeAgents, name) {
+					err := fmt.Errorf("component implementation struct %v has a antipode agent field %v, but antipode agent %v hasn't been registered; maybe you forgot to run 'weaver generate'", reg.Impl, name, name)
+					errs = append(errs, err)
+				}
 			}
 		}
 	}
@@ -79,6 +94,24 @@ func validateRegistrations(regs []*codegen.Registration) error {
 // isValidListenerName returns whether the provided name is a valid
 // xcweaver.Listener name.
 func isValidListenerName(name string) bool {
+	// We allow valid Go identifiers [1]. This code is taken from [2].
+	//
+	// [1]: https://go.dev/ref/spec#Identifiers
+	// [2]: https://cs.opensource.google/go/go/+/refs/tags/go1.20.6:src/go/token/token.go;l=331-341;drc=19309779ac5e2f5a2fd3cbb34421dafb2855ac21
+	if name == "" {
+		return false
+	}
+	for i, c := range name {
+		if !unicode.IsLetter(c) && c != '_' && (i == 0 || !unicode.IsDigit(c)) {
+			return false
+		}
+	}
+	return true
+}
+
+// isValidAntipodeAgentName returns whether the provided name is a valid
+// weaver.Antipode name.
+func isValidAntipodeAgentName(name string) bool {
 	// We allow valid Go identifiers [1]. This code is taken from [2].
 	//
 	// [1]: https://go.dev/ref/spec#Identifiers

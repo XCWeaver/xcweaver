@@ -208,6 +208,11 @@ func (b *babysitter) GetListenerAddress(context.Context, *protos.GetListenerAddr
 	return &protos.GetListenerAddressReply{Address: fmt.Sprintf("%s:0", host)}, nil
 }
 
+// GetAntipodeAgentInfo implements the protos.EnvelopeHandler interface.
+func (b *babysitter) GetAntipodeAgentInfo(_ context.Context, request *protos.GetAntipodeAgentInfoRequest) (*protos.GetAntipodeAgentInfoReply, error) {
+	return nil, nil
+}
+
 // ExportListener implements the protos.EnvelopeHandler interface.
 func (b *babysitter) ExportListener(_ context.Context, req *protos.ExportListenerRequest) (*protos.ExportListenerReply, error) {
 	reply := &protos.ExportListenerReply{}

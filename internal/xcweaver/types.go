@@ -18,6 +18,8 @@ import (
 	"log/slog"
 	"net"
 	"reflect"
+
+	"github.com/XCWeaver/xcweaver/internal/antipode"
 )
 
 var (
@@ -51,6 +53,17 @@ var (
 	//   - get should be a function that returns the required Listener values,
 	//     namely the network listener and the proxy address.
 	FillListeners func(impl any, get func(string) (net.Listener, string, error)) error
+
+	// HasAntipodeAgents returns whether the provided component implementation has
+	// xcweaver.Antipode fields.
+	HasAntipodeAgents func(impl any) bool
+
+	// FillAntipodeAgents initializes Antipode fields in a component implementation
+	// struct.
+	//   - impl should be a pointer to the implementation struct
+	//   - get should be a function that returns the required Antipode values,
+	//     namely the datastore type and the datastore id.
+	FillAntipodeAgents func(impl any, get func(string) (antipode.Datastore_type, string, error)) error
 
 	// HasConfig returns whether the provided component implementation has
 	// an embedded xcweaver.Config field.

@@ -23,6 +23,8 @@ import (
 	"os"
 	"sort"
 	"strings"
+
+	"github.com/XCWeaver/xcweaver/internal/antipode"
 )
 
 // Command is a subcommand of a binary, like the "add" in "git add".
@@ -96,7 +98,7 @@ func Run(tool string, commands map[string]*Command) {
 	}
 
 	// Run command.
-	ctx := context.Background()
+	ctx := antipode.InitCtx(context.Background())
 	if err := cmd.Fn(ctx, args); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)

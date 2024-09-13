@@ -36,4 +36,22 @@ message MultiConfig {
     string address = 1;
   }
   map<string, ListenerOptions> listeners = 3;
+
+  // Options for the application antipode agents, keyed by antipode agent name.
+  // If an antipode agent isn't specified in the map, default options will be used.
+  message AntipodeAgentOptions {
+    // the type of the datastore e.g. "redis"
+    string datastoreType = 1;
+    // the datastore host
+    string host = 2;
+    // the datastore port
+    string port = 3;
+    // the datastore user
+    string user = 4;
+    // the datastore password
+    string password = 5;
+    // the datastore name
+    string datastore = 6;
+  }
+  map<string, AntipodeAgentOptions> antipodeAgents = 5;
 }

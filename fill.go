@@ -20,6 +20,7 @@ import (
 	"net"
 	"reflect"
 
+	"github.com/XCWeaver/xcweaver/internal/antipode"
 	"github.com/XCWeaver/xcweaver/internal/reflection"
 	"github.com/XCWeaver/xcweaver/internal/xcweaver"
 )
@@ -32,6 +33,8 @@ func init() {
 	xcweaver.FillRefs = fillRefs
 	xcweaver.HasListeners = hasListeners
 	xcweaver.FillListeners = fillListeners
+	xcweaver.HasAntipodeAgents = hasAntipodeAgents
+	xcweaver.FillAntipodeAgents = fillAntipodeAgents
 	xcweaver.HasConfig = hasConfig
 	xcweaver.GetConfig = getConfig
 }
@@ -171,6 +174,68 @@ func fillListeners(impl any, get func(name string) (net.Listener, string, error)
 		l := (*Listener)(f.Addr().UnsafePointer())
 		l.Listener = lis
 		l.proxyAddr = proxyAddr
+	}
+	return nil
+}
+
+// See internal/xcweaver/types.go.
+func hasAntipodeAgents(impl any) bool {
+	p := reflect.ValueOf(impl)
+	if p.Kind() != reflect.Pointer {
+		return false
+	}
+	s := p.Elem()
+	if s.Kind() != reflect.Struct {
+		return false
+	}
+
+	for i, n := 0, s.NumField(); i < n; i++ {
+		f := s.Field(i)
+		if f.Type() == reflection.Type[Antipode]() {
+			return true
+		}
+	}
+	return false
+}
+
+// See internal/xcweaver/types.go.
+func fillAntipodeAgents(impl any, get func(string) (antipode.Datastore_type, string, error)) error {
+	p := reflect.ValueOf(impl)
+	if p.Kind() != reflect.Pointer {
+		return fmt.Errorf("FillAntipodeAgents: %T not a pointer", impl)
+	}
+	s := p.Elem()
+	if s.Kind() != reflect.Struct {
+		return fmt.Errorf("FillAntipodeAgents: %T not a struct pointer", impl)
+	}
+
+	for i, n := 0, s.NumField(); i < n; i++ {
+		f := s.Field(i)
+		t := s.Type().Field(i)
+		if f.Type() != reflection.Type[Antipode]() {
+			continue
+		}
+
+		// The antipode agent's name is the field name, unless a tag is present.
+		name := t.Name
+		if tag, ok := t.Tag.Lookup("xcweaver"); ok {
+			if !isValidAntipodeAgentName(name) {
+				return fmt.Errorf("FillAntipodeAgents: antipode agent tag %s is not a valid Go identifier", tag)
+			}
+			name = tag
+		}
+
+		// Get the datastore agent.
+		datastoreType, datastoreId, err := get(name)
+		if err != nil {
+			return fmt.Errorf("FillAntipodeAgents: setting field %v.%s: %w", s.Type(), t.Name, err)
+		}
+
+		// Set the antipode agent. We have to use UnsafePointer because the field may
+		// not be exported.
+		antipode := (*Antipode)(f.Addr().UnsafePointer())
+		antipode.Datastore_type = datastoreType
+		antipode.Datastore_ID = datastoreId
 	}
 	return nil
 }

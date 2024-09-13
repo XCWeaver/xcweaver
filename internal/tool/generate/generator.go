@@ -51,15 +51,15 @@ import (
 const (
 	generatedCodeFile = "xcweaver_gen.go"
 
-	Usage = `Generate code for a Service Weaver application.
+	Usage = `Generate code for a XCWeaver application.
 
 Usage:
   xcweaver generate [packages]
 
 Description:
-  "xcweaver generate" generates code for the Service Weaver applications in the
+  "xcweaver generate" generates code for the XCWeaver applications in the
   provided packages. For example, "xcweaver generate . ./foo" will generate code
-  for the Service Weaver applications in the current directory and in the ./foo
+  for the XCWeaver applications in the current directory and in the ./foo
   directory. For every package, the generated code is placed in a xcweaver_gen.go
   file in the package's directory. For example, "xcweaver generate . ./foo" will
   create ./xcweaver_gen.go and ./foo/xcweaver_gen.go.
@@ -481,11 +481,12 @@ func extractComponent(opt Options, pkg *packages.Package, file *ast.File, tset *
 	}
 
 	// Find any xcweaver.Implements[T] or xcweaver.WithRouter[T] embedded fields.
-	var intf *types.Named   // The component interface type
-	var router *types.Named // Router type (if any)
-	var isMain bool         // Is intf xcweaver.Main?
-	var refs []*types.Named // T for which xcweaver.Ref[T] exists in struct
-	var listeners []string  // Names of all listener fields declared in struct
+	var intf *types.Named       // The component interface type
+	var router *types.Named     // Router type (if any)
+	var isMain bool             // Is intf xcweaver.Main?
+	var refs []*types.Named     // T for which xcweaver.Ref[T] exists in struct
+	var listeners []string      // Names of all listener fields declared in struct
+	var antipodeAgents []string // Names of all listener fields declared in struct
 	for _, f := range s.Fields.List {
 		typeAndValue, ok := pkg.TypesInfo.Types[f.Type]
 		if !ok {
@@ -513,6 +514,12 @@ func extractComponent(opt Options, pkg *packages.Package, file *ast.File, tset *
 				return nil, err
 			}
 			listeners = append(listeners, lis...)
+		} else if isWeaverAntipodeAgent(t) {
+			antipode, err := getAntipodeAgentNamesFromStructField(pkg, f)
+			if err != nil {
+				return nil, err
+			}
+			antipodeAgents = append(antipodeAgents, antipode...)
 		}
 
 		if len(f.Names) != 0 {
@@ -602,6 +609,16 @@ func extractComponent(opt Options, pkg *packages.Package, file *ast.File, tset *
 		seenLis[lis] = struct{}{}
 	}
 
+	// Check that antipode agent names are unique.
+	seenAntipodeAgents := map[string]struct{}{}
+	for _, antipodeAgent := range antipodeAgents {
+		if _, ok := seenAntipodeAgents[antipodeAgent]; ok {
+			return nil, errorf(pkg.Fset, spec.Pos(),
+				"component implementation %s declares multiple antipode agents with name %s. Please disambiguate.", formatType(pkg, impl), antipodeAgent)
+		}
+		seenAntipodeAgents[antipodeAgent] = struct{}{}
+	}
+
 	// Warn the user if the component has a mistyped Init or Shutdown method. These
 	// methods are supposed to have type "func(context.Context) error", but it's easy
 	// to forget to add a context.Context argument or error return. Without
@@ -612,12 +629,13 @@ func extractComponent(opt Options, pkg *packages.Package, file *ast.File, tset *
 	}
 
 	comp := &component{
-		intf:      intf,
-		impl:      impl,
-		router:    router,
-		isMain:    isMain,
-		refs:      refs,
-		listeners: listeners,
+		intf:           intf,
+		impl:           impl,
+		router:         router,
+		isMain:         isMain,
+		refs:           refs,
+		listeners:      listeners,
+		antipodeAgents: antipodeAgents,
 	}
 
 	// Find routing information if needed.
@@ -664,6 +682,38 @@ func getListenerNamesFromStructField(pkg *packages.Package, f *ast.Field) ([]str
 	return ret, nil
 }
 
+// getAntipodeAgentNamesFromStructField extracts antipode agents names from the given
+// weaver.Antipode[T] field in the component implementation struct.
+func getAntipodeAgentNamesFromStructField(pkg *packages.Package, f *ast.Field) ([]string, error) {
+	// Try to get the antipode agent name from the struct tag.
+	if f.Tag != nil {
+		tag := reflect.StructTag(strings.TrimPrefix(
+			strings.TrimSuffix(f.Tag.Value, "`"), "`"))
+		if len(f.Names) > 1 {
+			return nil, errorf(pkg.Fset, f.Pos(),
+				"Tag %s repeated for multiple fields", tag)
+		}
+		if name, ok := tag.Lookup("xcweaver"); ok {
+			if !token.IsIdentifier(name) {
+				return nil, errorf(pkg.Fset, f.Pos(),
+					"Listener tag %s is not a valid Go identifier", tag)
+			}
+			return []string{name}, nil
+		}
+		// fallthrough
+	}
+
+	// Get the antipode agent name(s) from the struct field name(s).
+	if f.Names == nil { // embedded field
+		return []string{"Antipode"}, nil
+	}
+	var ret []string
+	for _, fname := range f.Names {
+		ret = append(ret, fname.Name)
+	}
+	return ret, nil
+}
+
 // component represents a Service Weaver component.
 //
 // A component is divided into an interface and implementation. For example, in
@@ -677,15 +727,16 @@ func getListenerNamesFromStructField(pkg *packages.Package, f *ast.Field) ([]str
 //	}
 //	type router struct{}
 type component struct {
-	intf          *types.Named        // component interface
-	impl          *types.Named        // component implementation
-	router        *types.Named        // router, or nil if there is no router
-	routingKey    types.Type          // routing key, or nil if there is no router
-	routedMethods map[string]bool     // the set of methods with a routing function
-	isMain        bool                // intf is xcweaver.Main
-	refs          []*types.Named      // List of T where a xcweaver.Ref[T] field is in impl struct
-	listeners     []string            // Names of listener fields declared in impl struct
-	noretry       map[string]struct{} // Methods that should not be retried
+	intf           *types.Named        // component interface
+	impl           *types.Named        // component implementation
+	router         *types.Named        // router, or nil if there is no router
+	routingKey     types.Type          // routing key, or nil if there is no router
+	routedMethods  map[string]bool     // the set of methods with a routing function
+	isMain         bool                // intf is xcweaver.Main
+	refs           []*types.Named      // List of T where a xcweaver.Ref[T] field is in impl struct
+	listeners      []string            // Names of listener fields declared in impl struct
+	noretry        map[string]struct{} // Methods that should not be retried
+	antipodeAgents []string            // Names of antipode agent fields declared in impl struct
 }
 
 func fullName(t *types.Named) string {
@@ -1232,6 +1283,9 @@ func (g *generator) generateRegisteredComponents(p printFn) {
 		if len(comp.listeners) > 0 {
 			refData.WriteString(codegen.MakeListenersString(myName, comp.listeners))
 		}
+		if len(comp.antipodeAgents) > 0 {
+			refData.WriteString(codegen.MakeAntipodeAgentsString(myName, comp.antipodeAgents))
+		}
 
 		// E.g.,
 		//	xcweaver.Register(xcweaver.Registration{
@@ -1254,6 +1308,13 @@ func (g *generator) generateRegisteredComponents(p printFn) {
 				listeners[i] = fmt.Sprintf("%q", lis)
 			}
 			p(`		Listeners: []string{%s},`, strings.Join(listeners, ", "))
+		}
+		if len(comp.antipodeAgents) > 0 {
+			antipodeAgents := make([]string, len(comp.antipodeAgents))
+			for i, anti := range comp.antipodeAgents {
+				antipodeAgents[i] = fmt.Sprintf("%q", anti)
+			}
+			p(`		AntipodeAgents: []string{%s},`, strings.Join(antipodeAgents, ", "))
 		}
 		if len(comp.noretry) > 0 {
 			p(`		NoRetry: []int{%s},`, noRetryString(comp))

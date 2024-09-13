@@ -46,6 +46,10 @@ type DeployerControl interface {
 	// a particular listener.
 	GetListenerAddress(context.Context, *protos.GetListenerAddressRequest) (*protos.GetListenerAddressReply, error)
 
+	// GetAntipodeAgentInfo returns the arguments the weavelet needs to
+	// automatically initialize a particular Antipode agent.
+	GetAntipodeAgentInfo(context.Context, *protos.GetAntipodeAgentInfoRequest) (*protos.GetAntipodeAgentInfoReply, error)
+
 	// ExportListener exports the provided listener. Exporting a listener
 	// typically, but not always, involves running a proxy that forwards
 	// traffic to the provided address.

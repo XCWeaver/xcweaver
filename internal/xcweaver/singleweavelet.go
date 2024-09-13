@@ -28,6 +28,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/XCWeaver/xcweaver/internal/antipode"
 	"github.com/XCWeaver/xcweaver/internal/config"
 	"github.com/XCWeaver/xcweaver/internal/env"
 	imetrics "github.com/XCWeaver/xcweaver/internal/metrics"
@@ -80,9 +81,10 @@ type SingleWeavelet struct {
 	stats  *imetrics.StatsProcessor // metrics aggregator
 
 	// Components and listeners.
-	mu         sync.Mutex              // guards the following fields
-	components map[string]any          // components, by name
-	listeners  map[string]net.Listener // listeners, by name
+	mu             sync.Mutex                         // guards the following fields
+	components     map[string]any                     // components, by name
+	listeners      map[string]net.Listener            // listeners, by name
+	antipodeAgents map[string]antipode.Datastore_type // antipodeAgents, by name
 }
 
 // NewSingleWeavelet returns a new SingleWeavelet that hosts the components
@@ -133,22 +135,23 @@ func NewSingleWeavelet(ctx context.Context, regs []*codegen.Registration, opts S
 	}
 
 	w := &SingleWeavelet{
-		ctx:          ctx,
-		regs:         regs,
-		regsByName:   regsByName,
-		regsByIntf:   regsByIntf,
-		regsByImpl:   regsByImpl,
-		opts:         opts,
-		config:       config,
-		deploymentId: deploymentId,
-		id:           id,
-		weaverInfo:   &WeaverInfo{DeploymentID: id},
-		createdAt:    time.Now(),
-		pp:           logging.NewPrettyPrinter(colors.Enabled()),
-		tracer:       tracer,
-		stats:        imetrics.NewStatsProcessor(),
-		components:   map[string]any{},
-		listeners:    map[string]net.Listener{},
+		ctx:            ctx,
+		regs:           regs,
+		regsByName:     regsByName,
+		regsByIntf:     regsByIntf,
+		regsByImpl:     regsByImpl,
+		opts:           opts,
+		config:         config,
+		deploymentId:   deploymentId,
+		id:             id,
+		weaverInfo:     &WeaverInfo{DeploymentID: id},
+		createdAt:      time.Now(),
+		pp:             logging.NewPrettyPrinter(colors.Enabled()),
+		tracer:         tracer,
+		stats:          imetrics.NewStatsProcessor(),
+		components:     map[string]any{},
+		listeners:      map[string]net.Listener{},
+		antipodeAgents: map[string]antipode.Datastore_type{},
 	}
 
 	// Start a signal handler to detect when the process is killed. This isn't
@@ -202,6 +205,19 @@ func parseSingleConfig(regs []*codegen.Registration, filename, contents string) 
 	for listener := range config.Listeners {
 		if _, ok := listeners[listener]; !ok {
 			return nil, fmt.Errorf("listener %s (in the config) not found", listener)
+		}
+	}
+
+	// Validate antipode agents in the config.
+	antipodeAgents := map[string]struct{}{}
+	for _, reg := range regs {
+		for _, antipode := range reg.AntipodeAgents {
+			antipodeAgents[antipode] = struct{}{}
+		}
+	}
+	for antipode := range config.AntipodeAgents {
+		if _, ok := antipodeAgents[antipode]; !ok {
+			return nil, fmt.Errorf("antipode agent %s (in the config) not found", antipode)
 		}
 	}
 
@@ -313,6 +329,15 @@ func (w *SingleWeavelet) get(reg *codegen.Registration) (any, error) {
 		return nil, err
 	}
 
+	// Fill antipode agent fields.
+	if err := FillAntipodeAgents(obj, func(name string) (antipode.Datastore_type, string, error) {
+		antipode, err := w.antipodeAgent(name)
+		datastoreId, err := w.antipodeDatastoreId(name)
+		return antipode, datastoreId, err
+	}); err != nil {
+		return nil, err
+	}
+
 	// Call Init if available.
 	if i, ok := obj.(interface{ Init(context.Context) error }); ok {
 		if err := i.Init(w.ctx); err != nil {
@@ -346,6 +371,59 @@ func (w *SingleWeavelet) listener(name string) (net.Listener, error) {
 	// Store the listener.
 	w.listeners[name] = lis
 	return lis, err
+}
+
+// antipodeAgent returns the Antipode agent with the provided name.
+//
+// REQUIRES: w.mu is held.
+func (w *SingleWeavelet) antipodeAgent(name string) (antipode.Datastore_type, error) {
+	if antipodeAgent, ok := w.antipodeAgents[name]; ok {
+		// The antipode agent already exists.
+		return antipodeAgent, nil
+	}
+
+	// Create the Antipode agent
+	var datastoreType string
+	var host string
+	var user string
+	var port string
+	var password string
+	var database string
+	if opts, ok := w.config.AntipodeAgents[name]; ok {
+		datastoreType = opts.DatastoreType
+		host = opts.Host
+		port = opts.Port
+		user = opts.User
+		password = opts.Password
+		database = opts.Datastore
+	}
+
+	var antipodeAgent antipode.Datastore_type
+	switch datastoreType {
+	case "Redis":
+		antipodeAgent = antipode.CreateRedis(host, port, password)
+	case "RabbitMQ":
+		antipodeAgent = antipode.CreateRabbitMQ(host, port, user, password)
+	case "MongoDB":
+		antipodeAgent = antipode.CreateMongoDB(host, port, database)
+	case "MySQL":
+		antipodeAgent = antipode.CreateMySQL(host, port, user, password, database)
+	default:
+		return nil, fmt.Errorf("%s is not a datastore type supported", datastoreType)
+	}
+
+	// Store the antipode agent.
+	w.antipodeAgents[name] = antipodeAgent
+	return antipodeAgent, nil
+}
+
+func (w *SingleWeavelet) antipodeDatastoreId(name string) (string, error) {
+	var datastoreId string
+	if opts, ok := w.config.AntipodeAgents[name]; ok {
+		datastoreId = opts.Datastore
+		return datastoreId, nil
+	}
+	return "", fmt.Errorf("%s is not a antipode agent", name)
 }
 
 // logger returns a logger for the component with the provided name.
