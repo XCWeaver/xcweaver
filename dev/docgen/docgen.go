@@ -145,7 +145,7 @@ func main() {
 	flag.Parse()
 
 	if err := os.Chdir("website"); err != nil {
-		fmt.Fprintln(os.Stderr, err, "(make sure you are in the top-level weaver directory)")
+		fmt.Fprintln(os.Stderr, err, "(make sure you are in the top-level xcweaver directory)")
 		os.Exit(1)
 	}
 
