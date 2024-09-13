@@ -1,0 +1,13 @@
+[serviceweaver]
+binary = "./reverser"
+rollout = "5m"
+
+[single]
+listeners.reverser = {address = "localhost:9000"}
+
+[multi]
+listeners.reverser = {address = "localhost:9000"}
+
+[gke]
+regions = ["us-west1"]
+listeners.reverser = {is_public = true, hostname = "reverser.example.com"}

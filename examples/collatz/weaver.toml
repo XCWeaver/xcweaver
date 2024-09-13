@@ -1,0 +1,17 @@
+[serviceweaver]
+binary = "./collatz"
+rollout = "5m"
+
+[single]
+listeners.collatz = {address = "localhost:9000"}
+
+[multi]
+listeners.collatz = {address = "localhost:9000"}
+
+[ssh]
+listeners.collatz = {address = "localhost:9000"}
+locations = "./ssh_locations.txt"
+
+[gke]
+regions = ["us-west1"]
+listeners.collatz = {is_public = true, hostname = "collatz.example.com"}
