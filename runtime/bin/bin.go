@@ -138,6 +138,16 @@ func ReadListeners(file string) ([]codegen.ComponentListeners, error) {
 	return codegen.ExtractListeners(data), nil
 }
 
+// ReadAntipodeAgents reads the sets of Antipode agents associated with each component
+// in the specified binary.
+func ReadAntipodeAgents(file string) ([]codegen.ComponentAntipodeAgents, error) {
+	data, err := rodata(file)
+	if err != nil {
+		return nil, err
+	}
+	return codegen.ExtractAntipodeAgents(data), nil
+}
+
 type Versions struct {
 	ModuleVersion   string         // Service Weaver library's module version
 	DeployerVersion version.SemVer // see version.DeployerVersion

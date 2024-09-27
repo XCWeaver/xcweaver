@@ -28,15 +28,16 @@ import (
 // See [1] for an overview of this idiom.
 //
 // [1]: https://go.googlesource.com/proposal/+/refs/heads/master/design/43651-type-parameters.md#pointer-method-example
-type configProtoPointer[T any, L any] interface {
+type configProtoPointer[T any, L any, A any] interface {
 	*T
 	proto.Message
 	GetListeners() map[string]*L
+	GetAntipodeAgents() map[string]*A
 }
 
 // GetDeployerConfig extracts and validates the deployer config from the
 // specified section in the app config.
-func GetDeployerConfig[T, L any, TP configProtoPointer[T, L]](key, shortKey string, app *protos.AppConfig) (*T, error) {
+func GetDeployerConfig[T, L any, A any, TP configProtoPointer[T, L, A]](key, shortKey string, app *protos.AppConfig) (*T, error) {
 	// Read the config.
 	config := new(T)
 	if err := runtime.ParseConfigSection(key, shortKey, app.Sections, config); err != nil {
@@ -57,6 +58,22 @@ func GetDeployerConfig[T, L any, TP configProtoPointer[T, L]](key, shortKey stri
 	for lis := range TP(config).GetListeners() {
 		if _, ok := all[lis]; !ok {
 			return nil, fmt.Errorf("listeners %s specified in the config not found in the binary", lis)
+		}
+	}
+
+	binAntipode, err := bin.ReadAntipodeAgents(app.Binary)
+	if err != nil {
+		return nil, fmt.Errorf("cannot read Antipode agents from binary %s: %w", app.Binary, err)
+	}
+	all = make(map[string]struct{})
+	for _, c := range binAntipode {
+		for _, l := range c.AntipodeAgents {
+			all[l] = struct{}{}
+		}
+	}
+	for anti := range TP(config).GetAntipodeAgents() {
+		if _, ok := all[anti]; !ok {
+			return nil, fmt.Errorf("Antipode agent %s specified in the config not found in the binary", anti)
 		}
 	}
 	return config, nil

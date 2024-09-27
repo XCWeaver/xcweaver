@@ -71,7 +71,7 @@ func deploy(ctx context.Context, args []string) error {
 	}
 
 	// Parse the single section of the config.
-	config, err := config.GetDeployerConfig[SingleConfig, SingleConfig_ListenerOptions](ConfigKey, ShortConfigKey, app)
+	config, err := config.GetDeployerConfig[SingleConfig, SingleConfig_ListenerOptions, SingleConfig_AntipodeAgentOptions](ConfigKey, ShortConfigKey, app)
 	if err != nil {
 		return err
 	}

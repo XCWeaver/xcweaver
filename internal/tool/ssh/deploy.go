@@ -85,7 +85,7 @@ func deploy(ctx context.Context, args []string) error {
 	}
 
 	// Parse and finalize the SSH config.
-	config, err := config.GetDeployerConfig[impl.SshConfig, impl.SshConfig_ListenerOptions](configKey, shortConfigKey, app)
+	config, err := config.GetDeployerConfig[impl.SshConfig, impl.SshConfig_ListenerOptions, impl.SshConfig_AntipodeAgentOptions](configKey, shortConfigKey, app)
 	if err != nil {
 		return err
 	}

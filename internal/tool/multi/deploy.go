@@ -77,7 +77,7 @@ func deploy(ctx context.Context, args []string) error {
 	}
 
 	// Parse the multi section of the config.
-	multiConfig, err := config.GetDeployerConfig[MultiConfig, MultiConfig_ListenerOptions](configKey, shortConfigKey, appConfig)
+	multiConfig, err := config.GetDeployerConfig[MultiConfig, MultiConfig_ListenerOptions, MultiConfig_AntipodeAgentOptions](configKey, shortConfigKey, appConfig)
 	if err != nil {
 		return err
 	}
