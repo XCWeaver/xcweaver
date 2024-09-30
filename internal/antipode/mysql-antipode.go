@@ -75,7 +75,6 @@ func (m MySQL) consume(context.Context, string, string, chan struct{}) (<-chan A
 func (m MySQL) barrier(ctx context.Context, lineage []WriteIdentifier, datastoreID string) error {
 
 	for _, writeIdentifier := range lineage {
-		fmt.Println("key after for: ", writeIdentifier.Key)
 		if writeIdentifier.Dtstid == datastoreID {
 			for {
 				// Query the database for the value associated with the writeIdentifier.Key
@@ -85,7 +84,6 @@ func (m MySQL) barrier(ctx context.Context, lineage []WriteIdentifier, datastore
 				if !errors.Is(err, sql.ErrNoRows) && err != nil {
 					return err
 				} else if errors.Is(err, sql.ErrNoRows) { //the version replication process is not yet completed
-					fmt.Println("replication in progress")
 					continue
 				} else {
 					defer rows.Close()
@@ -103,7 +101,6 @@ func (m MySQL) barrier(ctx context.Context, lineage []WriteIdentifier, datastore
 						}
 
 						if antiObj.Version == writeIdentifier.Version { //the version replication process is already completed
-							fmt.Println("replication done: ", antiObj.Version)
 							replicationDone = true
 							break
 						}
@@ -115,7 +112,6 @@ func (m MySQL) barrier(ctx context.Context, lineage []WriteIdentifier, datastore
 					if replicationDone { //the version replication process is already completed
 						break
 					} else { //the version replication process is not yet completed
-						fmt.Println("replication of the new version in progress!")
 						continue
 					}
 				}

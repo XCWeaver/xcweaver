@@ -597,7 +597,6 @@ type Antipode struct {
 	Datastore_ID   string
 }
 
-// Change for another name?
 type AntipodeObject struct {
 	Version string
 	Lineage []byte
@@ -607,8 +606,6 @@ func (a Antipode) String() string {
 	return a.Datastore_ID
 }
 
-// TO-DO
-// Test this method with values as string, bool, int and struct
 func (a Antipode) Write(ctx context.Context, table string, key string, value string) (context.Context, error) {
 
 	return antipode.Write(ctx, a.Datastore_type, a.Datastore_ID, table, key, value)

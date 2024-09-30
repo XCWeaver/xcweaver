@@ -41,7 +41,6 @@ message SshConfig {
   string locations = 4;
 
   // Options for the application antipode agents, keyed by antipode agent name.
-  // If an antipode agent isn't specified in the map, default options will be used.
   message AntipodeAgentOptions {
     // the type of the datastore e.g. "redis"
     string datastoreType = 1;

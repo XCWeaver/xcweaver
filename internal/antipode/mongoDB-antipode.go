@@ -3,7 +3,6 @@ package antipode
 import (
 	"context"
 	"errors"
-	"fmt"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -67,22 +66,16 @@ func (m MongoDB) consume(context.Context, string, string, chan struct{}) (<-chan
 
 func (m MongoDB) barrier(ctx context.Context, lineage []WriteIdentifier, datastoreID string) error {
 
-	fmt.Println("start barrier")
-
 	for _, writeIdentifier := range lineage {
-		fmt.Println("key after for: ", writeIdentifier.Key)
 		if writeIdentifier.Dtstid == datastoreID {
 			for {
 				filter := bson.D{{"key", writeIdentifier.Key}}
-
-				fmt.Println("key: ", writeIdentifier.Key)
 
 				cursor, err := m.mongoClient.Database(m.database).Collection(writeIdentifier.TableId).Find(ctx, filter)
 
 				if !errors.Is(err, mongo.ErrNoDocuments) && err != nil {
 					return err
 				} else if errors.Is(err, mongo.ErrNoDocuments) { //the version replication process is not yet completed
-					fmt.Println("replication in progress")
 					continue
 				} else {
 					replicationDone := false
@@ -93,7 +86,6 @@ func (m MongoDB) barrier(ctx context.Context, lineage []WriteIdentifier, datasto
 							return err
 						}
 						if document.Value.Version == writeIdentifier.Version { //the version replication process is already completed
-							fmt.Println("replication done: ", document.Value.Version)
 							replicationDone = true
 							break
 						}
@@ -102,7 +94,6 @@ func (m MongoDB) barrier(ctx context.Context, lineage []WriteIdentifier, datasto
 					if replicationDone { //the version replication process is already completed
 						break
 					} else { //the version replication process is not yet completed
-						fmt.Println("replication of the new version in progress!")
 						continue
 					}
 				}

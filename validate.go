@@ -110,7 +110,7 @@ func isValidListenerName(name string) bool {
 }
 
 // isValidAntipodeAgentName returns whether the provided name is a valid
-// weaver.Antipode name.
+// xcweaver.Antipode name.
 func isValidAntipodeAgentName(name string) bool {
 	// We allow valid Go identifiers [1]. This code is taken from [2].
 	//

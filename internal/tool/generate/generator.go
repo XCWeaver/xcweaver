@@ -683,7 +683,7 @@ func getListenerNamesFromStructField(pkg *packages.Package, f *ast.Field) ([]str
 }
 
 // getAntipodeAgentNamesFromStructField extracts antipode agents names from the given
-// weaver.Antipode[T] field in the component implementation struct.
+// xcweaver.Antipode field in the component implementation struct.
 func getAntipodeAgentNamesFromStructField(pkg *packages.Package, f *ast.Field) ([]string, error) {
 	// Try to get the antipode agent name from the struct tag.
 	if f.Tag != nil {
