@@ -82,7 +82,7 @@ type deployer struct {
 type group struct {
 	name        string                          // group name
 	envelopes   []*envelope.Envelope            // envelopes, one per weavelet
-	replicas    []*status.Replica               // stores replica info such as pid, weavelet id
+	pids        []int64                         // weavelet pids
 	started     map[string]bool                 // started components
 	addresses   map[string]bool                 // weavelet addresses
 	assignments map[string]*protos.Assignment   // assignment, by component
@@ -352,10 +352,7 @@ func (d *deployer) startColocationGroup(g *group) error {
 		if !ok {
 			panic("multi deployer child must be a real process")
 		}
-		// Add replica info to group
-		g.replicas = append(g.replicas, &status.Replica{Pid: int64(pid), WeaveletId: info.Id})
-		// Register replica
-		if err := d.registerReplica(g, e.WeaveletAddress()); err != nil {
+		if err := d.registerReplica(g, e.WeaveletAddress(), pid); err != nil {
 			return err
 		}
 		if err := e.UpdateComponents(components); err != nil {
@@ -510,13 +507,15 @@ func (d *deployer) activateComponent(req *protos.ActivateComponentRequest) error
 
 // registerReplica registers the information about a colocation group replica
 // (i.e., a weavelet).
-func (d *deployer) registerReplica(g *group, replicaAddr string) error {
+func (d *deployer) registerReplica(g *group, replicaAddr string, pid int) error {
 	// Update addresses and pids.
 	if g.addresses[replicaAddr] {
 		// Replica already registered.
 		return nil
 	}
 	g.addresses[replicaAddr] = true
+	g.pids = append(g.pids, int64(pid))
+
 	// Update all assignments.
 	replicas := maps.Keys(g.addresses)
 	for component, assignment := range g.assignments {
@@ -663,8 +662,8 @@ func (d *deployer) Status(context.Context) (*status.Status, error) {
 	for _, group := range d.groups {
 		for component := range group.started {
 			c := &status.Component{
-				Name:     component,
-				Replicas: group.replicas,
+				Name: component,
+				Pids: slices.Clone(group.pids),
 			}
 			components = append(components, c)
 

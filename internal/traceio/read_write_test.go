@@ -220,15 +220,15 @@ func TestTracesReadWrite(t *testing.T) {
 		Scope: &protos.Span_Scope{
 			Name:      "serviceweaver",
 			Version:   "v2",
-			SchemaUrl: "serviceweaver://service.xcweaver",
+			SchemaUrl: "serviceweaver://service.weaver",
 		},
 		Library: &protos.Span_Library{
 			Name:      "serviceweaver",
 			Version:   "v2",
-			SchemaUrl: "serviceweaver://service.xcweaver",
+			SchemaUrl: "serviceweaver://service.weaver",
 		},
 		Resource: &protos.Span_Resource{
-			SchemaUrl: "serviceweaver://service.xcweaver",
+			SchemaUrl: "serviceweaver://service.weaver",
 			// Remove the invalid attribute, which cannot be passed into the
 			// trace.Resource type.
 			Attributes: testAttrs()[1:],

@@ -16,11 +16,12 @@ package metrics
 
 import (
 	"context"
-	"fmt"
 	"strings"
 	"sync"
 	"time"
 
+	"github.com/XCWeaver/xcweaver/runtime/codegen"
+	"github.com/XCWeaver/xcweaver/runtime/logging"
 	"github.com/XCWeaver/xcweaver/runtime/metrics"
 )
 
@@ -153,7 +154,7 @@ func (s *StatsProcessor) getSnapshot(snapshot []*metrics.MetricSnapshot) {
 		var comp, method string
 		for k, v := range m.Labels {
 			if k == "component" {
-				comp = shortenComponent(v)
+				comp = logging.ShortenComponent(v)
 			} else if k == "method" {
 				method = v
 			}
@@ -175,13 +176,13 @@ func (s *StatsProcessor) getSnapshot(snapshot []*metrics.MetricSnapshot) {
 		// Aggregate stats within a bucket, based on metric values from different
 		// replicas for the method.
 		switch m.Name {
-		case MethodCountsName:
+		case codegen.MethodCountsName:
 			bucket.calls += m.Value
-		case MethodBytesReplyName:
+		case codegen.MethodBytesReplyName:
 			bucket.kbSent += m.Value / 1024 // B to KB
-		case MethodBytesRequestName:
+		case codegen.MethodBytesRequestName:
 			bucket.kbRecvd += m.Value / 1024 // B to KB
-		case MethodLatenciesName:
+		case codegen.MethodLatenciesName:
 			bucket.latencyMs += m.Value / 1000 // µs to ms
 
 			var count uint64
@@ -291,23 +292,4 @@ func (s *statsMethod) computeStatsStatusz(startTime time.Time) methodStatuszInfo
 		result.Hour.AvgLatencyMs = aggBucket.latencyMs / aggBucket.latencyCounts
 	}
 	return result
-}
-
-// shortenComponent shortens the given component name to be of the format
-// <pkg>.<IfaceType>. (Recall that the full component name is of the format
-// <path1>/<path2>/.../<pathN>/<IfaceType>.)
-//
-// TODO(rgrandl): To avoid cyclic dependencies, we have created a local copy of the
-// logging.ShortenComponent method. Consider moving logging.ShortenComponent to a
-// different package instead.
-func shortenComponent(component string) string {
-	parts := strings.Split(component, "/")
-	switch len(parts) {
-	case 0: // should never happen
-		return "nil"
-	case 1:
-		return parts[0]
-	default:
-		return fmt.Sprintf("%s.%s", parts[len(parts)-2], parts[len(parts)-1])
-	}
 }

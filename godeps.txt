@@ -1,18 +1,17 @@
 // Automatically generated; DO NOT EDIT
-github.com/XCWeaver/xcweaver
+github.com/ServiceWeaver/weaver
     context
     errors
     fmt
-    github.com/XCWeaver/xcweaver/internal/control
-    github.com/XCWeaver/xcweaver/internal/metrics
-    github.com/XCWeaver/xcweaver/internal/reflection
-    github.com/XCWeaver/xcweaver/internal/xcweaver
-    github.com/XCWeaver/xcweaver/metrics
-    github.com/XCWeaver/xcweaver/runtime
-    github.com/XCWeaver/xcweaver/runtime/codegen
-    github.com/XCWeaver/xcweaver/runtime/colors
-    github.com/XCWeaver/xcweaver/runtime/logging
-    github.com/XCWeaver/xcweaver/runtime/protos
+    github.com/ServiceWeaver/weaver/internal/control
+    github.com/ServiceWeaver/weaver/internal/reflection
+    github.com/ServiceWeaver/weaver/internal/weaver
+    github.com/ServiceWeaver/weaver/metrics
+    github.com/ServiceWeaver/weaver/runtime
+    github.com/ServiceWeaver/weaver/runtime/codegen
+    github.com/ServiceWeaver/weaver/runtime/colors
+    github.com/ServiceWeaver/weaver/runtime/logging
+    github.com/ServiceWeaver/weaver/runtime/protos
     go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp
     go.opentelemetry.io/otel/codes
     go.opentelemetry.io/otel/trace
@@ -27,22 +26,22 @@ github.com/XCWeaver/xcweaver
     sync/atomic
     time
     unicode
-github.com/XCWeaver/xcweaver/cmd/xcweaver
+github.com/ServiceWeaver/weaver/cmd/weaver
     context
     errors
     flag
     fmt
-    github.com/XCWeaver/xcweaver/internal/tool
-    github.com/XCWeaver/xcweaver/internal/tool/callgraph
-    github.com/XCWeaver/xcweaver/internal/tool/generate
-    github.com/XCWeaver/xcweaver/internal/tool/multi
-    github.com/XCWeaver/xcweaver/internal/tool/single
-    github.com/XCWeaver/xcweaver/internal/tool/ssh
-    github.com/XCWeaver/xcweaver/runtime/tool
+    github.com/ServiceWeaver/weaver/internal/tool
+    github.com/ServiceWeaver/weaver/internal/tool/callgraph
+    github.com/ServiceWeaver/weaver/internal/tool/generate
+    github.com/ServiceWeaver/weaver/internal/tool/multi
+    github.com/ServiceWeaver/weaver/internal/tool/single
+    github.com/ServiceWeaver/weaver/internal/tool/ssh
+    github.com/ServiceWeaver/weaver/runtime/tool
     os
     os/exec
     strings
-github.com/XCWeaver/xcweaver/dev/docgen
+github.com/ServiceWeaver/weaver/dev/docgen
     bytes
     flag
     fmt
@@ -59,38 +58,38 @@ github.com/XCWeaver/xcweaver/dev/docgen
     path/filepath
     regexp
     strings
-github.com/XCWeaver/xcweaver/examples
-github.com/XCWeaver/xcweaver/examples/bankofanthos
+github.com/ServiceWeaver/weaver/examples
+github.com/ServiceWeaver/weaver/examples/bankofanthos
     context
     flag
-    github.com/XCWeaver/xcweaver
-    github.com/XCWeaver/xcweaver/examples/bankofanthos/frontend
+    github.com/ServiceWeaver/weaver
+    github.com/ServiceWeaver/weaver/examples/bankofanthos/frontend
     log
-github.com/XCWeaver/xcweaver/examples/bankofanthos/balancereader
+github.com/ServiceWeaver/weaver/examples/bankofanthos/balancereader
     context
     errors
-    github.com/XCWeaver/xcweaver
-    github.com/XCWeaver/xcweaver/examples/bankofanthos/common
-    github.com/XCWeaver/xcweaver/examples/bankofanthos/model
-    github.com/XCWeaver/xcweaver/runtime/codegen
+    github.com/ServiceWeaver/weaver
+    github.com/ServiceWeaver/weaver/examples/bankofanthos/common
+    github.com/ServiceWeaver/weaver/examples/bankofanthos/model
+    github.com/ServiceWeaver/weaver/runtime/codegen
     github.com/goburrow/cache
     go.opentelemetry.io/otel/codes
     go.opentelemetry.io/otel/trace
     reflect
-github.com/XCWeaver/xcweaver/examples/bankofanthos/common
+github.com/ServiceWeaver/weaver/examples/bankofanthos/common
     fmt
-    github.com/XCWeaver/xcweaver/examples/bankofanthos/model
+    github.com/ServiceWeaver/weaver/examples/bankofanthos/model
     gorm.io/driver/postgres
     gorm.io/gorm
     log/slog
     sync/atomic
     time
-github.com/XCWeaver/xcweaver/examples/bankofanthos/contacts
+github.com/ServiceWeaver/weaver/examples/bankofanthos/contacts
     context
     errors
     fmt
-    github.com/XCWeaver/xcweaver
-    github.com/XCWeaver/xcweaver/runtime/codegen
+    github.com/ServiceWeaver/weaver
+    github.com/ServiceWeaver/weaver/runtime/codegen
     go.opentelemetry.io/otel/codes
     go.opentelemetry.io/otel/trace
     gorm.io/driver/postgres
@@ -98,21 +97,21 @@ github.com/XCWeaver/xcweaver/examples/bankofanthos/contacts
     os
     reflect
     regexp
-github.com/XCWeaver/xcweaver/examples/bankofanthos/frontend
+github.com/ServiceWeaver/weaver/examples/bankofanthos/frontend
     context
     crypto/rsa
     embed
     encoding/json
     errors
     fmt
-    github.com/XCWeaver/xcweaver
-    github.com/XCWeaver/xcweaver/examples/bankofanthos/balancereader
-    github.com/XCWeaver/xcweaver/examples/bankofanthos/contacts
-    github.com/XCWeaver/xcweaver/examples/bankofanthos/ledgerwriter
-    github.com/XCWeaver/xcweaver/examples/bankofanthos/model
-    github.com/XCWeaver/xcweaver/examples/bankofanthos/transactionhistory
-    github.com/XCWeaver/xcweaver/examples/bankofanthos/userservice
-    github.com/XCWeaver/xcweaver/runtime/codegen
+    github.com/ServiceWeaver/weaver
+    github.com/ServiceWeaver/weaver/examples/bankofanthos/balancereader
+    github.com/ServiceWeaver/weaver/examples/bankofanthos/contacts
+    github.com/ServiceWeaver/weaver/examples/bankofanthos/ledgerwriter
+    github.com/ServiceWeaver/weaver/examples/bankofanthos/model
+    github.com/ServiceWeaver/weaver/examples/bankofanthos/transactionhistory
+    github.com/ServiceWeaver/weaver/examples/bankofanthos/userservice
+    github.com/ServiceWeaver/weaver/runtime/codegen
     github.com/golang-jwt/jwt
     github.com/google/uuid
     go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp
@@ -128,14 +127,14 @@ github.com/XCWeaver/xcweaver/examples/bankofanthos/frontend
     strconv
     strings
     time
-github.com/XCWeaver/xcweaver/examples/bankofanthos/ledgerwriter
+github.com/ServiceWeaver/weaver/examples/bankofanthos/ledgerwriter
     context
     errors
     fmt
-    github.com/XCWeaver/xcweaver
-    github.com/XCWeaver/xcweaver/examples/bankofanthos/balancereader
-    github.com/XCWeaver/xcweaver/examples/bankofanthos/model
-    github.com/XCWeaver/xcweaver/runtime/codegen
+    github.com/ServiceWeaver/weaver
+    github.com/ServiceWeaver/weaver/examples/bankofanthos/balancereader
+    github.com/ServiceWeaver/weaver/examples/bankofanthos/model
+    github.com/ServiceWeaver/weaver/runtime/codegen
     github.com/patrickmn/go-cache
     go.opentelemetry.io/otel/codes
     go.opentelemetry.io/otel/trace
@@ -144,30 +143,30 @@ github.com/XCWeaver/xcweaver/examples/bankofanthos/ledgerwriter
     reflect
     regexp
     time
-github.com/XCWeaver/xcweaver/examples/bankofanthos/model
+github.com/ServiceWeaver/weaver/examples/bankofanthos/model
     fmt
-    github.com/XCWeaver/xcweaver
-    github.com/XCWeaver/xcweaver/runtime/codegen
+    github.com/ServiceWeaver/weaver
+    github.com/ServiceWeaver/weaver/runtime/codegen
     time
-github.com/XCWeaver/xcweaver/examples/bankofanthos/transactionhistory
+github.com/ServiceWeaver/weaver/examples/bankofanthos/transactionhistory
     context
     errors
-    github.com/XCWeaver/xcweaver
-    github.com/XCWeaver/xcweaver/examples/bankofanthos/common
-    github.com/XCWeaver/xcweaver/examples/bankofanthos/model
-    github.com/XCWeaver/xcweaver/runtime/codegen
+    github.com/ServiceWeaver/weaver
+    github.com/ServiceWeaver/weaver/examples/bankofanthos/common
+    github.com/ServiceWeaver/weaver/examples/bankofanthos/model
+    github.com/ServiceWeaver/weaver/runtime/codegen
     github.com/goburrow/cache
     go.opentelemetry.io/otel/codes
     go.opentelemetry.io/otel/trace
     reflect
     time
-github.com/XCWeaver/xcweaver/examples/bankofanthos/userservice
+github.com/ServiceWeaver/weaver/examples/bankofanthos/userservice
     context
     crypto/rsa
     errors
     fmt
-    github.com/XCWeaver/xcweaver
-    github.com/XCWeaver/xcweaver/runtime/codegen
+    github.com/ServiceWeaver/weaver
+    github.com/ServiceWeaver/weaver/runtime/codegen
     github.com/golang-jwt/jwt
     go.opentelemetry.io/otel/codes
     go.opentelemetry.io/otel/trace
@@ -179,7 +178,7 @@ github.com/XCWeaver/xcweaver/examples/bankofanthos/userservice
     reflect
     regexp
     time
-github.com/XCWeaver/xcweaver/examples/chat
+github.com/ServiceWeaver/weaver/examples/chat
     bytes
     context
     database/sql
@@ -187,9 +186,9 @@ github.com/XCWeaver/xcweaver/examples/chat
     errors
     flag
     fmt
-    github.com/XCWeaver/xcweaver
-    github.com/XCWeaver/xcweaver/metrics
-    github.com/XCWeaver/xcweaver/runtime/codegen
+    github.com/ServiceWeaver/weaver
+    github.com/ServiceWeaver/weaver/metrics
+    github.com/ServiceWeaver/weaver/runtime/codegen
     github.com/go-sql-driver/mysql
     github.com/hashicorp/golang-lru/v2
     go.opentelemetry.io/otel/codes
@@ -211,13 +210,13 @@ github.com/XCWeaver/xcweaver/examples/chat
     strings
     sync
     time
-github.com/XCWeaver/xcweaver/examples/collatz
+github.com/ServiceWeaver/weaver/examples/collatz
     context
     errors
     flag
     fmt
-    github.com/XCWeaver/xcweaver
-    github.com/XCWeaver/xcweaver/runtime/codegen
+    github.com/ServiceWeaver/weaver
+    github.com/ServiceWeaver/weaver/runtime/codegen
     go.opentelemetry.io/otel/codes
     go.opentelemetry.io/otel/trace
     log
@@ -225,13 +224,13 @@ github.com/XCWeaver/xcweaver/examples/collatz
     reflect
     strconv
     strings
-github.com/XCWeaver/xcweaver/examples/factors
+github.com/ServiceWeaver/weaver/examples/factors
     context
     errors
     flag
     fmt
-    github.com/XCWeaver/xcweaver
-    github.com/XCWeaver/xcweaver/runtime/codegen
+    github.com/ServiceWeaver/weaver
+    github.com/ServiceWeaver/weaver/runtime/codegen
     github.com/hashicorp/golang-lru/v2
     go.opentelemetry.io/otel/codes
     go.opentelemetry.io/otel/trace
@@ -240,90 +239,91 @@ github.com/XCWeaver/xcweaver/examples/factors
     os
     reflect
     strconv
-github.com/XCWeaver/xcweaver/examples/fakes
+github.com/ServiceWeaver/weaver/examples/fakes
     context
     errors
-    github.com/XCWeaver/xcweaver
-    github.com/XCWeaver/xcweaver/runtime/codegen
+    github.com/ServiceWeaver/weaver
+    github.com/ServiceWeaver/weaver/runtime/codegen
     go.opentelemetry.io/otel/codes
     go.opentelemetry.io/otel/trace
     reflect
     time
-github.com/XCWeaver/xcweaver/examples/hello
+github.com/ServiceWeaver/weaver/examples/hello
     context
     errors
     fmt
-    github.com/XCWeaver/xcweaver
-    github.com/XCWeaver/xcweaver/runtime/codegen
+    github.com/ServiceWeaver/weaver
+    github.com/ServiceWeaver/weaver/runtime/codegen
     go.opentelemetry.io/otel/codes
     go.opentelemetry.io/otel/trace
     log
     net/http
     reflect
-github.com/XCWeaver/xcweaver/examples/helloworld
+github.com/ServiceWeaver/weaver/examples/helloworld
     context
     fmt
-    github.com/XCWeaver/xcweaver
-    github.com/XCWeaver/xcweaver/runtime/codegen
+    github.com/ServiceWeaver/weaver
+    github.com/ServiceWeaver/weaver/runtime/codegen
     go.opentelemetry.io/otel/trace
     log
     reflect
-github.com/XCWeaver/xcweaver/examples/reverser
+github.com/ServiceWeaver/weaver/examples/reverser
     context
     embed
     errors
     flag
     fmt
-    github.com/XCWeaver/xcweaver
-    github.com/XCWeaver/xcweaver/metrics
-    github.com/XCWeaver/xcweaver/runtime/codegen
+    github.com/ServiceWeaver/weaver
+    github.com/ServiceWeaver/weaver/metrics
+    github.com/ServiceWeaver/weaver/runtime/codegen
     go.opentelemetry.io/otel/codes
     go.opentelemetry.io/otel/trace
     html
     log
     net/http
     reflect
-github.com/XCWeaver/xcweaver/internal/benchmarks
+github.com/ServiceWeaver/weaver/internal/benchmarks
     context
     errors
     fmt
-    github.com/XCWeaver/xcweaver
-    github.com/XCWeaver/xcweaver/runtime/codegen
+    github.com/ServiceWeaver/weaver
+    github.com/ServiceWeaver/weaver/runtime/codegen
     go.opentelemetry.io/otel/codes
     go.opentelemetry.io/otel/trace
     google.golang.org/protobuf/reflect/protoreflect
     google.golang.org/protobuf/runtime/protoimpl
     reflect
     sync
-github.com/XCWeaver/xcweaver/internal/cond
+github.com/ServiceWeaver/weaver/internal/cond
     context
     sync
-github.com/XCWeaver/xcweaver/internal/config
+github.com/ServiceWeaver/weaver/internal/config
     fmt
     reflect
     strings
-github.com/XCWeaver/xcweaver/internal/control
+github.com/ServiceWeaver/weaver/internal/control
     context
-    github.com/XCWeaver/xcweaver/runtime/protos
-github.com/XCWeaver/xcweaver/internal/env
+    github.com/ServiceWeaver/weaver/runtime/protos
+github.com/ServiceWeaver/weaver/internal/env
     fmt
     strings
-github.com/XCWeaver/xcweaver/internal/files
+github.com/ServiceWeaver/weaver/internal/files
     fmt
     os
     path/filepath
-github.com/XCWeaver/xcweaver/internal/heap
+github.com/ServiceWeaver/weaver/internal/heap
     container/heap
-github.com/XCWeaver/xcweaver/internal/metrics
+github.com/ServiceWeaver/weaver/internal/metrics
     context
-    fmt
-    github.com/XCWeaver/xcweaver/runtime/metrics
+    github.com/ServiceWeaver/weaver/runtime/codegen
+    github.com/ServiceWeaver/weaver/runtime/logging
+    github.com/ServiceWeaver/weaver/runtime/metrics
     strings
     sync
     time
-github.com/XCWeaver/xcweaver/internal/must
-github.com/XCWeaver/xcweaver/internal/net/benchmarks
-github.com/XCWeaver/xcweaver/internal/net/call
+github.com/ServiceWeaver/weaver/internal/must
+github.com/ServiceWeaver/weaver/internal/net/benchmarks
+github.com/ServiceWeaver/weaver/internal/net/call
     bufio
     context
     crypto/sha256
@@ -331,10 +331,10 @@ github.com/XCWeaver/xcweaver/internal/net/call
     encoding/binary
     errors
     fmt
-    github.com/XCWeaver/xcweaver/internal/traceio
-    github.com/XCWeaver/xcweaver/runtime/codegen
-    github.com/XCWeaver/xcweaver/runtime/logging
-    github.com/XCWeaver/xcweaver/runtime/retry
+    github.com/ServiceWeaver/weaver/internal/traceio
+    github.com/ServiceWeaver/weaver/runtime/codegen
+    github.com/ServiceWeaver/weaver/runtime/logging
+    github.com/ServiceWeaver/weaver/runtime/retry
     go.opentelemetry.io/otel/codes
     go.opentelemetry.io/otel/trace
     io
@@ -344,40 +344,40 @@ github.com/XCWeaver/xcweaver/internal/net/call
     sync
     sync/atomic
     time
-github.com/XCWeaver/xcweaver/internal/pipe
+github.com/ServiceWeaver/weaver/internal/pipe
     context
     fmt
     io
     os
     os/exec
-github.com/XCWeaver/xcweaver/internal/proto
+github.com/ServiceWeaver/weaver/internal/proto
     encoding/base64
     google.golang.org/protobuf/proto
-github.com/XCWeaver/xcweaver/internal/proxy
+github.com/ServiceWeaver/weaver/internal/proxy
     errors
     log/slog
     math/rand
     net/http
     net/http/httputil
     sync
-github.com/XCWeaver/xcweaver/internal/queue
+github.com/ServiceWeaver/weaver/internal/queue
     context
-    github.com/XCWeaver/xcweaver/internal/cond
+    github.com/ServiceWeaver/weaver/internal/cond
     sync
-github.com/XCWeaver/xcweaver/internal/reflection
+github.com/ServiceWeaver/weaver/internal/reflection
     fmt
     reflect
-github.com/XCWeaver/xcweaver/internal/register
+github.com/ServiceWeaver/weaver/internal/register
     fmt
     sync
-github.com/XCWeaver/xcweaver/internal/routing
+github.com/ServiceWeaver/weaver/internal/routing
     fmt
-    github.com/XCWeaver/xcweaver/runtime/protos
+    github.com/ServiceWeaver/weaver/runtime/protos
     math
     slices
     sort
     strings
-github.com/XCWeaver/xcweaver/internal/status
+github.com/ServiceWeaver/weaver/internal/status
     bytes
     context
     embed
@@ -385,18 +385,18 @@ github.com/XCWeaver/xcweaver/internal/status
     errors
     flag
     fmt
-    github.com/XCWeaver/xcweaver/internal/files
-    github.com/XCWeaver/xcweaver/internal/metrics
-    github.com/XCWeaver/xcweaver/internal/traceio
-    github.com/XCWeaver/xcweaver/runtime/colors
-    github.com/XCWeaver/xcweaver/runtime/logging
-    github.com/XCWeaver/xcweaver/runtime/metrics
-    github.com/XCWeaver/xcweaver/runtime/perfetto
-    github.com/XCWeaver/xcweaver/runtime/prometheus
-    github.com/XCWeaver/xcweaver/runtime/protomsg
-    github.com/XCWeaver/xcweaver/runtime/protos
-    github.com/XCWeaver/xcweaver/runtime/tool
-    github.com/XCWeaver/xcweaver/runtime/traces
+    github.com/ServiceWeaver/weaver/internal/files
+    github.com/ServiceWeaver/weaver/internal/traceio
+    github.com/ServiceWeaver/weaver/runtime/codegen
+    github.com/ServiceWeaver/weaver/runtime/colors
+    github.com/ServiceWeaver/weaver/runtime/logging
+    github.com/ServiceWeaver/weaver/runtime/metrics
+    github.com/ServiceWeaver/weaver/runtime/perfetto
+    github.com/ServiceWeaver/weaver/runtime/prometheus
+    github.com/ServiceWeaver/weaver/runtime/protomsg
+    github.com/ServiceWeaver/weaver/runtime/protos
+    github.com/ServiceWeaver/weaver/runtime/tool
+    github.com/ServiceWeaver/weaver/runtime/traces
     github.com/google/pprof/profile
     github.com/pkg/browser
     golang.org/x/exp/maps
@@ -419,29 +419,29 @@ github.com/XCWeaver/xcweaver/internal/status
     syscall
     text/template
     time
-github.com/XCWeaver/xcweaver/internal/testdeployer
+github.com/ServiceWeaver/weaver/internal/testdeployer
     context
     errors
-    github.com/XCWeaver/xcweaver
-    github.com/XCWeaver/xcweaver/metrics
-    github.com/XCWeaver/xcweaver/runtime/codegen
+    github.com/ServiceWeaver/weaver
+    github.com/ServiceWeaver/weaver/metrics
+    github.com/ServiceWeaver/weaver/runtime/codegen
     go.opentelemetry.io/otel/codes
     go.opentelemetry.io/otel/trace
     reflect
-github.com/XCWeaver/xcweaver/internal/tool
+github.com/ServiceWeaver/weaver/internal/tool
     context
     flag
     fmt
-    github.com/XCWeaver/xcweaver/runtime/tool
+    github.com/ServiceWeaver/weaver/runtime/tool
     runtime
     runtime/debug
-github.com/XCWeaver/xcweaver/internal/tool/callgraph
+github.com/ServiceWeaver/weaver/internal/tool/callgraph
     fmt
-    github.com/XCWeaver/xcweaver/runtime/bin
-    github.com/XCWeaver/xcweaver/runtime/graph
-    github.com/XCWeaver/xcweaver/runtime/logging
+    github.com/ServiceWeaver/weaver/runtime/bin
+    github.com/ServiceWeaver/weaver/runtime/graph
+    github.com/ServiceWeaver/weaver/runtime/logging
     strings
-github.com/XCWeaver/xcweaver/internal/tool/certs
+github.com/ServiceWeaver/weaver/internal/tool/certs
     bytes
     crypto
     crypto/rand
@@ -453,22 +453,22 @@ github.com/XCWeaver/xcweaver/internal/tool/certs
     fmt
     math/big
     time
-github.com/XCWeaver/xcweaver/internal/tool/config
+github.com/ServiceWeaver/weaver/internal/tool/config
     fmt
-    github.com/XCWeaver/xcweaver/runtime
-    github.com/XCWeaver/xcweaver/runtime/bin
-    github.com/XCWeaver/xcweaver/runtime/protos
+    github.com/ServiceWeaver/weaver/runtime
+    github.com/ServiceWeaver/weaver/runtime/bin
+    github.com/ServiceWeaver/weaver/runtime/protos
     google.golang.org/protobuf/proto
-github.com/XCWeaver/xcweaver/internal/tool/generate
+github.com/ServiceWeaver/weaver/internal/tool/generate
     bytes
     crypto/sha256
     errors
     fmt
-    github.com/XCWeaver/xcweaver/internal/files
-    github.com/XCWeaver/xcweaver/internal/tool
-    github.com/XCWeaver/xcweaver/runtime/codegen
-    github.com/XCWeaver/xcweaver/runtime/colors
-    github.com/XCWeaver/xcweaver/runtime/version
+    github.com/ServiceWeaver/weaver/internal/files
+    github.com/ServiceWeaver/weaver/internal/tool
+    github.com/ServiceWeaver/weaver/runtime/codegen
+    github.com/ServiceWeaver/weaver/runtime/colors
+    github.com/ServiceWeaver/weaver/runtime/version
     go/ast
     go/format
     go/parser
@@ -486,44 +486,44 @@ github.com/XCWeaver/xcweaver/internal/tool/generate
     strconv
     strings
     unicode
-github.com/XCWeaver/xcweaver/internal/tool/generate/example
+github.com/ServiceWeaver/weaver/internal/tool/generate/example
     context
     errors
     fmt
-    github.com/XCWeaver/xcweaver
-    github.com/XCWeaver/xcweaver/runtime/codegen
+    github.com/ServiceWeaver/weaver
+    github.com/ServiceWeaver/weaver/runtime/codegen
     go.opentelemetry.io/otel/codes
     go.opentelemetry.io/otel/trace
     reflect
-github.com/XCWeaver/xcweaver/internal/tool/multi
+github.com/ServiceWeaver/weaver/internal/tool/multi
     context
     crypto
     crypto/x509
     errors
     flag
     fmt
-    github.com/XCWeaver/xcweaver/internal/metrics
-    github.com/XCWeaver/xcweaver/internal/must
-    github.com/XCWeaver/xcweaver/internal/proxy
-    github.com/XCWeaver/xcweaver/internal/routing
-    github.com/XCWeaver/xcweaver/internal/status
-    github.com/XCWeaver/xcweaver/internal/tool
-    github.com/XCWeaver/xcweaver/internal/tool/certs
-    github.com/XCWeaver/xcweaver/internal/tool/config
-    github.com/XCWeaver/xcweaver/runtime
-    github.com/XCWeaver/xcweaver/runtime/bin
-    github.com/XCWeaver/xcweaver/runtime/codegen
-    github.com/XCWeaver/xcweaver/runtime/colors
-    github.com/XCWeaver/xcweaver/runtime/envelope
-    github.com/XCWeaver/xcweaver/runtime/graph
-    github.com/XCWeaver/xcweaver/runtime/logging
-    github.com/XCWeaver/xcweaver/runtime/metrics
-    github.com/XCWeaver/xcweaver/runtime/profiling
-    github.com/XCWeaver/xcweaver/runtime/protos
-    github.com/XCWeaver/xcweaver/runtime/retry
-    github.com/XCWeaver/xcweaver/runtime/tool
-    github.com/XCWeaver/xcweaver/runtime/traces
-    github.com/XCWeaver/xcweaver/runtime/version
+    github.com/ServiceWeaver/weaver/internal/metrics
+    github.com/ServiceWeaver/weaver/internal/must
+    github.com/ServiceWeaver/weaver/internal/proxy
+    github.com/ServiceWeaver/weaver/internal/routing
+    github.com/ServiceWeaver/weaver/internal/status
+    github.com/ServiceWeaver/weaver/internal/tool
+    github.com/ServiceWeaver/weaver/internal/tool/certs
+    github.com/ServiceWeaver/weaver/internal/tool/config
+    github.com/ServiceWeaver/weaver/runtime
+    github.com/ServiceWeaver/weaver/runtime/bin
+    github.com/ServiceWeaver/weaver/runtime/codegen
+    github.com/ServiceWeaver/weaver/runtime/colors
+    github.com/ServiceWeaver/weaver/runtime/envelope
+    github.com/ServiceWeaver/weaver/runtime/graph
+    github.com/ServiceWeaver/weaver/runtime/logging
+    github.com/ServiceWeaver/weaver/runtime/metrics
+    github.com/ServiceWeaver/weaver/runtime/profiling
+    github.com/ServiceWeaver/weaver/runtime/protos
+    github.com/ServiceWeaver/weaver/runtime/retry
+    github.com/ServiceWeaver/weaver/runtime/tool
+    github.com/ServiceWeaver/weaver/runtime/traces
+    github.com/ServiceWeaver/weaver/runtime/version
     github.com/google/uuid
     golang.org/x/exp/maps
     golang.org/x/sync/errgroup
@@ -540,19 +540,19 @@ github.com/XCWeaver/xcweaver/internal/tool/multi
     sync
     syscall
     time
-github.com/XCWeaver/xcweaver/internal/tool/single
+github.com/ServiceWeaver/weaver/internal/tool/single
     context
     errors
     flag
     fmt
-    github.com/XCWeaver/xcweaver/internal/must
-    github.com/XCWeaver/xcweaver/internal/status
-    github.com/XCWeaver/xcweaver/internal/tool
-    github.com/XCWeaver/xcweaver/internal/tool/config
-    github.com/XCWeaver/xcweaver/runtime
-    github.com/XCWeaver/xcweaver/runtime/codegen
-    github.com/XCWeaver/xcweaver/runtime/protos
-    github.com/XCWeaver/xcweaver/runtime/tool
+    github.com/ServiceWeaver/weaver/internal/must
+    github.com/ServiceWeaver/weaver/internal/status
+    github.com/ServiceWeaver/weaver/internal/tool
+    github.com/ServiceWeaver/weaver/internal/tool/config
+    github.com/ServiceWeaver/weaver/runtime
+    github.com/ServiceWeaver/weaver/runtime/codegen
+    github.com/ServiceWeaver/weaver/runtime/protos
+    github.com/ServiceWeaver/weaver/runtime/tool
     google.golang.org/protobuf/reflect/protoreflect
     google.golang.org/protobuf/runtime/protoimpl
     os
@@ -562,23 +562,23 @@ github.com/XCWeaver/xcweaver/internal/tool/single
     reflect
     sync
     syscall
-github.com/XCWeaver/xcweaver/internal/tool/ssh
+github.com/ServiceWeaver/weaver/internal/tool/ssh
     bufio
     context
     errors
     flag
     fmt
-    github.com/XCWeaver/xcweaver/internal/status
-    github.com/XCWeaver/xcweaver/internal/tool
-    github.com/XCWeaver/xcweaver/internal/tool/config
-    github.com/XCWeaver/xcweaver/internal/tool/ssh/impl
-    github.com/XCWeaver/xcweaver/runtime
-    github.com/XCWeaver/xcweaver/runtime/bin
-    github.com/XCWeaver/xcweaver/runtime/codegen
-    github.com/XCWeaver/xcweaver/runtime/colors
-    github.com/XCWeaver/xcweaver/runtime/logging
-    github.com/XCWeaver/xcweaver/runtime/tool
-    github.com/XCWeaver/xcweaver/runtime/version
+    github.com/ServiceWeaver/weaver/internal/status
+    github.com/ServiceWeaver/weaver/internal/tool
+    github.com/ServiceWeaver/weaver/internal/tool/config
+    github.com/ServiceWeaver/weaver/internal/tool/ssh/impl
+    github.com/ServiceWeaver/weaver/runtime
+    github.com/ServiceWeaver/weaver/runtime/bin
+    github.com/ServiceWeaver/weaver/runtime/codegen
+    github.com/ServiceWeaver/weaver/runtime/colors
+    github.com/ServiceWeaver/weaver/runtime/logging
+    github.com/ServiceWeaver/weaver/runtime/tool
+    github.com/ServiceWeaver/weaver/runtime/version
     github.com/google/uuid
     golang.org/x/exp/maps
     io
@@ -589,25 +589,25 @@ github.com/XCWeaver/xcweaver/internal/tool/ssh
     path/filepath
     strings
     syscall
-github.com/XCWeaver/xcweaver/internal/tool/ssh/impl
+github.com/ServiceWeaver/weaver/internal/tool/ssh/impl
     context
     errors
     fmt
-    github.com/XCWeaver/xcweaver/internal/metrics
-    github.com/XCWeaver/xcweaver/internal/must
-    github.com/XCWeaver/xcweaver/internal/proto
-    github.com/XCWeaver/xcweaver/internal/proxy
-    github.com/XCWeaver/xcweaver/internal/routing
-    github.com/XCWeaver/xcweaver/internal/status
-    github.com/XCWeaver/xcweaver/internal/versioned
-    github.com/XCWeaver/xcweaver/runtime
-    github.com/XCWeaver/xcweaver/runtime/envelope
-    github.com/XCWeaver/xcweaver/runtime/logging
-    github.com/XCWeaver/xcweaver/runtime/metrics
-    github.com/XCWeaver/xcweaver/runtime/protomsg
-    github.com/XCWeaver/xcweaver/runtime/protos
-    github.com/XCWeaver/xcweaver/runtime/retry
-    github.com/XCWeaver/xcweaver/runtime/traces
+    github.com/ServiceWeaver/weaver/internal/metrics
+    github.com/ServiceWeaver/weaver/internal/must
+    github.com/ServiceWeaver/weaver/internal/proto
+    github.com/ServiceWeaver/weaver/internal/proxy
+    github.com/ServiceWeaver/weaver/internal/routing
+    github.com/ServiceWeaver/weaver/internal/status
+    github.com/ServiceWeaver/weaver/internal/versioned
+    github.com/ServiceWeaver/weaver/runtime
+    github.com/ServiceWeaver/weaver/runtime/envelope
+    github.com/ServiceWeaver/weaver/runtime/logging
+    github.com/ServiceWeaver/weaver/runtime/metrics
+    github.com/ServiceWeaver/weaver/runtime/protomsg
+    github.com/ServiceWeaver/weaver/runtime/protos
+    github.com/ServiceWeaver/weaver/runtime/retry
+    github.com/ServiceWeaver/weaver/runtime/traces
     github.com/google/uuid
     golang.org/x/exp/maps
     google.golang.org/protobuf/reflect/protoreflect
@@ -620,12 +620,13 @@ github.com/XCWeaver/xcweaver/internal/tool/ssh/impl
     os/exec
     path/filepath
     reflect
+    slices
     sync
     syscall
     time
-github.com/XCWeaver/xcweaver/internal/traceio
+github.com/ServiceWeaver/weaver/internal/traceio
     context
-    github.com/XCWeaver/xcweaver/runtime/protos
+    github.com/ServiceWeaver/weaver/runtime/protos
     go.opentelemetry.io/otel/attribute
     go.opentelemetry.io/otel/codes
     go.opentelemetry.io/otel/exporters/stdout/stdouttrace
@@ -636,10 +637,10 @@ github.com/XCWeaver/xcweaver/internal/traceio
     math
     sync
     time
-github.com/XCWeaver/xcweaver/internal/versioned
+github.com/ServiceWeaver/weaver/internal/versioned
     github.com/google/uuid
     sync
-github.com/XCWeaver/xcweaver/internal/xcweaver
+github.com/ServiceWeaver/weaver/internal/weaver
     bytes
     context
     crypto/tls
@@ -647,26 +648,26 @@ github.com/XCWeaver/xcweaver/internal/xcweaver
     errors
     fmt
     github.com/DataDog/hyperloglog
-    github.com/XCWeaver/xcweaver/internal/cond
-    github.com/XCWeaver/xcweaver/internal/config
-    github.com/XCWeaver/xcweaver/internal/control
-    github.com/XCWeaver/xcweaver/internal/env
-    github.com/XCWeaver/xcweaver/internal/metrics
-    github.com/XCWeaver/xcweaver/internal/net/call
-    github.com/XCWeaver/xcweaver/internal/register
-    github.com/XCWeaver/xcweaver/internal/status
-    github.com/XCWeaver/xcweaver/internal/tool/single
-    github.com/XCWeaver/xcweaver/internal/traceio
-    github.com/XCWeaver/xcweaver/runtime
-    github.com/XCWeaver/xcweaver/runtime/codegen
-    github.com/XCWeaver/xcweaver/runtime/colors
-    github.com/XCWeaver/xcweaver/runtime/deployers
-    github.com/XCWeaver/xcweaver/runtime/logging
-    github.com/XCWeaver/xcweaver/runtime/metrics
-    github.com/XCWeaver/xcweaver/runtime/protos
-    github.com/XCWeaver/xcweaver/runtime/retry
-    github.com/XCWeaver/xcweaver/runtime/traces
-    github.com/XCWeaver/xcweaver/runtime/version
+    github.com/ServiceWeaver/weaver/internal/cond
+    github.com/ServiceWeaver/weaver/internal/config
+    github.com/ServiceWeaver/weaver/internal/control
+    github.com/ServiceWeaver/weaver/internal/env
+    github.com/ServiceWeaver/weaver/internal/metrics
+    github.com/ServiceWeaver/weaver/internal/net/call
+    github.com/ServiceWeaver/weaver/internal/register
+    github.com/ServiceWeaver/weaver/internal/status
+    github.com/ServiceWeaver/weaver/internal/tool/single
+    github.com/ServiceWeaver/weaver/internal/traceio
+    github.com/ServiceWeaver/weaver/runtime
+    github.com/ServiceWeaver/weaver/runtime/codegen
+    github.com/ServiceWeaver/weaver/runtime/colors
+    github.com/ServiceWeaver/weaver/runtime/deployers
+    github.com/ServiceWeaver/weaver/runtime/logging
+    github.com/ServiceWeaver/weaver/runtime/metrics
+    github.com/ServiceWeaver/weaver/runtime/protos
+    github.com/ServiceWeaver/weaver/runtime/retry
+    github.com/ServiceWeaver/weaver/runtime/traces
+    github.com/ServiceWeaver/weaver/runtime/version
     github.com/google/uuid
     github.com/lightstep/varopt
     go.opentelemetry.io/otel
@@ -692,19 +693,18 @@ github.com/XCWeaver/xcweaver/internal/xcweaver
     sort
     strings
     sync
-    sync/atomic
     syscall
     time
-github.com/XCWeaver/xcweaver/metrics
-    github.com/XCWeaver/xcweaver/runtime/metrics
-    github.com/XCWeaver/xcweaver/runtime/protos
-github.com/XCWeaver/xcweaver/runtime
+github.com/ServiceWeaver/weaver/metrics
+    github.com/ServiceWeaver/weaver/runtime/metrics
+    github.com/ServiceWeaver/weaver/runtime/protos
+github.com/ServiceWeaver/weaver/runtime
     context
     fmt
     github.com/BurntSushi/toml
-    github.com/XCWeaver/xcweaver/internal/env
-    github.com/XCWeaver/xcweaver/internal/proto
-    github.com/XCWeaver/xcweaver/runtime/protos
+    github.com/ServiceWeaver/weaver/internal/env
+    github.com/ServiceWeaver/weaver/internal/proto
+    github.com/ServiceWeaver/weaver/runtime/protos
     os
     os/signal
     path/filepath
@@ -712,28 +712,28 @@ github.com/XCWeaver/xcweaver/runtime
     sync
     syscall
     time
-github.com/XCWeaver/xcweaver/runtime/bin
+github.com/ServiceWeaver/weaver/runtime/bin
     bytes
     debug/buildinfo
     debug/elf
     debug/macho
     debug/pe
     fmt
-    github.com/XCWeaver/xcweaver/runtime/codegen
-    github.com/XCWeaver/xcweaver/runtime/graph
-    github.com/XCWeaver/xcweaver/runtime/version
+    github.com/ServiceWeaver/weaver/runtime/codegen
+    github.com/ServiceWeaver/weaver/runtime/graph
+    github.com/ServiceWeaver/weaver/runtime/version
     golang.org/x/exp/maps
     golang.org/x/exp/slices
     os
     regexp
     strconv
-github.com/XCWeaver/xcweaver/runtime/bin/testprogram
+github.com/ServiceWeaver/weaver/runtime/bin/testprogram
     context
-    github.com/XCWeaver/xcweaver
-    github.com/XCWeaver/xcweaver/runtime/codegen
+    github.com/ServiceWeaver/weaver
+    github.com/ServiceWeaver/weaver/runtime/codegen
     go.opentelemetry.io/otel/trace
     reflect
-github.com/XCWeaver/xcweaver/runtime/codegen
+github.com/ServiceWeaver/weaver/runtime/codegen
     bytes
     context
     crypto/sha256
@@ -741,12 +741,11 @@ github.com/XCWeaver/xcweaver/runtime/codegen
     encoding/binary
     errors
     fmt
-    github.com/XCWeaver/xcweaver/internal/config
-    github.com/XCWeaver/xcweaver/internal/metrics
-    github.com/XCWeaver/xcweaver/metrics
-    github.com/XCWeaver/xcweaver/runtime
-    github.com/XCWeaver/xcweaver/runtime/protos
-    github.com/XCWeaver/xcweaver/runtime/version
+    github.com/ServiceWeaver/weaver/internal/config
+    github.com/ServiceWeaver/weaver/metrics
+    github.com/ServiceWeaver/weaver/runtime
+    github.com/ServiceWeaver/weaver/runtime/protos
+    github.com/ServiceWeaver/weaver/runtime/version
     go.opentelemetry.io/otel/trace
     google.golang.org/protobuf/proto
     math
@@ -756,36 +755,36 @@ github.com/XCWeaver/xcweaver/runtime/codegen
     strings
     sync
     time
-github.com/XCWeaver/xcweaver/runtime/colors
+github.com/ServiceWeaver/weaver/runtime/colors
     fmt
     golang.org/x/term
     io
     os
     strings
-github.com/XCWeaver/xcweaver/runtime/deployers
+github.com/ServiceWeaver/weaver/runtime/deployers
     context
     fmt
-    github.com/XCWeaver/xcweaver/internal/net/call
+    github.com/ServiceWeaver/weaver/internal/net/call
     log/slog
     net
     path/filepath
     sync
-github.com/XCWeaver/xcweaver/runtime/envelope
+github.com/ServiceWeaver/weaver/runtime/envelope
     bufio
     context
     fmt
-    github.com/XCWeaver/xcweaver
-    github.com/XCWeaver/xcweaver/internal/control
-    github.com/XCWeaver/xcweaver/internal/net/call
-    github.com/XCWeaver/xcweaver/internal/pipe
-    github.com/XCWeaver/xcweaver/internal/proto
-    github.com/XCWeaver/xcweaver/runtime
-    github.com/XCWeaver/xcweaver/runtime/codegen
-    github.com/XCWeaver/xcweaver/runtime/deployers
-    github.com/XCWeaver/xcweaver/runtime/metrics
-    github.com/XCWeaver/xcweaver/runtime/protomsg
-    github.com/XCWeaver/xcweaver/runtime/protos
-    github.com/XCWeaver/xcweaver/runtime/version
+    github.com/ServiceWeaver/weaver
+    github.com/ServiceWeaver/weaver/internal/control
+    github.com/ServiceWeaver/weaver/internal/net/call
+    github.com/ServiceWeaver/weaver/internal/pipe
+    github.com/ServiceWeaver/weaver/internal/proto
+    github.com/ServiceWeaver/weaver/runtime
+    github.com/ServiceWeaver/weaver/runtime/codegen
+    github.com/ServiceWeaver/weaver/runtime/deployers
+    github.com/ServiceWeaver/weaver/runtime/metrics
+    github.com/ServiceWeaver/weaver/runtime/protomsg
+    github.com/ServiceWeaver/weaver/runtime/protos
+    github.com/ServiceWeaver/weaver/runtime/version
     go.opentelemetry.io/otel/trace
     golang.org/x/sync/errgroup
     io
@@ -793,21 +792,21 @@ github.com/XCWeaver/xcweaver/runtime/envelope
     net
     os
     sync
-github.com/XCWeaver/xcweaver/runtime/graph
+github.com/ServiceWeaver/weaver/runtime/graph
     fmt
     golang.org/x/exp/slices
     slices
     strings
-github.com/XCWeaver/xcweaver/runtime/logging
+github.com/ServiceWeaver/weaver/runtime/logging
     bufio
     context
     errors
     fmt
-    github.com/XCWeaver/xcweaver/internal/cond
-    github.com/XCWeaver/xcweaver/internal/heap
-    github.com/XCWeaver/xcweaver/runtime/colors
-    github.com/XCWeaver/xcweaver/runtime/protomsg
-    github.com/XCWeaver/xcweaver/runtime/protos
+    github.com/ServiceWeaver/weaver/internal/cond
+    github.com/ServiceWeaver/weaver/internal/heap
+    github.com/ServiceWeaver/weaver/runtime/colors
+    github.com/ServiceWeaver/weaver/runtime/protomsg
+    github.com/ServiceWeaver/weaver/runtime/protos
     github.com/fsnotify/fsnotify
     github.com/google/cel-go/cel
     github.com/google/cel-go/checker/decls
@@ -827,10 +826,10 @@ github.com/XCWeaver/xcweaver/runtime/logging
     strings
     sync
     time
-github.com/XCWeaver/xcweaver/runtime/metrics
+github.com/ServiceWeaver/weaver/runtime/metrics
     encoding/binary
     fmt
-    github.com/XCWeaver/xcweaver/runtime/protos
+    github.com/ServiceWeaver/weaver/runtime/protos
     github.com/google/uuid
     golang.org/x/exp/maps
     math
@@ -841,44 +840,43 @@ github.com/XCWeaver/xcweaver/runtime/metrics
     sync/atomic
     unicode
     unicode/utf8
-github.com/XCWeaver/xcweaver/runtime/perfetto
+github.com/ServiceWeaver/weaver/runtime/perfetto
     crypto/sha256
     encoding/binary
     encoding/json
-    github.com/XCWeaver/xcweaver/internal/traceio
-    github.com/XCWeaver/xcweaver/runtime/protos
-    github.com/XCWeaver/xcweaver/runtime/traces
+    github.com/ServiceWeaver/weaver/internal/traceio
+    github.com/ServiceWeaver/weaver/runtime/protos
+    github.com/ServiceWeaver/weaver/runtime/traces
     go.opentelemetry.io/otel/sdk/trace
     go.opentelemetry.io/otel/semconv/v1.4.0
     go.opentelemetry.io/otel/trace
     strconv
     strings
-github.com/XCWeaver/xcweaver/runtime/profiling
+github.com/ServiceWeaver/weaver/runtime/profiling
     bytes
     errors
     fmt
     github.com/google/pprof/profile
     sync
-github.com/XCWeaver/xcweaver/runtime/prometheus
+github.com/ServiceWeaver/weaver/runtime/prometheus
     bytes
     fmt
-    github.com/XCWeaver/xcweaver/runtime/logging
-    github.com/XCWeaver/xcweaver/runtime/metrics
-    github.com/XCWeaver/xcweaver/runtime/protos
+    github.com/ServiceWeaver/weaver/runtime/logging
+    github.com/ServiceWeaver/weaver/runtime/metrics
+    github.com/ServiceWeaver/weaver/runtime/protos
     golang.org/x/exp/maps
     math
     sort
     strconv
     strings
-github.com/XCWeaver/xcweaver/runtime/protomsg
+github.com/ServiceWeaver/weaver/runtime/protomsg
     bytes
     context
     encoding/binary
     errors
     fmt
-    github.com/XCWeaver/xcweaver/internal/metrics
-    github.com/XCWeaver/xcweaver/metrics
-    github.com/XCWeaver/xcweaver/runtime/codegen
+    github.com/ServiceWeaver/weaver/metrics
+    github.com/ServiceWeaver/weaver/runtime/codegen
     google.golang.org/protobuf/proto
     io
     log/slog
@@ -886,26 +884,26 @@ github.com/XCWeaver/xcweaver/runtime/protomsg
     net/http
     runtime/debug
     time
-github.com/XCWeaver/xcweaver/runtime/protos
+github.com/ServiceWeaver/weaver/runtime/protos
     google.golang.org/protobuf/reflect/protoreflect
     google.golang.org/protobuf/runtime/protoimpl
     reflect
     sync
-github.com/XCWeaver/xcweaver/runtime/retry
+github.com/ServiceWeaver/weaver/runtime/retry
     context
     math
     math/rand
     sync
     time
-github.com/XCWeaver/xcweaver/runtime/tool
+github.com/ServiceWeaver/weaver/runtime/tool
     bufio
     context
     encoding/json
     errors
     flag
     fmt
-    github.com/XCWeaver/xcweaver/runtime/colors
-    github.com/XCWeaver/xcweaver/runtime/logging
+    github.com/ServiceWeaver/weaver/runtime/colors
+    github.com/ServiceWeaver/weaver/runtime/logging
     io
     os
     os/exec
@@ -913,15 +911,15 @@ github.com/XCWeaver/xcweaver/runtime/tool
     strings
     text/template
     time
-github.com/XCWeaver/xcweaver/runtime/traces
+github.com/ServiceWeaver/weaver/runtime/traces
     bytes
     context
     database/sql
     encoding/hex
     errors
     fmt
-    github.com/XCWeaver/xcweaver/runtime/protos
-    github.com/XCWeaver/xcweaver/runtime/retry
+    github.com/ServiceWeaver/weaver/runtime/protos
+    github.com/ServiceWeaver/weaver/runtime/retry
     go.opentelemetry.io/otel/attribute
     go.opentelemetry.io/otel/codes
     go.opentelemetry.io/otel/sdk/instrumentation
@@ -936,21 +934,21 @@ github.com/XCWeaver/xcweaver/runtime/traces
     os
     path/filepath
     time
-github.com/XCWeaver/xcweaver/runtime/version
+github.com/ServiceWeaver/weaver/runtime/version
     fmt
-github.com/XCWeaver/xcweaver/sim
+github.com/ServiceWeaver/weaver/sim
     context
     crypto/sha256
     encoding/json
     errors
     fmt
-    github.com/XCWeaver/xcweaver
-    github.com/XCWeaver/xcweaver/internal/reflection
-    github.com/XCWeaver/xcweaver/internal/xcweaver
-    github.com/XCWeaver/xcweaver/runtime
-    github.com/XCWeaver/xcweaver/runtime/codegen
-    github.com/XCWeaver/xcweaver/runtime/logging
-    github.com/XCWeaver/xcweaver/runtime/protos
+    github.com/ServiceWeaver/weaver
+    github.com/ServiceWeaver/weaver/internal/reflection
+    github.com/ServiceWeaver/weaver/internal/weaver
+    github.com/ServiceWeaver/weaver/runtime
+    github.com/ServiceWeaver/weaver/runtime/codegen
+    github.com/ServiceWeaver/weaver/runtime/logging
+    github.com/ServiceWeaver/weaver/runtime/protos
     github.com/google/uuid
     go.opentelemetry.io/otel/codes
     go.opentelemetry.io/otel/trace
@@ -974,27 +972,27 @@ github.com/XCWeaver/xcweaver/sim
     sync/atomic
     testing
     time
-github.com/XCWeaver/xcweaver/sim/internal/bank
+github.com/ServiceWeaver/weaver/sim/internal/bank
     context
     errors
     fmt
-    github.com/XCWeaver/xcweaver
-    github.com/XCWeaver/xcweaver/runtime/codegen
+    github.com/ServiceWeaver/weaver
+    github.com/ServiceWeaver/weaver/runtime/codegen
     go.opentelemetry.io/otel/codes
     go.opentelemetry.io/otel/trace
     reflect
-github.com/XCWeaver/xcweaver/weavertest
+github.com/ServiceWeaver/weaver/weavertest
     context
     errors
     fmt
-    github.com/XCWeaver/xcweaver/internal/control
-    github.com/XCWeaver/xcweaver/internal/reflection
-    github.com/XCWeaver/xcweaver/internal/xcweaver
-    github.com/XCWeaver/xcweaver/runtime
-    github.com/XCWeaver/xcweaver/runtime/codegen
-    github.com/XCWeaver/xcweaver/runtime/envelope
-    github.com/XCWeaver/xcweaver/runtime/logging
-    github.com/XCWeaver/xcweaver/runtime/protos
+    github.com/ServiceWeaver/weaver/internal/control
+    github.com/ServiceWeaver/weaver/internal/reflection
+    github.com/ServiceWeaver/weaver/internal/weaver
+    github.com/ServiceWeaver/weaver/runtime
+    github.com/ServiceWeaver/weaver/runtime/codegen
+    github.com/ServiceWeaver/weaver/runtime/envelope
+    github.com/ServiceWeaver/weaver/runtime/logging
+    github.com/ServiceWeaver/weaver/runtime/protos
     github.com/google/uuid
     golang.org/x/exp/maps
     golang.org/x/sync/errgroup
@@ -1008,62 +1006,62 @@ github.com/XCWeaver/xcweaver/weavertest
     sync
     testing
     time
-github.com/XCWeaver/xcweaver/weavertest/internal/chain
+github.com/ServiceWeaver/weaver/weavertest/internal/chain
     context
     errors
-    github.com/XCWeaver/xcweaver
-    github.com/XCWeaver/xcweaver/runtime/codegen
+    github.com/ServiceWeaver/weaver
+    github.com/ServiceWeaver/weaver/runtime/codegen
     go.opentelemetry.io/otel/codes
     go.opentelemetry.io/otel/trace
     reflect
     sync
-github.com/XCWeaver/xcweaver/weavertest/internal/deploy
+github.com/ServiceWeaver/weaver/weavertest/internal/deploy
     context
     errors
     fmt
-    github.com/XCWeaver/xcweaver
-    github.com/XCWeaver/xcweaver/runtime/codegen
+    github.com/ServiceWeaver/weaver
+    github.com/ServiceWeaver/weaver/runtime/codegen
     github.com/google/uuid
     go.opentelemetry.io/otel/codes
     go.opentelemetry.io/otel/trace
     os
     path/filepath
     reflect
-github.com/XCWeaver/xcweaver/weavertest/internal/diverge
+github.com/ServiceWeaver/weaver/weavertest/internal/diverge
     context
     errors
     fmt
-    github.com/XCWeaver/xcweaver
-    github.com/XCWeaver/xcweaver/runtime/codegen
+    github.com/ServiceWeaver/weaver
+    github.com/ServiceWeaver/weaver/runtime/codegen
     go.opentelemetry.io/otel/codes
     go.opentelemetry.io/otel/trace
     reflect
-github.com/XCWeaver/xcweaver/weavertest/internal/generate
+github.com/ServiceWeaver/weaver/weavertest/internal/generate
     context
     errors
     fmt
-    github.com/XCWeaver/xcweaver
-    github.com/XCWeaver/xcweaver/runtime/codegen
+    github.com/ServiceWeaver/weaver
+    github.com/ServiceWeaver/weaver/runtime/codegen
     go.opentelemetry.io/otel/codes
     go.opentelemetry.io/otel/trace
     reflect
-github.com/XCWeaver/xcweaver/weavertest/internal/protos
+github.com/ServiceWeaver/weaver/weavertest/internal/protos
     context
     errors
-    github.com/XCWeaver/xcweaver
-    github.com/XCWeaver/xcweaver/runtime/codegen
+    github.com/ServiceWeaver/weaver
+    github.com/ServiceWeaver/weaver/runtime/codegen
     go.opentelemetry.io/otel/codes
     go.opentelemetry.io/otel/trace
     google.golang.org/protobuf/reflect/protoreflect
     google.golang.org/protobuf/runtime/protoimpl
     reflect
     sync
-github.com/XCWeaver/xcweaver/weavertest/internal/simple
+github.com/ServiceWeaver/weaver/weavertest/internal/simple
     context
     errors
     fmt
-    github.com/XCWeaver/xcweaver
-    github.com/XCWeaver/xcweaver/runtime/codegen
+    github.com/ServiceWeaver/weaver
+    github.com/ServiceWeaver/weaver/runtime/codegen
     go.opentelemetry.io/otel/codes
     go.opentelemetry.io/otel/trace
     net/http
@@ -1071,26 +1069,26 @@ github.com/XCWeaver/xcweaver/weavertest/internal/simple
     reflect
     strings
     sync
-github.com/XCWeaver/xcweaver/website/blog/deployers
-github.com/XCWeaver/xcweaver/website/blog/deployers/multi
+github.com/ServiceWeaver/weaver/website/blog/deployers
+github.com/ServiceWeaver/weaver/website/blog/deployers/multi
     context
     flag
     fmt
-    github.com/XCWeaver/xcweaver/runtime
-    github.com/XCWeaver/xcweaver/runtime/colors
-    github.com/XCWeaver/xcweaver/runtime/envelope
-    github.com/XCWeaver/xcweaver/runtime/logging
-    github.com/XCWeaver/xcweaver/runtime/protos
+    github.com/ServiceWeaver/weaver/runtime
+    github.com/ServiceWeaver/weaver/runtime/colors
+    github.com/ServiceWeaver/weaver/runtime/envelope
+    github.com/ServiceWeaver/weaver/runtime/logging
+    github.com/ServiceWeaver/weaver/runtime/protos
     github.com/google/uuid
     os
     sync
-github.com/XCWeaver/xcweaver/website/blog/deployers/single
+github.com/ServiceWeaver/weaver/website/blog/deployers/single
     context
     flag
     fmt
-    github.com/XCWeaver/xcweaver/runtime/colors
-    github.com/XCWeaver/xcweaver/runtime/envelope
-    github.com/XCWeaver/xcweaver/runtime/logging
-    github.com/XCWeaver/xcweaver/runtime/protos
+    github.com/ServiceWeaver/weaver/runtime/colors
+    github.com/ServiceWeaver/weaver/runtime/envelope
+    github.com/ServiceWeaver/weaver/runtime/logging
+    github.com/ServiceWeaver/weaver/runtime/protos
     github.com/google/uuid
     log

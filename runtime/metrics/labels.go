@@ -68,7 +68,7 @@ func typecheckLabels[L comparable]() error {
 
 		// Check for duplicate fields.
 		name := unexport(fi.Name)
-		if alias, ok := fi.Tag.Lookup("xcweaver"); ok {
+		if alias, ok := fi.Tag.Lookup("weaver"); ok {
 			name = alias
 		}
 		if _, ok := names[name]; ok {
@@ -98,7 +98,7 @@ func newLabelExtractor[L comparable]() *labelExtractor[L] {
 	fields := make([]field, t.NumField())
 	for i := 0; i < t.NumField(); i++ {
 		fi := t.Field(i)
-		if alias, ok := fi.Tag.Lookup("xcweaver"); ok {
+		if alias, ok := fi.Tag.Lookup("weaver"); ok {
 			fields[i] = field{fi, alias}
 		} else {
 			fields[i] = field{fi, unexport(fi.Name)}

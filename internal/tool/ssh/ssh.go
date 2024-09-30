@@ -25,7 +25,7 @@ var (
 		"deploy":    &deployCmd,
 		"logs":      tool.LogsCmd(&logsSpec),
 		"dashboard": status.DashboardCommand(dashboardSpec),
-		"version":   itool.VersionCmd("xcweaver ssh"),
+		"version":   itool.VersionCmd("weaver ssh"),
 
 		// Hidden commands.
 		"babysitter": &babysitterCmd,

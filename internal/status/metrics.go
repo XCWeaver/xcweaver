@@ -34,7 +34,7 @@ import (
 // MetricsCommand returns a "metrics" subcommand that pretty prints the metrics
 // of all active applications registered with the provided registry. tool is
 // the name of the command-line tool the returned subcommand runs as (e.g.,
-// "xcweaver single").
+// "weaver single").
 func MetricsCommand(tool string, registry func(context.Context) (*Registry, error)) *dtool.Command {
 	return &dtool.Command{
 		Name:        "metrics",

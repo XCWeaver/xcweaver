@@ -35,8 +35,8 @@ func TestFillListeners(t *testing.T) {
 	var x struct {
 		A Listener
 		b Listener
-		C Listener `xcweaver:"cname"`
-		d Listener `xcweaver:"DName"`
+		C Listener `weaver:"cname"`
+		d Listener `weaver:"DName"`
 	}
 	if err := fillListeners(&x, getListener); err != nil {
 		t.Fatal(err)

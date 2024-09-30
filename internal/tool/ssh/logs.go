@@ -23,7 +23,7 @@ import (
 )
 
 var logsSpec = tool.LogsSpec{
-	Tool: "xcweaver ssh",
+	Tool: "weaver ssh",
 	Source: func(context.Context) (logging.Source, error) {
 		return logging.FileSource(impl.LogDir), nil
 	},

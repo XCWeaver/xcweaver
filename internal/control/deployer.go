@@ -24,7 +24,7 @@ import (
 // It points to an internal type in a different package.
 const DeployerPath = "github.com/XCWeaver/xcweaver/deployerControl"
 
-// DeployerControl is the interface for the xcweaver.deployerControl component. It is
+// DeployerControl is the interface for the weaver.deployerControl component. It is
 // present in its own package so other packages do not need to copy the interface
 // definition.
 //
@@ -46,8 +46,8 @@ type DeployerControl interface {
 	// a particular listener.
 	GetListenerAddress(context.Context, *protos.GetListenerAddressRequest) (*protos.GetListenerAddressReply, error)
 
-	// GetAntipodeAgentInfo returns the arguments the weavelet needs to
-	// automatically initialize a particular Antipode agent.
+	// GetAntipodeAgentInfo returns the parameters to initialize
+	// a particular Antipode agent.
 	GetAntipodeAgentInfo(context.Context, *protos.GetAntipodeAgentInfoRequest) (*protos.GetAntipodeAgentInfoReply, error)
 
 	// ExportListener exports the provided listener. Exporting a listener

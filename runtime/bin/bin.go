@@ -33,7 +33,7 @@ import (
 	"golang.org/x/exp/slices"
 )
 
-// versionData exists to embed the xcweaver module version and deployer API
+// versionData exists to embed the weaver module version and deployer API
 // version into a Service Weaver binary. We split declaring and assigning
 // versionData to prevent the compiler from erasing it.
 //
@@ -45,7 +45,7 @@ func init() {
 	// the value of version.DeployerVersion. If the string is not a
 	// constant---if we try to use fmt.Sprintf, for example---it will not be
 	// embedded in a Service Weaver binary.
-	versionData = "⟦wEaVeRvErSiOn:deployer=v0.24.0⟧"
+	versionData = "⟦wEaVeRvErSiOn:deployer=v0.22.0⟧"
 }
 
 // rodata returns the read-only data section of the provided binary.

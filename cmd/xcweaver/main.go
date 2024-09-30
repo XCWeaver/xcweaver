@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Weaver deploys and manages Weaver applications. Run "xcweaver -help" for
+// XCWeaver deploys and manages Weaver applications. Run "weaver -help" for
 // more information.
 package main
 
@@ -36,8 +36,8 @@ import (
 
 const usage = `USAGE
 
-  xcweaver generate                 // xcweaver code generator
-  xcweaver version                  // show xcweaver version
+  xcweaver generate                 // weaver code generator
+  xcweaver version                  // show weaver version
   xcweaver single    <command> ...  // for single process deployments
   xcweaver multi     <command> ...  // for multiprocess deployments
   xcweaver ssh       <command> ...  // for multimachine deployments
@@ -47,7 +47,7 @@ const usage = `USAGE
 
 DESCRIPTION
 
-  Use the "xcweaver" command to deploy and manage Weaver applications.
+  Use the "xcweaver" command to deploy and manage XCWeaver applications.
 
   The "xcweaver generate", "xcweaver version", "xcweaver single", "xcweaver multi", and
   "xcweaver ssh" subcommands are baked in, but all other subcommands of the form
@@ -130,16 +130,16 @@ Description:
 		command := flag.Arg(1)
 		switch {
 		case n == 1:
-			// xcweaver help
+			// weaver help
 			fmt.Fprint(os.Stdout, usage)
 		case n == 2 && command == "generate":
-			// xcweaver help generate
+			// weaver help generate
 			fmt.Fprintln(os.Stdout, generate.Usage)
 		case n == 2 && internals[command] != nil:
-			// xcweaver help <command>
+			// weaver help <command>
 			fmt.Fprintln(os.Stdout, tool.MainHelp("xcweaver "+command, internals[command]))
 		case n == 2:
-			// xcweaver help <external>
+			// weaver help <external>
 			code, err := run(command, []string{"--help"})
 			if err != nil {
 				fmt.Fprintln(os.Stderr, err.Error())
@@ -151,7 +151,7 @@ Description:
 		return
 	}
 
-	// Handle all other "xcweaver <deployer>" subcommands.
+	// Handle all other "weaver <deployer>" subcommands.
 	code, err := run(flag.Args()[0], flag.Args()[1:])
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err.Error())
@@ -159,10 +159,10 @@ Description:
 	}
 }
 
-// run runs "xcweaver-<deployer> [arg]..." in a subprocess and returns the
+// run runs "weaver-<deployer> [arg]..." in a subprocess and returns the
 // subprocess' exit code and any error.
 func run(deployer string, args []string) (int, error) {
-	binary := "xcweaver-" + deployer
+	binary := "weaver-" + deployer
 	if _, err := exec.LookPath(binary); err != nil {
 		msg := fmt.Sprintf(`"xcweaver %s" is not a xcweaver command. See "xcweaver --help". If you're trying to invoke a custom deployer, the %q binary was not found. You may need to install the %q binary or add it to your PATH.`, deployer, binary, binary)
 		return 1, fmt.Errorf(wrap(msg, 80))

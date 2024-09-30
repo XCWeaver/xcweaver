@@ -21,7 +21,6 @@ import (
 	"sync/atomic"
 	"time"
 
-	imetrics "github.com/XCWeaver/xcweaver/internal/metrics"
 	"github.com/XCWeaver/xcweaver/metrics"
 	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 )
@@ -33,18 +32,12 @@ import (
 type httpLabels struct {
 	Label string // user-provided instrumentation label
 	Host  string // URL host
-
-	// Is this a metric implicitly created by the framework?
-	Generated bool `xcweaver:"serviceweaver_generated"`
 }
 
 type httpErrorLabels struct {
 	Label string // user-provided instrumentation label
 	Host  string // URL host
 	Code  int    // HTTP status code (e.g., 404)
-
-	// Is this a metric implicitly created by the framework?
-	Generated bool `xcweaver:"serviceweaver_generated"`
 }
 
 var (
@@ -59,17 +52,17 @@ var (
 	httpRequestLatencyMicros = metrics.NewHistogramMap[httpLabels](
 		"serviceweaver_http_request_latency_micros",
 		"Duration, in microseconds, of HTTP request execution",
-		imetrics.GeneratedBuckets,
+		metrics.NonNegativeBuckets,
 	)
 	httpRequestBytesReceived = metrics.NewHistogramMap[httpLabels](
 		"serviceweaver_http_request_bytes_received",
 		"Number of bytes received by HTTP request handlers",
-		imetrics.GeneratedBuckets,
+		metrics.NonNegativeBuckets,
 	)
 	httpRequestBytesReturned = metrics.NewHistogramMap[httpLabels](
 		"serviceweaver_http_request_bytes_returned",
 		"Number of bytes returned by HTTP request handlers",
-		imetrics.GeneratedBuckets,
+		metrics.NonNegativeBuckets,
 	)
 )
 
@@ -90,11 +83,9 @@ func InstrumentHandler(label string, handler http.Handler) http.Handler {
 		// a more robust solution for fetching the hostname (e.g., get the
 		// listener attached to the HTTP server and return its associated
 		// hostname).
-		labels := httpLabels{Label: label, Host: r.Host, Generated: true}
+		labels := httpLabels{Label: label, Host: r.Host}
 
-		// Note that the httpRequestCounts metric is not marked as generated, because
-		// it is used by the deployers to do rollouts.
-		httpRequestCounts.Get(httpLabels{Label: label, Host: r.Host}).Add(1)
+		httpRequestCounts.Get(labels).Add(1)
 		defer func() {
 			httpRequestLatencyMicros.Get(labels).Put(
 				float64(time.Since(start).Microseconds()))
@@ -106,10 +97,9 @@ func InstrumentHandler(label string, handler http.Handler) http.Handler {
 		handler.ServeHTTP(&writer, r)
 		if writer.statusCode >= 400 && writer.statusCode < 600 {
 			httpRequestErrors.Get(httpErrorLabels{
-				Label:     label,
-				Host:      r.Host,
-				Code:      writer.statusCode,
-				Generated: true,
+				Label: label,
+				Host:  r.Host,
+				Code:  writer.statusCode,
 			}).Add(1)
 		}
 		httpRequestBytesReturned.Get(labels).Put(float64(writer.responseSize(r)))

@@ -53,7 +53,7 @@ type typeSet struct {
 // importPkg is a package imported by the generated code.
 type importPkg struct {
 	path  string // e.g., "github.com/XCWeaver/xcweaver"
-	pkg   string // e.g., "xcweaver", "context", "time"
+	pkg   string // e.g., "weaver", "context", "time"
 	alias string // e.g., foo in `import foo "context"`
 	local bool   // are we in this package?
 }
@@ -308,8 +308,8 @@ func (tset *typeSet) checkSerializable(t types.Type) []error {
 			// serializable.
 			if tset.automarshalCandidates.At(t) == nil {
 				// TODO(mwhittaker): Print out a link to documentation on
-				// xcweaver.AutoMarshal.
-				addError(fmt.Errorf("named structs are not serializable by default. Consider using xcweaver.AutoMarshal."))
+				// weaver.AutoMarshal.
+				addError(fmt.Errorf("named structs are not serializable by default. Consider using weaver.AutoMarshal."))
 				tset.checked.Set(t, false)
 				break
 			}
@@ -477,7 +477,7 @@ func (tset *typeSet) sizeOfType(t types.Type) int {
 //   - For simplicity, we only consider a type measurable if the type and all
 //     its nested types are package local. For example, a struct { x
 //     otherpackage.T } is not measurable, even if otherpackage.T is
-//     measurable. We make an exception for xcweaver.AutoMarshal.
+//     measurable. We make an exception for weaver.AutoMarshal.
 func (tset *typeSet) isMeasurable(t types.Type) bool {
 	rootPkg := tset.pkg.Types
 
@@ -489,7 +489,7 @@ func (tset *typeSet) isMeasurable(t types.Type) bool {
 	//     m([]t) = true if t is fixed size.
 	//     m(map[k]v) = true if k and v are fixed size.
 	//     m(struct{..., fi:ti, ...}) = true, if every ti is measurable.
-	//     m(xcweaver.AutoMarshal) = true
+	//     m(weaver.AutoMarshal) = true
 	//     m(type t u) = m(u), if t is package local
 	//     m(_) = false
 	if result := tset.measurable.At(t); result != nil {
@@ -653,7 +653,7 @@ func isProtoMessage(t types.Type) bool {
 }
 
 // implementsAutoMarshal returns whether the provided type is a concrete
-// type that implements the xcweaver.AutoMarshal interface.
+// type that implements the weaver.AutoMarshal interface.
 func (tset *typeSet) implementsAutoMarshal(t types.Type) bool {
 	if _, ok := t.Underlying().(*types.Interface); ok {
 		// A superinterface of AutoMarshal does "implement" the interface,
@@ -854,7 +854,7 @@ func isUnmarshalBinary(t types.Type, m *types.Func) bool {
 	}
 }
 
-// isWeaverType returns true iff t is a named type from the xcweaver package with
+// isWeaverType returns true iff t is a named type from the weaver package with
 // the specified name and n type arguments.
 func isWeaverType(t types.Type, name string, n int) bool {
 	named, ok := t.(*types.Named)
@@ -938,7 +938,7 @@ func isPrimitiveRouter(t types.Type) bool {
 // isValidRouterType returns whether the provided type is a valid router type.
 // A router type can be one of the following: an integer (signed or unsigned),
 // a float, or a string. Alternatively, it can be a struct that may optioanly
-// embed the xcweaver.AutoMarshal struct and rest of the fields must be either
+// embed the weaver.AutoMarshal struct and rest of the fields must be either
 // integers, floats, or strings.
 func isValidRouterType(t types.Type) bool {
 	t = t.Underlying()

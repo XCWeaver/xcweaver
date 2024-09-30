@@ -87,7 +87,6 @@ message GetHealthRequest {}
 // GetHealthReply is a reply to a GetHealthRequest.
 message GetHealthReply {
   HealthStatus status = 1;
-  repeated string healthy_components = 2;
 }
 
 // HealthStatus specifies the health of a weavelet.

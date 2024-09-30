@@ -70,7 +70,6 @@ func (m MongoDB) barrier(ctx context.Context, lineage []WriteIdentifier, datasto
 		if writeIdentifier.Dtstid == datastoreID {
 			for {
 				filter := bson.D{{"key", writeIdentifier.Key}}
-
 				cursor, err := m.mongoClient.Database(m.database).Collection(writeIdentifier.TableId).Find(ctx, filter)
 
 				if !errors.Is(err, mongo.ErrNoDocuments) && err != nil {

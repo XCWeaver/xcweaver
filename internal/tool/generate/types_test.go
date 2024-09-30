@@ -276,15 +276,15 @@ func TestIsValidRouterType(t *testing.T) {
 		{"array", "type target [42]byte", false},
 		{"empty struct", "type target struct{}", true},
 		{"simple struct", "type target struct{x int; y string}", true},
-		{"embedded xcweaver.AutoMarshal", `
-import "github.com/XCWeaver/xcweaver"
+		{"embedded weaver.AutoMarshal", `
+import "github.com/ServiceWeaver/weaver"
 type target struct{
-	xcweaver.AutoMarshal
+	weaver.AutoMarshal
 	foo int
 	bar string
 }`, true},
 		{"embedded with something else", `
-import "github.com/XCWeaver/xcweaver"
+import "github.com/ServiceWeaver/weaver"
 type foo struct {}
 type target struct {
 	foo

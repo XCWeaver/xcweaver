@@ -50,6 +50,15 @@
 //		)
 //	)
 //
+// [NonNegativeBuckets] returns a default set of non-negative buckets. It is
+// useful when declaring histograms that measure things like memory or latency.
+//
+//	var exampleLatency = metrics.NewHistogram(
+//		"example_latency",
+//		"The latency of something, in microseconds",
+//		metrics.NonNegativeBuckets,
+//	)
+//
 // # Updating Metrics
 //
 // Every metric type has a set of methods you can use to update the metric.
@@ -77,7 +86,7 @@
 //	    Foo string
 //	    Bar string
 //	}
-//	var exampleLabeledCounter = xcweaver.NewCounterMap[labels](
+//	var exampleLabeledCounter = weaver.NewCounterMap[labels](
 //	    "example_labeled_counter",
 //	    `An example counter with labels "foo" and "bar"`,
 //	)
@@ -117,11 +126,11 @@
 // To adhere to popular metric naming conventions, the first letter of every
 // label is lowercased by default. The Foo label for example is exported as
 // "foo", not "Foo". You can override this behavior and provide a custom label
-// name using a xcweaver annotation.
+// name using a weaver annotation.
 //
 //	type labels struct {
 //	    Foo string                           // exported as "foo"
-//	    Bar string `xcweaver:"my_custom_name"` // exported as "my_custom_name"
+//	    Bar string `weaver:"my_custom_name"` // exported as "my_custom_name"
 //	}
 //
 // # Exporting Metrics

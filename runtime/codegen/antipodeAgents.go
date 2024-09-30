@@ -48,7 +48,7 @@ func MakeAntipodeAgentsString(component string, antipodeAgents []string) string 
 // ComponentAntipodeAgents represents a set of antipode Agents for a given component.
 type ComponentAntipodeAgents struct {
 	// Fully qualified component type name, e.g.,
-	//   github.com/TiagoMalhadas/xcweaver/Main.
+	//   github.com/XCWeaver/xcweaver/Main.
 	Component string
 
 	// The list of antipode agents names associated with the component.

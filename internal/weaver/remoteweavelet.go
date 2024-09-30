@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package xcweaver
+package weaver
 
 import (
 	"context"
@@ -23,12 +23,9 @@ import (
 	"log/slog"
 	"net"
 	"os"
-	"os/signal"
 	"reflect"
 	"strings"
 	"sync"
-	"sync/atomic"
-	"syscall"
 
 	"github.com/XCWeaver/xcweaver/internal/antipode"
 	"github.com/XCWeaver/xcweaver/internal/config"
@@ -49,9 +46,8 @@ import (
 	"golang.org/x/sync/errgroup"
 )
 
-// readyMethodName holds the name of the special component method used by the
-// clients to check if a component is ready.
-const readyMethodName = "ready"
+// readyMethodKey holds the key for a method used to check if a backend is ready.
+var readyMethodKey = call.MakeMethodKey("", "ready")
 
 // RemoteWeaveletOptions configure a RemoteWeavelet.
 type RemoteWeaveletOptions struct {
@@ -64,7 +60,7 @@ type RemoteWeaveletOptions struct {
 // components remotely. It is the weavelet used by all deployers, except for
 // the single process deployer.
 //
-// RemoteWeavelet must implement the xcweaver.controller component interface.
+// RemoteWeavelet must implement the weaver.controller component interface.
 type RemoteWeavelet struct {
 	ctx        context.Context         // shuts down the weavelet when canceled
 	servers    *errgroup.Group         // background servers
@@ -120,10 +116,16 @@ type component struct {
 
 	implInit   sync.Once      // used to initialize impl, severStub
 	implErr    error          // non-nil if impl creation fails
-	implReady  atomic.Bool    // true only after impl creation succeeds
 	impl       any            // instance of component implementation
 	serverStub codegen.Server // handles remote calls from other processes
 
+	// TODO(mwhittaker): We have one client for every component. Every client
+	// independently maintains network connections to every weavelet hosting
+	// the component. Thus, there may be many redundant network connections to
+	// the same weavelet. Given n weavelets hosting m components, there's at
+	// worst n^2m connections rather than a more optimal n^2 (a single
+	// connection between every pair of weavelets). We should rewrite things to
+	// avoid the redundancy.
 	resolver *routingResolver // client resolver
 	balancer *routingBalancer // client balancer
 
@@ -302,31 +304,11 @@ func NewRemoteWeavelet(ctx context.Context, regs []*codegen.Registration, bootst
 		return nil
 	})
 
-	// Start a signal handler to detect when the process is killed. This isn't
-	// perfect, as we can't catch a SIGKILL, but it's good in the common case.
-	done := make(chan os.Signal, 1)
-	signal.Notify(done, syscall.SIGINT, syscall.SIGTERM)
-	go func() {
-		<-done
-		for _, c := range w.componentsByName {
-			if !c.implReady.Load() {
-				continue
-			}
-			// Call Shutdown method if available.
-			if i, ok := c.impl.(interface{ Shutdown(context.Context) error }); ok {
-				if err := i.Shutdown(ctx); err != nil {
-					w.syslogger.Error("Component shutdown failed", "component", c.reg.Name, "err", err)
-				}
-			}
-		}
-		os.Exit(1)
-	}()
-
 	w.syslogger.Debug("🧶 weavelet started", "addr", dialAddr)
 	return w, nil
 }
 
-// InitWeavelet implements xcweaver.controller and conn.WeaverHandler interfaces.
+// InitWeavelet implements weaver.controller and conn.WeaverHandler interfaces.
 func (w *RemoteWeavelet) InitWeavelet(ctx context.Context, req *protos.InitWeaveletRequest) (*protos.InitWeaveletReply, error) {
 	w.initMu.Lock()
 	defer w.initMu.Unlock()
@@ -362,7 +344,7 @@ func (w *RemoteWeavelet) GetIntf(t reflect.Type) (any, error) {
 func (w *RemoteWeavelet) getIntf(t reflect.Type, requester string) (any, error) {
 	c, ok := w.componentsByIntf[t]
 	if !ok {
-		return nil, fmt.Errorf("component of type %v was not registered; maybe you forgot to run xcweaver generate", t)
+		return nil, fmt.Errorf("component of type %v was not registered; maybe you forgot to run weaver generate", t)
 	}
 
 	if r, ok := w.redirects[c.reg.Name]; ok {
@@ -439,7 +421,7 @@ func (w *RemoteWeavelet) redirect(requester string, c *component, target, addres
 func (w *RemoteWeavelet) GetImpl(t reflect.Type) (any, error) {
 	c, ok := w.componentsByImpl[t]
 	if !ok {
-		return nil, fmt.Errorf("component implementation of type %v was not registered; maybe you forgot to run xcweaver generate", t)
+		return nil, fmt.Errorf("component implementation of type %v was not registered; maybe you forgot to run weaver generate", t)
 	}
 
 	c.implInit.Do(func() {
@@ -451,7 +433,6 @@ func (w *RemoteWeavelet) GetImpl(t reflect.Type) (any, error) {
 			return
 		} else {
 			w.syslogger.Debug("Constructed", "component", name)
-			c.implReady.Store(true)
 		}
 
 		logger := w.logger(c.reg.Name)
@@ -554,7 +535,7 @@ func (w *RemoteWeavelet) makeStub(fullName string, reg *codegen.Registration, re
 		return nil, err
 	}
 	if wait {
-		if err := waitUntilReady(w.ctx, conn, fullName); err != nil {
+		if err := waitUntilReady(w.ctx, conn); err != nil {
 			w.syslogger.Error("Failed to wait for remote", "component", name, "err", err)
 			return nil, err
 		}
@@ -580,8 +561,8 @@ func (w *RemoteWeavelet) GetLoad(context.Context, *protos.GetLoadRequest) (*prot
 	return &protos.GetLoadReply{Load: report}, nil
 }
 
-// UpdateComponents implements xcweaver.controller and conn.WeaverHandler interfaces.
-func (w *RemoteWeavelet) UpdateComponents(_ context.Context, req *protos.UpdateComponentsRequest) (*protos.UpdateComponentsReply, error) {
+// UpdateComponents implements weaver.controller and conn.WeaverHandler interfaces.
+func (w *RemoteWeavelet) UpdateComponents(ctx context.Context, req *protos.UpdateComponentsRequest) (*protos.UpdateComponentsReply, error) {
 	var errs []error
 	var components []*component
 	var shortened []string
@@ -622,7 +603,7 @@ func (w *RemoteWeavelet) UpdateComponents(_ context.Context, req *protos.UpdateC
 }
 
 // UpdateRoutingInfo implements controller.UpdateRoutingInfo.
-func (w *RemoteWeavelet) UpdateRoutingInfo(_ context.Context, req *protos.UpdateRoutingInfoRequest) (reply *protos.UpdateRoutingInfoReply, err error) {
+func (w *RemoteWeavelet) UpdateRoutingInfo(ctx context.Context, req *protos.UpdateRoutingInfoRequest) (reply *protos.UpdateRoutingInfoReply, err error) {
 	if req.RoutingInfo == nil {
 		w.syslogger.Error("Failed to update nil routing info")
 		return nil, fmt.Errorf("nil RoutingInfo")
@@ -687,21 +668,12 @@ func (w *RemoteWeavelet) UpdateRoutingInfo(_ context.Context, req *protos.Update
 }
 
 // GetHealth implements controller.GetHealth.
-func (w *RemoteWeavelet) GetHealth(context.Context, *protos.GetHealthRequest) (*protos.GetHealthReply, error) {
-	// Get the health status for all components. For now, we consider a component
-	// healthy iff it has been successfully initialized. In the future, we will
-	// maintain a real-time health for each component.
-	reply := &protos.GetHealthReply{Status: protos.HealthStatus_HEALTHY}
-	for cname, c := range w.componentsByName {
-		if c.implReady.Load() {
-			reply.HealthyComponents = append(reply.HealthyComponents, cname)
-		}
-	}
-	return reply, nil
+func (w *RemoteWeavelet) GetHealth(ctx context.Context, req *protos.GetHealthRequest) (*protos.GetHealthReply, error) {
+	return &protos.GetHealthReply{Status: protos.HealthStatus_HEALTHY}, nil
 }
 
 // GetMetrics implements controller.GetMetrics.
-func (w *RemoteWeavelet) GetMetrics(context.Context, *protos.GetMetricsRequest) (*protos.GetMetricsReply, error) {
+func (w *RemoteWeavelet) GetMetrics(ctx context.Context, req *protos.GetMetricsRequest) (*protos.GetMetricsReply, error) {
 	// TODO(sanjay): The protocol is currently brittle; if we ever lose a set of
 	// updates, they will be lost forever. Fix by versioning the "last" map in
 	// metrics.Exporter. The reader echoes back the version of the last set of
@@ -742,7 +714,7 @@ func (w *RemoteWeavelet) getComponent(name string) (*component, error) {
 	// read-only.
 	c, ok := w.componentsByName[name]
 	if !ok {
-		return nil, fmt.Errorf("component %q was not registered; maybe you forgot to run xcweaver generate", name)
+		return nil, fmt.Errorf("component %q was not registered; maybe you forgot to run weaver generate", name)
 	}
 	return c, nil
 }
@@ -768,16 +740,6 @@ func (w *RemoteWeavelet) addHandlers(handlers *call.HandlerMap, c *component) {
 		}
 		handlers.Set(c.reg.Name, mname, handler)
 	}
-
-	// Add the special "component is ready" method handler, which is used by
-	// the clients to wait for the component to be ready before receiving traffic
-	// (see waitUntilReady).
-	handlers.Set(c.reg.Name, readyMethodName, func(context.Context, []byte) ([]byte, error) {
-		if c.implReady.Load() {
-			return nil, nil
-		}
-		return nil, call.Unreachable
-	})
 }
 
 // repeatedly repeatedly executes f until it succeeds or until ctx is cancelled.
@@ -1043,10 +1005,10 @@ func (s *server) handlers(components []string) (*call.HandlerMap, error) {
 }
 
 // waitUntilReady blocks until a successful call to the "ready" method is made
-// on the provided component.
-func waitUntilReady(ctx context.Context, client call.Connection, fullComponentName string) error {
+// on the provided client.
+func waitUntilReady(ctx context.Context, client call.Connection) error {
 	for r := retry.Begin(); r.Continue(ctx); {
-		_, err := client.Call(ctx, call.MakeMethodKey(fullComponentName, readyMethodName), nil, call.CallOptions{})
+		_, err := client.Call(ctx, readyMethodKey, nil, call.CallOptions{})
 		if err == nil || !errors.Is(err, call.Unreachable) {
 			return err
 		}

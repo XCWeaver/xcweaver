@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Package xcweaver provides the interface for building
+// Package weaver provides the interface for building
 // [single-image distributed programs].
 //
 // A program is composed of a set of Go interfaces called
-// components. Components are recognized by "xcweaver generate" (typically invoked
-// via "go generate"). "xcweaver generate" generates code that allows a component
+// components. Components are recognized by "weaver generate" (typically invoked
+// via "go generate"). "weaver generate" generates code that allows a component
 // to be invoked over the network. This flexibility allows Service Weaver
 // to decompose the program execution across many processes and machines.
 //
@@ -37,7 +37,7 @@ import (
 
 	"github.com/XCWeaver/xcweaver/internal/antipode"
 	"github.com/XCWeaver/xcweaver/internal/reflection"
-	"github.com/XCWeaver/xcweaver/internal/xcweaver"
+	"github.com/XCWeaver/xcweaver/internal/weaver"
 	"github.com/XCWeaver/xcweaver/runtime"
 	"github.com/XCWeaver/xcweaver/runtime/codegen"
 	"go.opentelemetry.io/otel/trace"
@@ -48,7 +48,7 @@ import (
 //go:generate ./dev/protoc.sh internal/tool/ssh/impl/ssh.proto
 //go:generate ./dev/protoc.sh runtime/protos/runtime.proto
 //go:generate ./dev/protoc.sh runtime/protos/config.proto
-//go:generate ./cmd/xcweaver/xcweaver generate . ./internal/tool/multi
+//go:generate ./cmd/weaver/weaver generate . ./internal/tool/multi
 //go:generate ./dev/writedeps.sh
 
 // RemoteCallError indicates that a remote component method call failed to
@@ -57,7 +57,7 @@ import (
 //
 //	// Call the foo.Foo method.
 //	err := foo.Foo(ctx)
-//	if errors.Is(err, xcweaver.RemoteCallError) {
+//	if errors.Is(err, weaver.RemoteCallError) {
 //	    // foo.Foo did not execute properly.
 //	} else if err != nil {
 //	    // foo.Foo executed properly, but returned an error.
@@ -84,15 +84,15 @@ var HealthzHandler = func(w http.ResponseWriter, _ *http.Request) {
 // e.g.:
 //
 //	mux := http.NewServeMux()
-//	mux.HandleFunc(xcweaver.HealthzURL, func(http.ResponseWriter, *http.Request) {
+//	mux.HandleFunc(weaver.HealthzURL, func(http.ResponseWriter, *http.Request) {
 //	    // ...
 //	})
 //
 // As a convenience, Service Weaver registers HealthzHandler under
 // this URL path in the default ServerMux, i.e.:
 //
-//	http.HandleFunc(xcweaver.HealthzURL, xcweaver.HealthzHandler)
-const HealthzURL = "/debug/xcweaver/healthz"
+//	http.HandleFunc(weaver.HealthzURL, weaver.HealthzHandler)
+const HealthzURL = "/debug/weaver/healthz"
 
 var healthzInit sync.Once
 
@@ -100,7 +100,7 @@ var healthzInit sync.Once
 type Main interface{}
 
 // PointerToMain is a type constraint that asserts *T is an instance of Main
-// (i.e. T is a struct that embeds xcweaver.Implements[xcweaver.Main]).
+// (i.e. T is a struct that embeds weaver.Implements[weaver.Main]).
 type PointerToMain[T any] interface {
 	*T
 	InstanceOf[Main]
@@ -108,26 +108,26 @@ type PointerToMain[T any] interface {
 
 // Run runs app as a Service Weaver application.
 //
-// The application is composed of a set of components that include xcweaver.Main
-// as well as any components transitively needed by xcweaver.Main. An instance
-// that implement xcweaver.Main is automatically created by xcweaver.Run and passed
-// to app. Note: other replicas in which xcweaver.Run is called may also create
-// instances of xcweaver.Main.
+// The application is composed of a set of components that include weaver.Main
+// as well as any components transitively needed by weaver.Main. An instance
+// that implement weaver.Main is automatically created by weaver.Run and passed
+// to app. Note: other replicas in which weaver.Run is called may also create
+// instances of weaver.Main.
 //
 // The type T must be a struct type that contains an embedded
-// `xcweaver.Implements[xcweaver.Main]` field. A value of type T is created,
+// `weaver.Implements[weaver.Main]` field. A value of type T is created,
 // initialized (by calling its Init method if any), and a pointer to the value
 // is passed to app. app contains the main body of the application; it will
 // typically run HTTP servers, etc.
 //
-// If this process is hosting the `xcweaver.Main` component, Run will call app
+// If this process is hosting the `weaver.Main` component, Run will call app
 // and will return when app returns. If this process is hosting other
 // components, Run will start those components and never return. Most callers
 // of Run will not do anything (other than possibly logging any returned error)
 // after Run returns.
 //
 //	func main() {
-//	    if err := xcweaver.Run(context.Background(), app); err != nil {
+//	    if err := weaver.Run(context.Background(), app); err != nil {
 //	        log.Fatal(err)
 //	    }
 //	}
@@ -152,7 +152,7 @@ func Run[T any, P PointerToMain[T]](ctx context.Context, app func(context.Contex
 
 func runLocal[T any, _ PointerToMain[T]](ctx context.Context, app func(context.Context, *T) error) error {
 	// Read config from SERVICEWEAVER_CONFIG env variable, if non-empty.
-	opts := xcweaver.SingleWeaveletOptions{}
+	opts := weaver.SingleWeaveletOptions{}
 	if filename := os.Getenv("SERVICEWEAVER_CONFIG"); filename != "" {
 		contents, err := os.ReadFile(filename)
 		if err != nil {
@@ -167,7 +167,7 @@ func runLocal[T any, _ PointerToMain[T]](ctx context.Context, app func(context.C
 		return err
 	}
 
-	wlet, err := xcweaver.NewSingleWeavelet(ctx, regs, opts)
+	wlet, err := weaver.NewSingleWeavelet(ctx, regs, opts)
 	if err != nil {
 		return err
 	}
@@ -182,6 +182,7 @@ func runLocal[T any, _ PointerToMain[T]](ctx context.Context, app func(context.C
 	if err != nil {
 		return err
 	}
+
 	return app(ctx, main.(*T))
 }
 
@@ -191,8 +192,8 @@ func runRemote[T any, _ PointerToMain[T]](ctx context.Context, app func(context.
 		return err
 	}
 
-	opts := xcweaver.RemoteWeaveletOptions{}
-	wlet, err := xcweaver.NewRemoteWeavelet(ctx, regs, bootstrap, opts)
+	opts := weaver.RemoteWeaveletOptions{}
+	wlet, err := weaver.NewRemoteWeavelet(ctx, regs, bootstrap, opts)
 	if err != nil {
 		return err
 	}
@@ -216,9 +217,9 @@ func runRemote[T any, _ PointerToMain[T]](ctx context.Context, app func(context.
 }
 
 var (
-	// Equivalence checks with the struct in internal/xcweaver/types.go.
-	_ = WeaverInfo(xcweaver.WeaverInfo{})
-	_ = xcweaver.WeaverInfo(WeaverInfo{})
+	// Equivalence checks with the struct in internal/weaver/types.go.
+	_ = WeaverInfo(weaver.WeaverInfo{})
+	_ = weaver.WeaverInfo(WeaverInfo{})
 )
 
 // WeaverInfo holds runtime information about a deployed application.
@@ -242,7 +243,7 @@ type WeaverInfo struct {
 // A concrete type that implements the Cache component is written as follows:
 //
 //	type lruCache struct {
-//	    xcweaver.Implements[Cache]
+//	    weaver.Implements[Cache]
 //	    ...
 //	}
 //
@@ -254,7 +255,7 @@ type Implements[T any] struct {
 	// Component logger.
 	logger *slog.Logger
 
-	weaverInfo *xcweaver.WeaverInfo
+	weaverInfo *weaver.WeaverInfo
 
 	// Given a component implementation type, there is currently no nice way,
 	// using reflection, to get the corresponding component interface type [1].
@@ -295,11 +296,11 @@ func (i Implements[T]) Weaver() WeaverInfo {
 	return WeaverInfo(*i.weaverInfo)
 }
 
-func (i *Implements[T]) setWeaverInfo(info *xcweaver.WeaverInfo) {
+func (i *Implements[T]) setWeaverInfo(info *weaver.WeaverInfo) {
 	i.weaverInfo = info
 }
 
-// implements is a method that can only be implemented inside the xcweaver
+// implements is a method that can only be implemented inside the weaver
 // package. It exists so that a component struct that embeds Implements[T]
 // implements the InstanceOf[T] interface.
 //
@@ -307,7 +308,7 @@ func (i *Implements[T]) setWeaverInfo(info *xcweaver.WeaverInfo) {
 func (Implements[T]) implements(T) {}
 
 // InstanceOf[T] is the interface implemented by a struct that embeds
-// xcweaver.Implements[T].
+// weaver.Implements[T].
 type InstanceOf[T any] interface {
 	implements(T)
 }
@@ -337,9 +338,9 @@ func (r *Ref[T]) setRef(value any) {
 // traffic. For example:
 //
 //	type myComponentImpl struct {
-//	    xcweaver.Implements[MyComponent]
-//	    myListener      xcweaver.Listener
-//	    myOtherListener xcweaver.Listener
+//	    weaver.Implements[MyComponent]
+//	    myListener      weaver.Listener
+//	    myOtherListener weaver.Listener
 //	}
 //
 // By default, all listeners listen on address ":0". This behavior can be
@@ -354,19 +355,19 @@ func (r *Ref[T]) setRef(value any) {
 // Listeners are identified by their field names in the component
 // implementation structs (e.g., myListener and myOtherListener). If the user
 // wishes to assign different names to their listeners, they may do so by
-// adding a `xcweaver:"name"` struct tag to their listener fields, e.g.:
+// adding a `weaver:"name"` struct tag to their listener fields, e.g.:
 //
 //	type myComponentImpl struct {
-//	    xcweaver.Implements[MyComponent]
-//	    myListener      xcweaver.Listener
-//	    myOtherListener xcweaver.Listener `xcweaver:"mylistener2"`
+//	    weaver.Implements[MyComponent]
+//	    myListener      weaver.Listener
+//	    myOtherListener weaver.Listener `weaver:"mylistener2"`
 //	}
 //
 // Listener names must be valid Go identifier names. Listener names must be
 // unique inside a given application binary, regardless of which components
 // they are specified in. For example, it is illegal to declare a Listener
 // field "foo" in two different component implementation structs, unless one is
-// renamed using the `xcweaver:"name"` struct tag.
+// renamed using the `weaver:"name"` struct tag.
 //
 // HTTP servers constructed using this listener are expected to perform health
 // checks on the reserved HealthzURL path. (Note that this URL path is
@@ -408,8 +409,8 @@ func (l *Listener) ProxyAddr() string {
 //	}
 //
 //	type cache struct {
-//	    xcweaver.Implements[Cache]
-//	    xcweaver.WithConfig[cacheConfig]
+//	    weaver.Implements[Cache]
+//	    weaver.WithConfig[cacheConfig]
 //	    // ...
 //	}
 //
@@ -443,7 +444,7 @@ type WithConfig[T any] struct {
 }
 
 // Config returns the configuration information for the component that embeds
-// this [xcweaver.WithConfig].
+// this [weaver.WithConfig].
 //
 // Any fields in T that were not present in the application config file will
 // have their default values.
@@ -478,12 +479,12 @@ func (wc *WithConfig[T]) getConfig() any {
 //	func (cacheRouter) Get(_ context.Context, key string) string { return key }
 //	func (cacheRouter) Put(_ context.Context, key, value string) string { return key }
 //
-// To associate a router with its component, embed [xcweaver.WithRouter] in the
+// To associate a router with its component, embed [weaver.WithRouter] in the
 // component implementation.
 //
 //	type lruCache struct {
-//		xcweaver.Implements[Cache]
-//		xcweaver.WithRouter[cacheRouter]
+//		weaver.Implements[Cache]
+//		weaver.WithRouter[cacheRouter]
 //	}
 //
 // For every component method that needs to be routed (e.g., Get and Put), the
@@ -508,7 +509,7 @@ func (wc *WithConfig[T]) getConfig() any {
 //	struct{}
 //	struct{x int}
 //	struct{x int; y string}
-//	struct{xcweaver.AutoMarshal; x int; y string}
+//	struct{weaver.AutoMarshal; x int; y string}
 //
 // Every router method must return the same routing key type. The following,
 // for example, is invalid:
@@ -531,7 +532,7 @@ type WithRouter[T any] struct{}
 func (WithRouter[T]) routedBy(T) {}
 
 // RoutedBy[T] is the interface implemented by a struct that embeds
-// xcweaver.RoutedBy[T].
+// weaver.RoutedBy[T].
 type RoutedBy[T any] interface {
 	routedBy(T)
 }
@@ -546,7 +547,7 @@ type if_youre_seeing_this_you_probably_forgot_to_run_weaver_generate struct{}
 func (implementsImpl) routedBy(if_youre_seeing_this_you_probably_forgot_to_run_weaver_generate) {}
 
 // Unrouted is the interface implemented by instances that don't embed
-// xcweaver.WithRouter[T].
+// weaver.WithRouter[T].
 type Unrouted interface {
 	routedBy(if_youre_seeing_this_you_probably_forgot_to_run_weaver_generate)
 }
@@ -554,26 +555,26 @@ type Unrouted interface {
 var _ Unrouted = (*implementsImpl)(nil)
 
 // AutoMarshal is a type that can be embedded within a struct to indicate that
-// "xcweaver generate" should generate serialization methods for the struct.
+// "weaver generate" should generate serialization methods for the struct.
 //
 // Named struct types are not serializable by default. However, they can
 // trivially be made serializable by embedding AutoMarshal. For example:
 //
 //	type Pair struct {
-//	    xcweaver.AutoMarshal
+//	    weaver.AutoMarshal
 //	    x, y int
 //	}
 //
-// The AutoMarshal embedding instructs "xcweaver generate" to generate
+// The AutoMarshal embedding instructs "weaver generate" to generate
 // serialization methods for the struct, Pair in this example.
 //
 // Note, however, that AutoMarshal cannot magically make any type serializable.
-// For example, "xcweaver generate" will raise an error for the following code
+// For example, "weaver generate" will raise an error for the following code
 // because the NotSerializable struct is fundamentally not serializable.
 //
 //	// ERROR: NotSerializable cannot be made serializable.
 //	type NotSerializable struct {
-//	    xcweaver.AutoMarshal
+//	    weaver.AutoMarshal
 //	    f func()   // functions are not serializable
 //	    c chan int // chans are not serializable
 //	}

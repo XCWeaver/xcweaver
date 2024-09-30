@@ -23,13 +23,13 @@ import (
 )
 
 var dashboardSpec = &status.DashboardSpec{
-	Tool:         "xcweaver ssh",
+	Tool:         "weaver ssh",
 	PerfettoFile: impl.PerfettoFile,
 	Registry:     impl.DefaultRegistry,
 	Commands: func(deploymentId string) []status.Command {
 		return []status.Command{
-			{Label: "cat logs", Command: fmt.Sprintf("xcweaver ssh logs 'version==%q'", logging.Shorten(deploymentId))},
-			{Label: "follow logs", Command: fmt.Sprintf("xcweaver ssh logs --follow 'version==%q'", logging.Shorten(deploymentId))},
+			{Label: "cat logs", Command: fmt.Sprintf("weaver ssh logs 'version==%q'", logging.Shorten(deploymentId))},
+			{Label: "follow logs", Command: fmt.Sprintf("weaver ssh logs --follow 'version==%q'", logging.Shorten(deploymentId))},
 		}
 	},
 }
