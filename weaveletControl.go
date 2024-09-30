@@ -28,7 +28,7 @@ type weaveletControl control.WeaveletControl
 
 // noopWeaveletControl is a no-op implementation of weaveletControl. It exists solely to cause
 // weaveletControl to be registered as a component. The actual implementation is provided
-// by internal/weaver/remoteweavelet.go
+// by internal/xcweaver/remoteweavelet.go
 type noopWeaveletControl struct {
 	Implements[weaveletControl]
 }

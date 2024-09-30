@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package weaver
+package xcweaver
 
 import (
 	"log/slog"
@@ -24,7 +24,7 @@ import (
 
 var (
 	// The following values are populated by an init function in the main
-	// weaver package. The circuitousness is to avoid cyclic dependencies.
+	// xcweaver package. The circuitousness is to avoid cyclic dependencies.
 
 	// SetLogger sets the logger of a component implementation struct. impl
 	// should be a pointer to the implementation struct.
@@ -34,7 +34,7 @@ var (
 	SetWeaverInfo func(impl any, info *WeaverInfo) error
 
 	// HasRefs returns whether the provided component implementation has
-	// weaver.Refs fields.
+	// xcweaver.Refs fields.
 	HasRefs func(impl any) bool
 
 	// FillRefs initializes Ref[T] fields in a component implement struct.
@@ -44,7 +44,7 @@ var (
 	FillRefs func(impl any, get func(reflect.Type) (any, error)) error
 
 	// HasListeners returns whether the provided component implementation has
-	// weaver.Listener fields.
+	// xcweaver.Listener fields.
 	HasListeners func(impl any) bool
 
 	// FillListeners initializes Listener fields in a component implementation
@@ -55,7 +55,7 @@ var (
 	FillListeners func(impl any, get func(string) (net.Listener, string, error)) error
 
 	// HasAntipodeAgents returns whether the provided component implementation has
-	// weaver.Antipode fields.
+	// xcweaver.Antipode fields.
 	HasAntipodeAgents func(impl any) bool
 
 	// FillAntipodeAgents initializes Antipode fields in a component implementation
@@ -66,7 +66,7 @@ var (
 	FillAntipodeAgents func(impl any, get func(string) (antipode.Datastore_type, string, error)) error
 
 	// HasConfig returns whether the provided component implementation has
-	// an embedded weaver.Config field.
+	// an embedded xcweaver.Config field.
 	HasConfig func(impl any) bool
 
 	// GetConfig returns the config stored in the provided component
@@ -74,7 +74,7 @@ var (
 	GetConfig func(impl any) any
 )
 
-// Copy of the same struct in the main weaver package.
+// Copy of the same struct in the main xcweaver package.
 type WeaverInfo struct {
 	// Unique identifier for the application deployment.
 	DeploymentID string

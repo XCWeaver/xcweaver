@@ -31,7 +31,7 @@ import (
 
 // LogSpec configures the command returned by LogsCmd.
 type LogsSpec struct {
-	Tool    string                                        // tool name, e.g., "weaver gke"
+	Tool    string                                        // tool name, e.g., "xcweaver gke"
 	Flags   *flag.FlagSet                                 // optional additional flags
 	Rewrite func(logging.Query) (logging.Query, error)    // optional query preprocessing
 	Source  func(context.Context) (logging.Source, error) // returns log source

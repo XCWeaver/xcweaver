@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package weaver
+package xcweaver
 
 import (
 	"context"
@@ -134,7 +134,7 @@ func NewSingleWeavelet(ctx context.Context, regs []*codegen.Registration, opts S
 		fmt.Fprint(os.Stderr, reg.Rolodex())
 	}
 
-	return &SingleWeavelet{
+	w := &SingleWeavelet{
 		ctx:            ctx,
 		regs:           regs,
 		regsByName:     regsByName,
@@ -152,7 +152,29 @@ func NewSingleWeavelet(ctx context.Context, regs []*codegen.Registration, opts S
 		components:     map[string]any{},
 		listeners:      map[string]net.Listener{},
 		antipodeAgents: map[string]antipode.Datastore_type{},
-	}, nil
+	}
+
+	// Start a signal handler to detect when the process is killed. This isn't
+	// perfect, as we can't catch a SIGKILL, but it's good in the common case.
+	done := make(chan os.Signal, 1)
+	signal.Notify(done, syscall.SIGINT, syscall.SIGTERM)
+	go func() {
+		<-done
+
+		w.mu.Lock()
+		defer w.mu.Unlock()
+		for c, impl := range w.components {
+			// Call Shutdown method if available.
+			if i, ok := impl.(interface{ Shutdown(context.Context) error }); ok {
+				if err := i.Shutdown(ctx); err != nil {
+					fmt.Printf("Component %s failed to shutdown: %v\n", c, err)
+				}
+			}
+		}
+		os.Exit(1)
+	}()
+
+	return w, nil
 }
 
 // parseSingleConfig parses the "[single]" section of a config file.
@@ -235,7 +257,7 @@ func (w *SingleWeavelet) GetImpl(t reflect.Type) (any, error) {
 func (w *SingleWeavelet) getIntf(t reflect.Type, requester string) (any, error) {
 	reg, ok := w.regsByIntf[t]
 	if !ok {
-		return nil, fmt.Errorf("component %v not found; maybe you forgot to run weaver generate", t)
+		return nil, fmt.Errorf("component %v not found; maybe you forgot to run xcweaver generate", t)
 	}
 	c, err := w.get(reg)
 	if err != nil {
@@ -251,7 +273,7 @@ func (w *SingleWeavelet) getIntf(t reflect.Type, requester string) (any, error) 
 func (w *SingleWeavelet) getImpl(t reflect.Type) (any, error) {
 	reg, ok := w.regsByImpl[t]
 	if !ok {
-		return nil, fmt.Errorf("component implementation %v not found; maybe you forgot to run weaver generate", t)
+		return nil, fmt.Errorf("component implementation %v not found; maybe you forgot to run xcweaver generate", t)
 	}
 	return w.get(reg)
 }
@@ -351,7 +373,7 @@ func (w *SingleWeavelet) listener(name string) (net.Listener, error) {
 	return lis, err
 }
 
-// antipodeAgent returns the datastore type with the provided name.
+// antipodeAgent returns the Antipode agent with the provided name.
 //
 // REQUIRES: w.mu is held.
 func (w *SingleWeavelet) antipodeAgent(name string) (antipode.Datastore_type, error) {
@@ -360,7 +382,7 @@ func (w *SingleWeavelet) antipodeAgent(name string) (antipode.Datastore_type, er
 		return antipodeAgent, nil
 	}
 
-	// Create the datastore type.
+	// Create the Antipode agent
 	var datastoreType string
 	var host string
 	var user string
@@ -504,15 +526,15 @@ func (w *SingleWeavelet) ServeStatus(ctx context.Context) error {
 func (w *SingleWeavelet) Status(context.Context) (*status.Status, error) {
 	w.mu.Lock()
 	defer w.mu.Unlock()
-
 	pid := int64(os.Getpid())
 	stats := w.stats.GetStatsStatusz()
 	var components []*status.Component
 	for component := range w.components {
 		c := &status.Component{
-			Name: component,
-			Pids: []int64{pid},
+			Name:     component,
+			Replicas: []*status.Replica{},
 		}
+		c.Replicas = append(c.Replicas, &status.Replica{Pid: pid, WeaveletId: w.id})
 		components = append(components, c)
 
 		// TODO(mwhittaker): Unify with ui package and remove duplication.

@@ -44,7 +44,7 @@ const (
 var deployCmd = tool.Command{
 	Name:        "deploy",
 	Description: "Deploy a Service Weaver app",
-	Help:        "Usage:\n  weaver multi deploy <configfile>",
+	Help:        "Usage:\n  xcweaver multi deploy <configfile>",
 	Flags:       flag.NewFlagSet("deploy", flag.ContinueOnError),
 	Fn:          deploy,
 }
@@ -103,17 +103,17 @@ func deploy(ctx context.Context, args []string) error {
 		}
 		return fmt.Errorf(`
 ERROR: The binary you're trying to deploy (%q) was built with
-github.com/XCWeaver/xcweaver module version %s. However, the 'weaver
-multi' binary you're using was built with weaver module version %s.
+github.com/XCWeaver/xcweaver module version %s. However, the 'xcweaver
+multi' binary you're using was built with xcweaver module version %s.
 These versions are incompatible.
 
-We recommend updating both the weaver module your application is built with and
-updating the 'weaver multi' command by running the following.
+We recommend updating both the xcweaver module your application is built with and
+updating the 'xcweaver multi' command by running the following.
 
     go get github.com/XCWeaver/xcweaver@latest
-    go install github.com/XCWeaver/xcweaver/cmd/weaver@latest
+    go install github.com/XCWeaver/xcweaver/cmd/xcweaver@latest
 
-Then, re-build your code and re-run 'weaver multi deploy'. If the problem
+Then, re-build your code and re-run 'xcweaver multi deploy'. If the problem
 persists, please file an issue at https://github.com/XCWeaver/xcweaver/issues.`,
 			binary, versions.ModuleVersion, selfVersion)
 	}

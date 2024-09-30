@@ -24,7 +24,7 @@ import (
 // It points to an internal type in a different package.
 const WeaveletPath = "github.com/XCWeaver/xcweaver/weaveletControl"
 
-// WeaveletControl is the interface for the weaver.weaveletControl component. It is
+// WeaveletControl is the interface for the xcweaver.weaveletControl component. It is
 // present in its own package so other packages do not need to copy the interface
 // definition.
 //

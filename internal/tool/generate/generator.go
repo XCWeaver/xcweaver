@@ -49,7 +49,7 @@ import (
 // which can be confusing and also we might do unnecessary work.
 
 const (
-	generatedCodeFile = "weaver_gen.go"
+	generatedCodeFile = "xcweaver_gen.go"
 
 	Usage = `Generate code for a XCWeaver application.
 
@@ -60,9 +60,9 @@ Description:
   "xcweaver generate" generates code for the XCWeaver applications in the
   provided packages. For example, "xcweaver generate . ./foo" will generate code
   for the XCWeaver applications in the current directory and in the ./foo
-  directory. For every package, the generated code is placed in a weaver_gen.go
+  directory. For every package, the generated code is placed in a xcweaver_gen.go
   file in the package's directory. For example, "xcweaver generate . ./foo" will
-  create ./weaver_gen.go and ./foo/weaver_gen.go.
+  create ./xcweaver_gen.go and ./foo/xcweaver_gen.go.
 
   You specify packages for "xcweaver generate" in the same way you specify
   packages for go build, go test, go vet, etc. See "go help packages" for more
@@ -130,7 +130,7 @@ func Generate(dir string, pkgs []string, opt Options) error {
 	return errors.Join(errs...)
 }
 
-// parseNonWeaverGenFile parses a Go file, except for weaver_gen.go files whose
+// parseNonWeaverGenFile parses a Go file, except for xcweaver_gen.go files whose
 // contents are ignored since those contents may reference types that no longer
 // exist.
 func parseNonWeaverGenFile(fset *token.FileSet, filename string, src []byte) (*ast.File, error) {
@@ -152,8 +152,8 @@ type generator struct {
 // errorf is like fmt.Errorf but prefixes the error with the provided position.
 func errorf(fset *token.FileSet, pos token.Pos, format string, args ...interface{}) error {
 	// Rewrite the position's filename relative to the current directory. This
-	// replaces long filenames like "/home/foo/XCWeaver/xcweaver/weaver.go"
-	// with much shorter filenames like "./weaver.go".
+	// replaces long filenames like "/home/foo/XCWeaver/xcweaver/xcweaver.go"
+	// with much shorter filenames like "./xcweaver.go".
 	position := fset.Position(pos)
 	if cwd, err := filepath.Abs("."); err == nil {
 		if filename, err := filepath.Rel(cwd, position.Filename); err == nil {
@@ -180,12 +180,12 @@ func newGenerator(opt Options, pkg *packages.Package, fset *token.FileSet, autom
 	}
 
 	// Search every file in the package for types that embed the
-	// weaver.AutoMarshal struct.
+	// xcweaver.AutoMarshal struct.
 	tset := newTypeSet(pkg, automarshals, &typeutil.Map{})
 	for _, file := range pkg.Syntax {
 		filename := fset.Position(file.Package).Filename
 		if filepath.Base(filename) == generatedCodeFile {
-			// Ignore weaver_gen.go files.
+			// Ignore xcweaver_gen.go files.
 			continue
 		}
 		ts, err := findAutoMarshals(pkg, file)
@@ -201,10 +201,10 @@ func newGenerator(opt Options, pkg *packages.Package, fset *token.FileSet, autom
 		return nil, err
 	}
 
-	// Just because a type embeds weaver.AutoMarshal doesn't mean we can
+	// Just because a type embeds xcweaver.AutoMarshal doesn't mean we can
 	// automatically marshal it. Some types, like `struct { x chan int }`, are
 	// just not serializable. Here, we check that every type that embeds
-	// weaver.AutoMarshal is actually serializable.
+	// xcweaver.AutoMarshal is actually serializable.
 	for _, t := range tset.automarshalCandidates.Keys() {
 		n := t.(*types.Named)
 		if err := errors.Join(tset.checkSerializable(n)...); err != nil {
@@ -222,7 +222,7 @@ func newGenerator(opt Options, pkg *packages.Package, fset *token.FileSet, autom
 	for _, file := range pkg.Syntax {
 		filename := fset.Position(file.Package).Filename
 		if filepath.Base(filename) == generatedCodeFile {
-			// Ignore weaver_gen.go files.
+			// Ignore xcweaver_gen.go files.
 			continue
 		}
 
@@ -234,7 +234,7 @@ func newGenerator(opt Options, pkg *packages.Package, fset *token.FileSet, autom
 
 		for _, c := range fileComponents {
 			// Check for component duplicates, two components that embed the
-			// same weaver.Implements[T].
+			// same xcweaver.Implements[T].
 			//
 			// TODO(mwhittaker): This code relies on the fact that a component
 			// interface and component implementation have to be in the same
@@ -253,7 +253,7 @@ func newGenerator(opt Options, pkg *packages.Package, fset *token.FileSet, autom
 	for _, file := range pkg.Syntax {
 		filename := fset.Position(file.Package).Filename
 		if filepath.Base(filename) == generatedCodeFile {
-			// Ignore weaver_gen.go files.
+			// Ignore xcweaver_gen.go files.
 			continue
 		}
 		if err := findMethodAttributes(pkg, file, components); err != nil {
@@ -277,7 +277,7 @@ func newGenerator(opt Options, pkg *packages.Package, fset *token.FileSet, autom
 // findComponents will find and return the following component.
 //
 //	type something struct {
-//	    weaver.Implements[SomeComponentType]
+//	    xcweaver.Implements[SomeComponentType]
 //	    ...
 //	}
 func findComponents(opt Options, pkg *packages.Package, f *ast.File, tset *typeSet) ([]*component, error) {
@@ -308,7 +308,7 @@ func findComponents(opt Options, pkg *packages.Package, f *ast.File, tset *typeS
 
 func findMethodAttributes(pkg *packages.Package, f *ast.File, components map[string]*component) error {
 	// Look for declarations of the form:
-	//	var _ weaver.NotRetriable = Component.Method
+	//	var _ xcweaver.NotRetriable = Component.Method
 	var errs []error
 	for _, decl := range f.Decls {
 		gendecl, ok := decl.(*ast.GenDecl)
@@ -375,7 +375,7 @@ func findComponentMethod(pkg *packages.Package, components map[string]*component
 }
 
 // findAutoMarshals returns the types in the provided file which embed the
-// weaver.AutoMarshal struct.
+// xcweaver.AutoMarshal struct.
 func findAutoMarshals(pkg *packages.Package, f *ast.File) ([]*types.Named, error) {
 	var automarshals []*types.Named
 	var errs []error
@@ -417,7 +417,7 @@ func findAutoMarshals(pkg *packages.Package, f *ast.File) ([]*types.Named, error
 				continue
 			}
 
-			// Check for an embedded weaver.AutoMarshal field.
+			// Check for an embedded xcweaver.AutoMarshal field.
 			automarshal := false
 			for i := 0; i < t.NumFields(); i++ {
 				f := t.Field(i)
@@ -435,7 +435,7 @@ func findAutoMarshals(pkg *packages.Package, f *ast.File) ([]*types.Named, error
 			// declaration:
 			//
 			//     type Register[A any] struct {
-			//         weaver.AutoMarshal
+			//         xcweaver.AutoMarshal
 			//         a A
 			//     }
 			//
@@ -480,11 +480,11 @@ func extractComponent(opt Options, pkg *packages.Package, file *ast.File, tset *
 		return nil, nil
 	}
 
-	// Find any weaver.Implements[T] or weaver.WithRouter[T] embedded fields.
+	// Find any xcweaver.Implements[T] or xcweaver.WithRouter[T] embedded fields.
 	var intf *types.Named       // The component interface type
 	var router *types.Named     // Router type (if any)
-	var isMain bool             // Is intf weaver.Main?
-	var refs []*types.Named     // T for which weaver.Ref[T] exists in struct
+	var isMain bool             // Is intf xcweaver.Main?
+	var refs []*types.Named     // T for which xcweaver.Ref[T] exists in struct
 	var listeners []string      // Names of all listener fields declared in struct
 	var antipodeAgents []string // Names of all listener fields declared in struct
 	for _, f := range s.Fields.List {
@@ -495,7 +495,7 @@ func extractComponent(opt Options, pkg *packages.Package, file *ast.File, tset *
 		t := typeAndValue.Type
 
 		if isWeaverRef(t) {
-			// The field f has type weaver.Ref[T].
+			// The field f has type xcweaver.Ref[T].
 			arg := t.(*types.Named).TypeArgs().At(0)
 			if isWeaverMain(arg) {
 				return nil, errorf(pkg.Fset, f.Pos(),
@@ -526,12 +526,12 @@ func extractComponent(opt Options, pkg *packages.Package, file *ast.File, tset *
 			// Ignore unembedded fields.
 			//
 			// TODO(mwhittaker): Warn the user about unembedded
-			// weaver.Implements, weaver.WithConfig, or weaver.WithRouter?
+			// xcweaver.Implements, xcweaver.WithConfig, or xcweaver.WithRouter?
 			continue
 		}
 
 		switch {
-		// The field f is an embedded weaver.Implements[T].
+		// The field f is an embedded xcweaver.Implements[T].
 		case isWeaverImplements(t):
 			// Check that T is a named interface type inside the package.
 			arg := t.(*types.Named).TypeArgs().At(0)
@@ -554,7 +554,7 @@ func extractComponent(opt Options, pkg *packages.Package, file *ast.File, tset *
 			}
 			intf = named
 
-		// The field f is an embedded weaver.WithRouter[T].
+		// The field f is an embedded xcweaver.WithRouter[T].
 		case isWeaverWithRouter(t):
 			// Check that T is a named type inside the package.
 			arg := t.(*types.Named).TypeArgs().At(0)
@@ -574,8 +574,8 @@ func extractComponent(opt Options, pkg *packages.Package, file *ast.File, tset *
 	}
 
 	if intf == nil {
-		// TODO(mwhittaker): Warn the user if they embed weaver.WithRouter or
-		// weaver.WithConfig but don't embed weaver.Implements.
+		// TODO(mwhittaker): Warn the user if they embed xcweaver.WithRouter or
+		// xcweaver.WithConfig but don't embed xcweaver.Implements.
 		return nil, nil
 	}
 
@@ -619,12 +619,12 @@ func extractComponent(opt Options, pkg *packages.Package, file *ast.File, tset *
 		seenAntipodeAgents[antipodeAgent] = struct{}{}
 	}
 
-	// Warn the user if the component has a mistyped Init method. Init methods
-	// are supposed to have type "func(context.Context) error", but it's easy
+	// Warn the user if the component has a mistyped Init or Shutdown method. These
+	// methods are supposed to have type "func(context.Context) error", but it's easy
 	// to forget to add a context.Context argument or error return. Without
-	// this warning, the component's Init method will be silently ignored. This
-	// can be very frustrating to debug.
-	if err := checkMistypedInit(pkg, tset, impl); err != nil {
+	// this warning, the component's Init or Shutdown method will be silently ignored.
+	// This can be very frustrating to debug.
+	if err := checkMistypedInitOrShutdown(pkg, tset, impl); err != nil {
 		opt.Warn(err)
 	}
 
@@ -651,7 +651,7 @@ func extractComponent(opt Options, pkg *packages.Package, file *ast.File, tset *
 }
 
 // getListenerNamesFromStructField extracts listener names from the given
-// weaver.Listener field in the component implementation struct.
+// xcweaver.Listener field in the component implementation struct.
 func getListenerNamesFromStructField(pkg *packages.Package, f *ast.Field) ([]string, error) {
 	// Try to get the listener name from the struct tag.
 	if f.Tag != nil {
@@ -722,8 +722,8 @@ func getAntipodeAgentNamesFromStructField(pkg *packages.Package, f *ast.Field) (
 //
 //	type Adder interface{}
 //	type adder struct {
-//	    weaver.Implements[Adder]
-//	    weaver.WithRouter[router]
+//	    xcweaver.Implements[Adder]
+//	    xcweaver.WithRouter[router]
 //	}
 //	type router struct{}
 type component struct {
@@ -732,8 +732,8 @@ type component struct {
 	router         *types.Named        // router, or nil if there is no router
 	routingKey     types.Type          // routing key, or nil if there is no router
 	routedMethods  map[string]bool     // the set of methods with a routing function
-	isMain         bool                // intf is weaver.Main
-	refs           []*types.Named      // List of T where a weaver.Ref[T] field is in impl struct
+	isMain         bool                // intf is xcweaver.Main
+	refs           []*types.Named      // List of T where a xcweaver.Ref[T] field is in impl struct
 	listeners      []string            // Names of listener fields declared in impl struct
 	noretry        map[string]struct{} // Methods that should not be retried
 	antipodeAgents []string            // Names of antipode agent fields declared in impl struct
@@ -789,7 +789,7 @@ func validateMethods(pkg *packages.Package, tset *typeSet, intf *types.Named) er
 		// Disallow unexported methods.
 		if !m.Exported() {
 			errs = append(errs, errorf(pkg.Fset, m.Pos(),
-				"Method `%s%s %s` of XCWeaver component %q is unexported. Every method in a component interface must be exported.",
+				"Method `%s%s %s` of Service Weaver component %q is unexported. Every method in a component interface must be exported.",
 				m.Name(), formatType(pkg, t.Params()), formatType(pkg, t.Results()), intf.Obj().Name()))
 			continue
 		}
@@ -799,7 +799,7 @@ func validateMethods(pkg *packages.Package, tset *typeSet, intf *types.Named) er
 			err := fmt.Errorf(format, arg...)
 			return errorf(
 				pkg.Fset, m.Pos(),
-				"Method `%s%s %s` of XCWeaver component %q has incorrect %s types. %w",
+				"Method `%s%s %s` of Service Weaver component %q has incorrect %s types. %w",
 				m.Name(), formatType(pkg, t.Params()), formatType(pkg, t.Results()), intf.Obj().Name(), bad, err)
 		}
 
@@ -840,27 +840,27 @@ func validateMethods(pkg *packages.Package, tset *typeSet, intf *types.Named) er
 	return errors.Join(errs...)
 }
 
-// checkMistypedInit returns an error if the provided component implementation
-// has an Init method that does not have type "func(context.Context) error".
-func checkMistypedInit(pkg *packages.Package, tset *typeSet, impl *types.Named) error {
+// checkMistypedInitOrShutdown returns an error if the provided component implementation
+// has an Init or a Shutdown method that does not have type "func(context.Context) error".
+func checkMistypedInitOrShutdown(pkg *packages.Package, tset *typeSet, impl *types.Named) error {
 	for i := 0; i < impl.NumMethods(); i++ {
 		m := impl.Method(i)
-		if m.Name() != "Init" {
+		if m.Name() != "Init" && m.Name() != "Shutdown" {
 			continue
 		}
 
 		// TODO(mwhittaker): Highlight the warning yellow instead of red.
 		sig := m.Type().(*types.Signature)
 		err := errorf(pkg.Fset, m.Pos(),
-			`WARNING: Component %v's Init method has type "%v", not type "func(context.Context) error". It will be ignored. See https://serviceweaver.dev/docs.html#components-implementation for more information.`,
-			impl.Obj().Name(), sig)
+			`WARNING: Component %v's %s method has type "%v", not type "func(context.Context) error". It will be ignored. See https://serviceweaver.dev/docs.html#components-implementation for more information.`,
+			impl.Obj().Name(), m.Name(), sig)
 
-		// Check Init's parameters.
+		// Check parameters.
 		if sig.Params().Len() != 1 || !isContext(sig.Params().At(0).Type()) {
 			return err
 		}
 
-		// Check Init's returns.
+		// Check returns.
 		if sig.Results().Len() != 1 || sig.Results().At(0).Type().String() != "error" {
 			return err
 		}
@@ -874,8 +874,8 @@ func checkMistypedInit(pkg *packages.Package, tset *typeSet, impl *types.Named) 
 // A developer can annotate a Service Weaver component with a router, like this:
 //
 //	type foo struct {
-//		weaver.Implements[Foo]
-//		weaver.WithRouter[fooRouter]
+//		xcweaver.Implements[Foo]
+//		xcweaver.WithRouter[fooRouter]
 //		...
 //	}
 //	func (*foo) A(context.Context) error {...}
@@ -1047,7 +1047,7 @@ func (g *generator) pkgDir() string {
 // implemented by a component in generated code.
 func (g *generator) componentRef(comp *component) string {
 	if comp.isMain {
-		return g.weaver().qualify("Main")
+		return g.xcweaver().qualify("Main")
 	}
 	return comp.intfName() // We already checked that interface is in the same package.
 }
@@ -1079,7 +1079,7 @@ func (g *generator) generateVersionCheck(p printFn) error {
 		return fmt.Errorf("read self version: %w", err)
 	}
 
-	// Example output when 'weaver generate' has codegen API version 0.1.0:
+	// Example output when 'xcweaver generate' has codegen API version 0.1.0:
 	//
 	//     var _ codegen.LatestVersion = codegen.Version[[0][1]struct{}]("You used ...")
 	p(``)
@@ -1102,7 +1102,7 @@ We recommend updating the xcweaver module and the 'xcweaver generate' command by
 running the following.
 
     go get github.com/XCWeaver/xcweaver@latest
-    go install github.com/XCWeaver/xcweaver/cmd/weaver@latest
+    go install github.com/XCWeaver/xcweaver/cmd/xcweaver@latest
 
 Then, re-run 'xcweaver generate' and re-build your code. If the problem persists,
 please file an issue at https://github.com/XCWeaver/xcweaver/issues.
@@ -1113,17 +1113,17 @@ please file an issue at https://github.com/XCWeaver/xcweaver/issues.
 }
 
 // generateInstanceChecks generates code that checks that every component
-// implementation type implements weaver.InstanceOf[T] for the appropriate T.
+// implementation type implements xcweaver.InstanceOf[T] for the appropriate T.
 func (g *generator) generateInstanceChecks(p printFn) {
-	// If someone deletes a weaver.Implements annotation and forgets to re-run
-	// `weaver generate`, these checks will fail to build. Similarly, if a user
-	// changes the interface in a weaver.Implements and forgets to re-run
-	// `weaver generate`, these checks will fail to build.
+	// If someone deletes a xcweaver.Implements annotation and forgets to re-run
+	// `xcweaver generate`, these checks will fail to build. Similarly, if a user
+	// changes the interface in a xcweaver.Implements and forgets to re-run
+	// `xcweaver generate`, these checks will fail to build.
 	p(``)
 	p(`// xcweaver.InstanceOf checks.`)
 	for _, c := range g.components {
-		// e.g., var _ weaver.InstanceOf[Odd] = &odd{}
-		p(`var _ %s[%s] = (*%s)(nil)`, g.weaver().qualify("InstanceOf"), g.tset.genTypeString(c.intf), g.tset.genTypeString(c.impl))
+		// e.g., var _ xcweaver.InstanceOf[Odd] = &odd{}
+		p(`var _ %s[%s] = (*%s)(nil)`, g.xcweaver().qualify("InstanceOf"), g.tset.genTypeString(c.intf), g.tset.genTypeString(c.impl))
 	}
 }
 
@@ -1131,18 +1131,18 @@ func (g *generator) generateInstanceChecks(p printFn) {
 // implementation is either unrouted or is routed by the expected router.
 func (g *generator) generateRouterChecks(p printFn) {
 	// If a user adds, deletes, or changes an embedded xcweaver.WithRouter[T]
-	// annotation and forgets to re-run `weaver generate`, these checks will
+	// annotation and forgets to re-run `xcweaver generate`, these checks will
 	// fail to build.
 	p(``)
 	p(`// xcweaver.Router checks.`)
 	for _, c := range g.components {
 		if c.router == nil {
-			// e.g., var _ weaver.Unrouted = &odd{}
-			p(`var _ %s = (*%s)(nil)`, g.weaver().qualify("Unrouted"), g.tset.genTypeString(c.impl))
+			// e.g., var _ xcweaver.Unrouted = &odd{}
+			p(`var _ %s = (*%s)(nil)`, g.xcweaver().qualify("Unrouted"), g.tset.genTypeString(c.impl))
 
 		} else {
 			// e.g., var _ xcweaver.RoutedBy[router] = &odd{}
-			p(`var _ %s[%s] = (*%s)(nil)`, g.weaver().qualify("RoutedBy"), g.tset.genTypeString(c.router), g.tset.genTypeString(c.impl))
+			p(`var _ %s[%s] = (*%s)(nil)`, g.xcweaver().qualify("RoutedBy"), g.tset.genTypeString(c.router), g.tset.genTypeString(c.impl))
 		}
 	}
 
@@ -1192,7 +1192,7 @@ func (g *generator) generateRouterChecks(p printFn) {
 		}
 
 		// If a user deletes a routed method from or implements an unrouted
-		// method on an embedded router and forgets to re-run `weaver
+		// method on an embedded router and forgets to re-run `xcweaver
 		// generate`, these checks will fail to build.
 		//
 		// For example, given a component struct "calc", a router "router",
@@ -1227,7 +1227,7 @@ func (g *generator) generateRegisteredComponents(p printFn) {
 
 		// Emits initializer for a single method's MethodMetrics object.
 		emitMetricInitializer := func(m *types.Func, remote bool) {
-			fmt.Fprintf(&b, ", %sMetrics: %s(%s{Caller: caller, Component: %q, Method: %q, Remote: %v})",
+			fmt.Fprintf(&b, ", %sMetrics: %s(%s{Caller: caller, Component: %q, Method: %q, Remote: %v, Generated: true})",
 				notExported(m.Name()),
 				g.codegen().qualify("MethodMetricsFor"),
 				g.codegen().qualify("MethodLabels"),
@@ -1288,7 +1288,7 @@ func (g *generator) generateRegisteredComponents(p printFn) {
 		}
 
 		// E.g.,
-		//	weaver.Register(weaver.Registration{
+		//	xcweaver.Register(xcweaver.Registration{
 		//	    Props: codegen.ComponentProperties{},
 		//	    ...,
 		//	})
@@ -1469,7 +1469,7 @@ func (g *generator) generateClientStubs(p printFn) {
 			p(`		if err == nil {`)
 			p(`			err = %s(recover())`, g.codegen().qualify("CatchPanics"))
 			p(`			if err != nil {`)
-			p(`				err = %s(%s, err)`, g.errorsPackage().qualify("Join"), g.weaver().qualify("RemoteCallError"))
+			p(`				err = %s(%s, err)`, g.errorsPackage().qualify("Join"), g.xcweaver().qualify("RemoteCallError"))
 			p(`			}`)
 			p(`		}`)
 			p(``)
@@ -1549,7 +1549,7 @@ func (g *generator) generateClientStubs(p printFn) {
 			p(`	results, err = s.stub.Run(ctx, %d, %s, shardKey)`, methodIndex[m.Name()], data)
 			p(`	replyBytes = len(results)`)
 			p(`	if err != nil {`)
-			p(`		err = %s(%s, err)`, g.errorsPackage().qualify("Join"), g.weaver().qualify("RemoteCallError"))
+			p(`		err = %s(%s, err)`, g.errorsPackage().qualify("Join"), g.xcweaver().qualify("RemoteCallError"))
 			p(`		return`)
 			p(`	}`)
 
@@ -1696,7 +1696,7 @@ func (g *generator) size(e string, t types.Type) string {
 	// size(e: []t) = 4 + len(e) * fixedsize(t)
 	// size(e: map[k]v) = 4 + len(e) * (fixedsize(k) + fixedsize(v))
 	// size(e: struct{...}) = serviceweaver_size_struct_XXXXXXXX(e)
-	// size(e: weaver.AutoMarshal) = 0
+	// size(e: xcweaver.AutoMarshal) = 0
 	// size(e: type t struct{...}) = serviceweaver_size_t(e)
 	// size(e: type t u) = size(e: u)
 
@@ -1755,7 +1755,7 @@ func (g *generator) size(e string, t types.Type) string {
 }
 
 // findSizeFuncNeededs finds any nested types within the provided type that
-// require a weaver generated size function.
+// require a xcweaver generated size function.
 //
 // We can compute the size of most measurable types without calling a function.
 // For example, the size of a string s is just len(s). However, computing the
@@ -2085,24 +2085,24 @@ func (g *generator) generateAutoMarshalMethods(p printFn) {
 		// Pair type:
 		//
 		//     type Pair struct {
-		//         weaver.AutoMarshal
+		//         xcweaver.AutoMarshal
 		//         x int
 		//         y int
 		//     }
 		//
 		// We generate the following code:
 		//
-		//     var _ weaver.AutoMarshal = &pair{}
+		//     var _ xcweaver.AutoMarshal = &pair{}
 		//
 		//     type __is_Pair[T ~struct {
-		//         weaver.AutoMarshal
+		//         xcweaver.AutoMarshal
 		//         x int
 		//         y int
 		//     }] struct{}
 		//     var _ __is_Pair[Pair]
 		//
 		// These checks ensure that if a user changes the Pair struct and
-		// forgets to re-run "weaver generate", the app will not build.
+		// forgets to re-run "xcweaver generate", the app will not build.
 		p(``)
 		p(`var _ %s = (*%s)(nil)`, g.codegen().qualify("AutoMarshal"), ts(t))
 		p(`type __is_%s[T ~%s] struct{}`, t.(*types.Named).Obj().Name(), ts(s))
@@ -2542,7 +2542,7 @@ func (g *generator) generateEncDecMethodsFor(p printFn, t types.Type) {
 
 	case *types.Named:
 		if g.tset.isProto(x) || g.tset.automarshals.At(x) != nil || g.tset.implementsAutoMarshal(x) || g.tset.hasMarshalBinary(x) {
-			// Types implementing proto.Marshal, weaver.AutoMarshal, or
+			// Types implementing proto.Marshal, xcweaver.AutoMarshal, or
 			// encoding.BinaryMarshaler and encoding.BinaryUnmarshaler don't
 			// need encoding or decoding methods. Instead, we call methods
 			// directly on a codegen.Encoder or codegen.Decoder (e.g.,
@@ -2559,8 +2559,8 @@ func (g *generator) generateEncDecMethodsFor(p printFn, t types.Type) {
 	}
 }
 
-// weaver imports and returns the weaver package.
-func (g *generator) weaver() importPkg {
+// xcweaver imports and returns the xcweaver package.
+func (g *generator) xcweaver() importPkg {
 	return g.tset.importPackage(weaverPackagePath, "xcweaver")
 }
 

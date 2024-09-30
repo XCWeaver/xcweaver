@@ -19,10 +19,10 @@ func init() {
 		Iface: reflect.TypeOf((*deployerControl)(nil)).Elem(),
 		Impl:  reflect.TypeOf(localDeployerControl{}),
 		LocalStubFn: func(impl any, caller string, tracer trace.Tracer) any {
-			return deployerControl_local_stub{impl: impl.(deployerControl), tracer: tracer, activateComponentMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/deployerControl", Method: "ActivateComponent", Remote: false}), exportListenerMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/deployerControl", Method: "ExportListener", Remote: false}), getAntipodeAgentInfoMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/deployerControl", Method: "GetAntipodeAgentInfo", Remote: false}), getListenerAddressMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/deployerControl", Method: "GetListenerAddress", Remote: false}), getSelfCertificateMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/deployerControl", Method: "GetSelfCertificate", Remote: false}), handleTraceSpansMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/deployerControl", Method: "HandleTraceSpans", Remote: false}), logBatchMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/deployerControl", Method: "LogBatch", Remote: false}), verifyClientCertificateMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/deployerControl", Method: "VerifyClientCertificate", Remote: false}), verifyServerCertificateMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/deployerControl", Method: "VerifyServerCertificate", Remote: false})}
+			return deployerControl_local_stub{impl: impl.(deployerControl), tracer: tracer, activateComponentMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/deployerControl", Method: "ActivateComponent", Remote: false, Generated: true}), exportListenerMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/deployerControl", Method: "ExportListener", Remote: false, Generated: true}), getAntipodeAgentInfoMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/deployerControl", Method: "GetAntipodeAgentInfo", Remote: false, Generated: true}), getListenerAddressMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/deployerControl", Method: "GetListenerAddress", Remote: false, Generated: true}), getSelfCertificateMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/deployerControl", Method: "GetSelfCertificate", Remote: false, Generated: true}), handleTraceSpansMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/deployerControl", Method: "HandleTraceSpans", Remote: false, Generated: true}), logBatchMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/deployerControl", Method: "LogBatch", Remote: false, Generated: true}), verifyClientCertificateMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/deployerControl", Method: "VerifyClientCertificate", Remote: false, Generated: true}), verifyServerCertificateMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/deployerControl", Method: "VerifyServerCertificate", Remote: false, Generated: true})}
 		},
 		ClientStubFn: func(stub codegen.Stub, caller string) any {
-			return deployerControl_client_stub{stub: stub, activateComponentMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/deployerControl", Method: "ActivateComponent", Remote: true}), exportListenerMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/deployerControl", Method: "ExportListener", Remote: true}), getAntipodeAgentInfoMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/deployerControl", Method: "GetAntipodeAgentInfo", Remote: true}), getListenerAddressMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/deployerControl", Method: "GetListenerAddress", Remote: true}), getSelfCertificateMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/deployerControl", Method: "GetSelfCertificate", Remote: true}), handleTraceSpansMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/deployerControl", Method: "HandleTraceSpans", Remote: true}), logBatchMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/deployerControl", Method: "LogBatch", Remote: true}), verifyClientCertificateMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/deployerControl", Method: "VerifyClientCertificate", Remote: true}), verifyServerCertificateMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/deployerControl", Method: "VerifyServerCertificate", Remote: true})}
+			return deployerControl_client_stub{stub: stub, activateComponentMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/deployerControl", Method: "ActivateComponent", Remote: true, Generated: true}), exportListenerMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/deployerControl", Method: "ExportListener", Remote: true, Generated: true}), getAntipodeAgentInfoMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/deployerControl", Method: "GetAntipodeAgentInfo", Remote: true, Generated: true}), getListenerAddressMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/deployerControl", Method: "GetListenerAddress", Remote: true, Generated: true}), getSelfCertificateMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/deployerControl", Method: "GetSelfCertificate", Remote: true, Generated: true}), handleTraceSpansMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/deployerControl", Method: "HandleTraceSpans", Remote: true, Generated: true}), logBatchMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/deployerControl", Method: "LogBatch", Remote: true, Generated: true}), verifyClientCertificateMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/deployerControl", Method: "VerifyClientCertificate", Remote: true, Generated: true}), verifyServerCertificateMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/deployerControl", Method: "VerifyServerCertificate", Remote: true, Generated: true})}
 		},
 		ServerStubFn: func(impl any, addLoad func(uint64, float64)) codegen.Server {
 			return deployerControl_server_stub{impl: impl.(deployerControl), addLoad: addLoad}
@@ -37,10 +37,10 @@ func init() {
 		Iface: reflect.TypeOf((*weaveletControl)(nil)).Elem(),
 		Impl:  reflect.TypeOf(noopWeaveletControl{}),
 		LocalStubFn: func(impl any, caller string, tracer trace.Tracer) any {
-			return weaveletControl_local_stub{impl: impl.(weaveletControl), tracer: tracer, getHealthMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/weaveletControl", Method: "GetHealth", Remote: false}), getLoadMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/weaveletControl", Method: "GetLoad", Remote: false}), getMetricsMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/weaveletControl", Method: "GetMetrics", Remote: false}), getProfileMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/weaveletControl", Method: "GetProfile", Remote: false}), initWeaveletMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/weaveletControl", Method: "InitWeavelet", Remote: false}), updateComponentsMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/weaveletControl", Method: "UpdateComponents", Remote: false}), updateRoutingInfoMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/weaveletControl", Method: "UpdateRoutingInfo", Remote: false})}
+			return weaveletControl_local_stub{impl: impl.(weaveletControl), tracer: tracer, getHealthMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/weaveletControl", Method: "GetHealth", Remote: false, Generated: true}), getLoadMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/weaveletControl", Method: "GetLoad", Remote: false, Generated: true}), getMetricsMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/weaveletControl", Method: "GetMetrics", Remote: false, Generated: true}), getProfileMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/weaveletControl", Method: "GetProfile", Remote: false, Generated: true}), initWeaveletMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/weaveletControl", Method: "InitWeavelet", Remote: false, Generated: true}), updateComponentsMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/weaveletControl", Method: "UpdateComponents", Remote: false, Generated: true}), updateRoutingInfoMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/weaveletControl", Method: "UpdateRoutingInfo", Remote: false, Generated: true})}
 		},
 		ClientStubFn: func(stub codegen.Stub, caller string) any {
-			return weaveletControl_client_stub{stub: stub, getHealthMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/weaveletControl", Method: "GetHealth", Remote: true}), getLoadMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/weaveletControl", Method: "GetLoad", Remote: true}), getMetricsMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/weaveletControl", Method: "GetMetrics", Remote: true}), getProfileMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/weaveletControl", Method: "GetProfile", Remote: true}), initWeaveletMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/weaveletControl", Method: "InitWeavelet", Remote: true}), updateComponentsMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/weaveletControl", Method: "UpdateComponents", Remote: true}), updateRoutingInfoMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/weaveletControl", Method: "UpdateRoutingInfo", Remote: true})}
+			return weaveletControl_client_stub{stub: stub, getHealthMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/weaveletControl", Method: "GetHealth", Remote: true, Generated: true}), getLoadMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/weaveletControl", Method: "GetLoad", Remote: true, Generated: true}), getMetricsMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/weaveletControl", Method: "GetMetrics", Remote: true, Generated: true}), getProfileMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/weaveletControl", Method: "GetProfile", Remote: true, Generated: true}), initWeaveletMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/weaveletControl", Method: "InitWeavelet", Remote: true, Generated: true}), updateComponentsMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/weaveletControl", Method: "UpdateComponents", Remote: true, Generated: true}), updateRoutingInfoMetrics: codegen.MethodMetricsFor(codegen.MethodLabels{Caller: caller, Component: "github.com/XCWeaver/xcweaver/weaveletControl", Method: "UpdateRoutingInfo", Remote: true, Generated: true})}
 		},
 		ServerStubFn: func(impl any, addLoad func(uint64, float64)) codegen.Server {
 			return weaveletControl_server_stub{impl: impl.(weaveletControl), addLoad: addLoad}
@@ -463,7 +463,7 @@ func (s deployerControl_client_stub) ActivateComponent(ctx context.Context, a0 *
 
 	// Encode arguments.
 	enc := codegen.NewEncoder()
-	serviceweaver_enc_ptr_ActivateComponentRequest_c3e03861(enc, a0)
+	serviceweaver_enc_ptr_ActivateComponentRequest_5a679567(enc, a0)
 	var shardKey uint64
 
 	// Call the remote method.
@@ -478,7 +478,7 @@ func (s deployerControl_client_stub) ActivateComponent(ctx context.Context, a0 *
 
 	// Decode the results.
 	dec := codegen.NewDecoder(results)
-	r0 = serviceweaver_dec_ptr_ActivateComponentReply_7f24f708(dec)
+	r0 = serviceweaver_dec_ptr_ActivateComponentReply_c8006e70(dec)
 	err = dec.Error()
 	return
 }
@@ -514,7 +514,7 @@ func (s deployerControl_client_stub) ExportListener(ctx context.Context, a0 *pro
 
 	// Encode arguments.
 	enc := codegen.NewEncoder()
-	serviceweaver_enc_ptr_ExportListenerRequest_3683bbeb(enc, a0)
+	serviceweaver_enc_ptr_ExportListenerRequest_ebf52349(enc, a0)
 	var shardKey uint64
 
 	// Call the remote method.
@@ -529,7 +529,7 @@ func (s deployerControl_client_stub) ExportListener(ctx context.Context, a0 *pro
 
 	// Decode the results.
 	dec := codegen.NewDecoder(results)
-	r0 = serviceweaver_dec_ptr_ExportListenerReply_5fe4f6f2(dec)
+	r0 = serviceweaver_dec_ptr_ExportListenerReply_2186e973(dec)
 	err = dec.Error()
 	return
 }
@@ -565,7 +565,7 @@ func (s deployerControl_client_stub) GetAntipodeAgentInfo(ctx context.Context, a
 
 	// Encode arguments.
 	enc := codegen.NewEncoder()
-	serviceweaver_enc_ptr_GetAntipodeAgentInfoRequest_de07f6bb(enc, a0)
+	serviceweaver_enc_ptr_GetAntipodeAgentInfoRequest_f0e7c1eb(enc, a0)
 	var shardKey uint64
 
 	// Call the remote method.
@@ -580,7 +580,7 @@ func (s deployerControl_client_stub) GetAntipodeAgentInfo(ctx context.Context, a
 
 	// Decode the results.
 	dec := codegen.NewDecoder(results)
-	r0 = serviceweaver_dec_ptr_GetAntipodeAgentInfoReply_80d3db5f(dec)
+	r0 = serviceweaver_dec_ptr_GetAntipodeAgentInfoReply_6b29e231(dec)
 	err = dec.Error()
 	return
 }
@@ -616,7 +616,7 @@ func (s deployerControl_client_stub) GetListenerAddress(ctx context.Context, a0 
 
 	// Encode arguments.
 	enc := codegen.NewEncoder()
-	serviceweaver_enc_ptr_GetListenerAddressRequest_82370afc(enc, a0)
+	serviceweaver_enc_ptr_GetListenerAddressRequest_52cc2571(enc, a0)
 	var shardKey uint64
 
 	// Call the remote method.
@@ -631,7 +631,7 @@ func (s deployerControl_client_stub) GetListenerAddress(ctx context.Context, a0 
 
 	// Decode the results.
 	dec := codegen.NewDecoder(results)
-	r0 = serviceweaver_dec_ptr_GetListenerAddressReply_a9f3f6f3(dec)
+	r0 = serviceweaver_dec_ptr_GetListenerAddressReply_132092dd(dec)
 	err = dec.Error()
 	return
 }
@@ -667,7 +667,7 @@ func (s deployerControl_client_stub) GetSelfCertificate(ctx context.Context, a0 
 
 	// Encode arguments.
 	enc := codegen.NewEncoder()
-	serviceweaver_enc_ptr_GetSelfCertificateRequest_d34f6dc5(enc, a0)
+	serviceweaver_enc_ptr_GetSelfCertificateRequest_298c9233(enc, a0)
 	var shardKey uint64
 
 	// Call the remote method.
@@ -682,7 +682,7 @@ func (s deployerControl_client_stub) GetSelfCertificate(ctx context.Context, a0 
 
 	// Decode the results.
 	dec := codegen.NewDecoder(results)
-	r0 = serviceweaver_dec_ptr_GetSelfCertificateReply_92d3fba3(dec)
+	r0 = serviceweaver_dec_ptr_GetSelfCertificateReply_87752294(dec)
 	err = dec.Error()
 	return
 }
@@ -718,7 +718,7 @@ func (s deployerControl_client_stub) HandleTraceSpans(ctx context.Context, a0 *p
 
 	// Encode arguments.
 	enc := codegen.NewEncoder()
-	serviceweaver_enc_ptr_TraceSpans_ff643e67(enc, a0)
+	serviceweaver_enc_ptr_TraceSpans_86cf317d(enc, a0)
 	var shardKey uint64
 
 	// Call the remote method.
@@ -768,7 +768,7 @@ func (s deployerControl_client_stub) LogBatch(ctx context.Context, a0 *protos.Lo
 
 	// Encode arguments.
 	enc := codegen.NewEncoder()
-	serviceweaver_enc_ptr_LogEntryBatch_b68efcc8(enc, a0)
+	serviceweaver_enc_ptr_LogEntryBatch_90b2181c(enc, a0)
 	var shardKey uint64
 
 	// Call the remote method.
@@ -818,7 +818,7 @@ func (s deployerControl_client_stub) VerifyClientCertificate(ctx context.Context
 
 	// Encode arguments.
 	enc := codegen.NewEncoder()
-	serviceweaver_enc_ptr_VerifyClientCertificateRequest_ccc2096f(enc, a0)
+	serviceweaver_enc_ptr_VerifyClientCertificateRequest_10a07b68(enc, a0)
 	var shardKey uint64
 
 	// Call the remote method.
@@ -833,7 +833,7 @@ func (s deployerControl_client_stub) VerifyClientCertificate(ctx context.Context
 
 	// Decode the results.
 	dec := codegen.NewDecoder(results)
-	r0 = serviceweaver_dec_ptr_VerifyClientCertificateReply_6b9ae3fa(dec)
+	r0 = serviceweaver_dec_ptr_VerifyClientCertificateReply_38a18f7b(dec)
 	err = dec.Error()
 	return
 }
@@ -869,7 +869,7 @@ func (s deployerControl_client_stub) VerifyServerCertificate(ctx context.Context
 
 	// Encode arguments.
 	enc := codegen.NewEncoder()
-	serviceweaver_enc_ptr_VerifyServerCertificateRequest_9e210a97(enc, a0)
+	serviceweaver_enc_ptr_VerifyServerCertificateRequest_c9dbdbe8(enc, a0)
 	var shardKey uint64
 
 	// Call the remote method.
@@ -884,7 +884,7 @@ func (s deployerControl_client_stub) VerifyServerCertificate(ctx context.Context
 
 	// Decode the results.
 	dec := codegen.NewDecoder(results)
-	r0 = serviceweaver_dec_ptr_VerifyServerCertificateReply_6fc8c959(dec)
+	r0 = serviceweaver_dec_ptr_VerifyServerCertificateReply_975794cc(dec)
 	err = dec.Error()
 	return
 }
@@ -934,7 +934,7 @@ func (s weaveletControl_client_stub) GetHealth(ctx context.Context, a0 *protos.G
 
 	// Encode arguments.
 	enc := codegen.NewEncoder()
-	serviceweaver_enc_ptr_GetHealthRequest_bbf579ea(enc, a0)
+	serviceweaver_enc_ptr_GetHealthRequest_675a143c(enc, a0)
 	var shardKey uint64
 
 	// Call the remote method.
@@ -949,7 +949,7 @@ func (s weaveletControl_client_stub) GetHealth(ctx context.Context, a0 *protos.G
 
 	// Decode the results.
 	dec := codegen.NewDecoder(results)
-	r0 = serviceweaver_dec_ptr_GetHealthReply_643539c1(dec)
+	r0 = serviceweaver_dec_ptr_GetHealthReply_789dfa54(dec)
 	err = dec.Error()
 	return
 }
@@ -985,7 +985,7 @@ func (s weaveletControl_client_stub) GetLoad(ctx context.Context, a0 *protos.Get
 
 	// Encode arguments.
 	enc := codegen.NewEncoder()
-	serviceweaver_enc_ptr_GetLoadRequest_0717c809(enc, a0)
+	serviceweaver_enc_ptr_GetLoadRequest_c33d4a5b(enc, a0)
 	var shardKey uint64
 
 	// Call the remote method.
@@ -1000,7 +1000,7 @@ func (s weaveletControl_client_stub) GetLoad(ctx context.Context, a0 *protos.Get
 
 	// Decode the results.
 	dec := codegen.NewDecoder(results)
-	r0 = serviceweaver_dec_ptr_GetLoadReply_49f3ce4b(dec)
+	r0 = serviceweaver_dec_ptr_GetLoadReply_d30bf405(dec)
 	err = dec.Error()
 	return
 }
@@ -1036,7 +1036,7 @@ func (s weaveletControl_client_stub) GetMetrics(ctx context.Context, a0 *protos.
 
 	// Encode arguments.
 	enc := codegen.NewEncoder()
-	serviceweaver_enc_ptr_GetMetricsRequest_c478481d(enc, a0)
+	serviceweaver_enc_ptr_GetMetricsRequest_ecd4d5f7(enc, a0)
 	var shardKey uint64
 
 	// Call the remote method.
@@ -1051,7 +1051,7 @@ func (s weaveletControl_client_stub) GetMetrics(ctx context.Context, a0 *protos.
 
 	// Decode the results.
 	dec := codegen.NewDecoder(results)
-	r0 = serviceweaver_dec_ptr_GetMetricsReply_54b1de7f(dec)
+	r0 = serviceweaver_dec_ptr_GetMetricsReply_340e66b4(dec)
 	err = dec.Error()
 	return
 }
@@ -1087,7 +1087,7 @@ func (s weaveletControl_client_stub) GetProfile(ctx context.Context, a0 *protos.
 
 	// Encode arguments.
 	enc := codegen.NewEncoder()
-	serviceweaver_enc_ptr_GetProfileRequest_b61a028a(enc, a0)
+	serviceweaver_enc_ptr_GetProfileRequest_96f3c30d(enc, a0)
 	var shardKey uint64
 
 	// Call the remote method.
@@ -1102,7 +1102,7 @@ func (s weaveletControl_client_stub) GetProfile(ctx context.Context, a0 *protos.
 
 	// Decode the results.
 	dec := codegen.NewDecoder(results)
-	r0 = serviceweaver_dec_ptr_GetProfileReply_af394018(dec)
+	r0 = serviceweaver_dec_ptr_GetProfileReply_c6dc161a(dec)
 	err = dec.Error()
 	return
 }
@@ -1138,7 +1138,7 @@ func (s weaveletControl_client_stub) InitWeavelet(ctx context.Context, a0 *proto
 
 	// Encode arguments.
 	enc := codegen.NewEncoder()
-	serviceweaver_enc_ptr_InitWeaveletRequest_d7977b39(enc, a0)
+	serviceweaver_enc_ptr_InitWeaveletRequest_16114ee6(enc, a0)
 	var shardKey uint64
 
 	// Call the remote method.
@@ -1153,7 +1153,7 @@ func (s weaveletControl_client_stub) InitWeavelet(ctx context.Context, a0 *proto
 
 	// Decode the results.
 	dec := codegen.NewDecoder(results)
-	r0 = serviceweaver_dec_ptr_InitWeaveletReply_78d29c1c(dec)
+	r0 = serviceweaver_dec_ptr_InitWeaveletReply_ef1e60ed(dec)
 	err = dec.Error()
 	return
 }
@@ -1189,7 +1189,7 @@ func (s weaveletControl_client_stub) UpdateComponents(ctx context.Context, a0 *p
 
 	// Encode arguments.
 	enc := codegen.NewEncoder()
-	serviceweaver_enc_ptr_UpdateComponentsRequest_f709e3cd(enc, a0)
+	serviceweaver_enc_ptr_UpdateComponentsRequest_5e728367(enc, a0)
 	var shardKey uint64
 
 	// Call the remote method.
@@ -1204,7 +1204,7 @@ func (s weaveletControl_client_stub) UpdateComponents(ctx context.Context, a0 *p
 
 	// Decode the results.
 	dec := codegen.NewDecoder(results)
-	r0 = serviceweaver_dec_ptr_UpdateComponentsReply_dbe1f570(dec)
+	r0 = serviceweaver_dec_ptr_UpdateComponentsReply_07d4e4e3(dec)
 	err = dec.Error()
 	return
 }
@@ -1240,7 +1240,7 @@ func (s weaveletControl_client_stub) UpdateRoutingInfo(ctx context.Context, a0 *
 
 	// Encode arguments.
 	enc := codegen.NewEncoder()
-	serviceweaver_enc_ptr_UpdateRoutingInfoRequest_296c913e(enc, a0)
+	serviceweaver_enc_ptr_UpdateRoutingInfoRequest_1a1198bc(enc, a0)
 	var shardKey uint64
 
 	// Call the remote method.
@@ -1255,7 +1255,7 @@ func (s weaveletControl_client_stub) UpdateRoutingInfo(ctx context.Context, a0 *
 
 	// Decode the results.
 	dec := codegen.NewDecoder(results)
-	r0 = serviceweaver_dec_ptr_UpdateRoutingInfoReply_f7889ece(dec)
+	r0 = serviceweaver_dec_ptr_UpdateRoutingInfoReply_7f3841c5(dec)
 	err = dec.Error()
 	return
 }
@@ -1263,10 +1263,10 @@ func (s weaveletControl_client_stub) UpdateRoutingInfo(ctx context.Context, a0 *
 // Note that "xcweaver generate" will always generate the error message below.
 // Everything is okay. The error message is only relevant if you see it when
 // you run "go build" or "go run".
-var _ codegen.LatestVersion = codegen.Version[[0][20]struct{}](`
+var _ codegen.LatestVersion = codegen.Version[[0][24]struct{}](`
 
-ERROR: You generated this file with 'xcweaver generate' v0.4.86 (codegen
-version v0.20.0). The generated code is incompatible with the version of the
+ERROR: You generated this file with 'xcweaver generate' v0.0.2 (codegen
+version v0.24.0). The generated code is incompatible with the version of the
 github.com/XCWeaver/xcweaver module that you're using. The xcweaver module
 version can be found in your go.mod file or by running the following command.
 
@@ -1276,7 +1276,7 @@ We recommend updating the xcweaver module and the 'xcweaver generate' command by
 running the following.
 
     go get github.com/XCWeaver/xcweaver@latest
-    go install github.com/XCWeaver/xcweaver/cmd/weaver@latest
+    go install github.com/XCWeaver/xcweaver/cmd/xcweaver@latest
 
 Then, re-run 'xcweaver generate' and re-build your code. If the problem persists,
 please file an issue at https://github.com/XCWeaver/xcweaver/issues.
@@ -1330,7 +1330,7 @@ func (s deployerControl_server_stub) activateComponent(ctx context.Context, args
 	// Decode arguments.
 	dec := codegen.NewDecoder(args)
 	var a0 *protos.ActivateComponentRequest
-	a0 = serviceweaver_dec_ptr_ActivateComponentRequest_c3e03861(dec)
+	a0 = serviceweaver_dec_ptr_ActivateComponentRequest_5a679567(dec)
 
 	// TODO(rgrandl): The deferred function above will recover from panics in the
 	// user code: fix this.
@@ -1339,7 +1339,7 @@ func (s deployerControl_server_stub) activateComponent(ctx context.Context, args
 
 	// Encode the results.
 	enc := codegen.NewEncoder()
-	serviceweaver_enc_ptr_ActivateComponentReply_7f24f708(enc, r0)
+	serviceweaver_enc_ptr_ActivateComponentReply_c8006e70(enc, r0)
 	enc.Error(appErr)
 	return enc.Data(), nil
 }
@@ -1355,7 +1355,7 @@ func (s deployerControl_server_stub) exportListener(ctx context.Context, args []
 	// Decode arguments.
 	dec := codegen.NewDecoder(args)
 	var a0 *protos.ExportListenerRequest
-	a0 = serviceweaver_dec_ptr_ExportListenerRequest_3683bbeb(dec)
+	a0 = serviceweaver_dec_ptr_ExportListenerRequest_ebf52349(dec)
 
 	// TODO(rgrandl): The deferred function above will recover from panics in the
 	// user code: fix this.
@@ -1364,7 +1364,7 @@ func (s deployerControl_server_stub) exportListener(ctx context.Context, args []
 
 	// Encode the results.
 	enc := codegen.NewEncoder()
-	serviceweaver_enc_ptr_ExportListenerReply_5fe4f6f2(enc, r0)
+	serviceweaver_enc_ptr_ExportListenerReply_2186e973(enc, r0)
 	enc.Error(appErr)
 	return enc.Data(), nil
 }
@@ -1380,7 +1380,7 @@ func (s deployerControl_server_stub) getAntipodeAgentInfo(ctx context.Context, a
 	// Decode arguments.
 	dec := codegen.NewDecoder(args)
 	var a0 *protos.GetAntipodeAgentInfoRequest
-	a0 = serviceweaver_dec_ptr_GetAntipodeAgentInfoRequest_de07f6bb(dec)
+	a0 = serviceweaver_dec_ptr_GetAntipodeAgentInfoRequest_f0e7c1eb(dec)
 
 	// TODO(rgrandl): The deferred function above will recover from panics in the
 	// user code: fix this.
@@ -1389,7 +1389,7 @@ func (s deployerControl_server_stub) getAntipodeAgentInfo(ctx context.Context, a
 
 	// Encode the results.
 	enc := codegen.NewEncoder()
-	serviceweaver_enc_ptr_GetAntipodeAgentInfoReply_80d3db5f(enc, r0)
+	serviceweaver_enc_ptr_GetAntipodeAgentInfoReply_6b29e231(enc, r0)
 	enc.Error(appErr)
 	return enc.Data(), nil
 }
@@ -1405,7 +1405,7 @@ func (s deployerControl_server_stub) getListenerAddress(ctx context.Context, arg
 	// Decode arguments.
 	dec := codegen.NewDecoder(args)
 	var a0 *protos.GetListenerAddressRequest
-	a0 = serviceweaver_dec_ptr_GetListenerAddressRequest_82370afc(dec)
+	a0 = serviceweaver_dec_ptr_GetListenerAddressRequest_52cc2571(dec)
 
 	// TODO(rgrandl): The deferred function above will recover from panics in the
 	// user code: fix this.
@@ -1414,7 +1414,7 @@ func (s deployerControl_server_stub) getListenerAddress(ctx context.Context, arg
 
 	// Encode the results.
 	enc := codegen.NewEncoder()
-	serviceweaver_enc_ptr_GetListenerAddressReply_a9f3f6f3(enc, r0)
+	serviceweaver_enc_ptr_GetListenerAddressReply_132092dd(enc, r0)
 	enc.Error(appErr)
 	return enc.Data(), nil
 }
@@ -1430,7 +1430,7 @@ func (s deployerControl_server_stub) getSelfCertificate(ctx context.Context, arg
 	// Decode arguments.
 	dec := codegen.NewDecoder(args)
 	var a0 *protos.GetSelfCertificateRequest
-	a0 = serviceweaver_dec_ptr_GetSelfCertificateRequest_d34f6dc5(dec)
+	a0 = serviceweaver_dec_ptr_GetSelfCertificateRequest_298c9233(dec)
 
 	// TODO(rgrandl): The deferred function above will recover from panics in the
 	// user code: fix this.
@@ -1439,7 +1439,7 @@ func (s deployerControl_server_stub) getSelfCertificate(ctx context.Context, arg
 
 	// Encode the results.
 	enc := codegen.NewEncoder()
-	serviceweaver_enc_ptr_GetSelfCertificateReply_92d3fba3(enc, r0)
+	serviceweaver_enc_ptr_GetSelfCertificateReply_87752294(enc, r0)
 	enc.Error(appErr)
 	return enc.Data(), nil
 }
@@ -1455,7 +1455,7 @@ func (s deployerControl_server_stub) handleTraceSpans(ctx context.Context, args 
 	// Decode arguments.
 	dec := codegen.NewDecoder(args)
 	var a0 *protos.TraceSpans
-	a0 = serviceweaver_dec_ptr_TraceSpans_ff643e67(dec)
+	a0 = serviceweaver_dec_ptr_TraceSpans_86cf317d(dec)
 
 	// TODO(rgrandl): The deferred function above will recover from panics in the
 	// user code: fix this.
@@ -1479,7 +1479,7 @@ func (s deployerControl_server_stub) logBatch(ctx context.Context, args []byte) 
 	// Decode arguments.
 	dec := codegen.NewDecoder(args)
 	var a0 *protos.LogEntryBatch
-	a0 = serviceweaver_dec_ptr_LogEntryBatch_b68efcc8(dec)
+	a0 = serviceweaver_dec_ptr_LogEntryBatch_90b2181c(dec)
 
 	// TODO(rgrandl): The deferred function above will recover from panics in the
 	// user code: fix this.
@@ -1503,7 +1503,7 @@ func (s deployerControl_server_stub) verifyClientCertificate(ctx context.Context
 	// Decode arguments.
 	dec := codegen.NewDecoder(args)
 	var a0 *protos.VerifyClientCertificateRequest
-	a0 = serviceweaver_dec_ptr_VerifyClientCertificateRequest_ccc2096f(dec)
+	a0 = serviceweaver_dec_ptr_VerifyClientCertificateRequest_10a07b68(dec)
 
 	// TODO(rgrandl): The deferred function above will recover from panics in the
 	// user code: fix this.
@@ -1512,7 +1512,7 @@ func (s deployerControl_server_stub) verifyClientCertificate(ctx context.Context
 
 	// Encode the results.
 	enc := codegen.NewEncoder()
-	serviceweaver_enc_ptr_VerifyClientCertificateReply_6b9ae3fa(enc, r0)
+	serviceweaver_enc_ptr_VerifyClientCertificateReply_38a18f7b(enc, r0)
 	enc.Error(appErr)
 	return enc.Data(), nil
 }
@@ -1528,7 +1528,7 @@ func (s deployerControl_server_stub) verifyServerCertificate(ctx context.Context
 	// Decode arguments.
 	dec := codegen.NewDecoder(args)
 	var a0 *protos.VerifyServerCertificateRequest
-	a0 = serviceweaver_dec_ptr_VerifyServerCertificateRequest_9e210a97(dec)
+	a0 = serviceweaver_dec_ptr_VerifyServerCertificateRequest_c9dbdbe8(dec)
 
 	// TODO(rgrandl): The deferred function above will recover from panics in the
 	// user code: fix this.
@@ -1537,7 +1537,7 @@ func (s deployerControl_server_stub) verifyServerCertificate(ctx context.Context
 
 	// Encode the results.
 	enc := codegen.NewEncoder()
-	serviceweaver_enc_ptr_VerifyServerCertificateReply_6fc8c959(enc, r0)
+	serviceweaver_enc_ptr_VerifyServerCertificateReply_975794cc(enc, r0)
 	enc.Error(appErr)
 	return enc.Data(), nil
 }
@@ -1583,7 +1583,7 @@ func (s weaveletControl_server_stub) getHealth(ctx context.Context, args []byte)
 	// Decode arguments.
 	dec := codegen.NewDecoder(args)
 	var a0 *protos.GetHealthRequest
-	a0 = serviceweaver_dec_ptr_GetHealthRequest_bbf579ea(dec)
+	a0 = serviceweaver_dec_ptr_GetHealthRequest_675a143c(dec)
 
 	// TODO(rgrandl): The deferred function above will recover from panics in the
 	// user code: fix this.
@@ -1592,7 +1592,7 @@ func (s weaveletControl_server_stub) getHealth(ctx context.Context, args []byte)
 
 	// Encode the results.
 	enc := codegen.NewEncoder()
-	serviceweaver_enc_ptr_GetHealthReply_643539c1(enc, r0)
+	serviceweaver_enc_ptr_GetHealthReply_789dfa54(enc, r0)
 	enc.Error(appErr)
 	return enc.Data(), nil
 }
@@ -1608,7 +1608,7 @@ func (s weaveletControl_server_stub) getLoad(ctx context.Context, args []byte) (
 	// Decode arguments.
 	dec := codegen.NewDecoder(args)
 	var a0 *protos.GetLoadRequest
-	a0 = serviceweaver_dec_ptr_GetLoadRequest_0717c809(dec)
+	a0 = serviceweaver_dec_ptr_GetLoadRequest_c33d4a5b(dec)
 
 	// TODO(rgrandl): The deferred function above will recover from panics in the
 	// user code: fix this.
@@ -1617,7 +1617,7 @@ func (s weaveletControl_server_stub) getLoad(ctx context.Context, args []byte) (
 
 	// Encode the results.
 	enc := codegen.NewEncoder()
-	serviceweaver_enc_ptr_GetLoadReply_49f3ce4b(enc, r0)
+	serviceweaver_enc_ptr_GetLoadReply_d30bf405(enc, r0)
 	enc.Error(appErr)
 	return enc.Data(), nil
 }
@@ -1633,7 +1633,7 @@ func (s weaveletControl_server_stub) getMetrics(ctx context.Context, args []byte
 	// Decode arguments.
 	dec := codegen.NewDecoder(args)
 	var a0 *protos.GetMetricsRequest
-	a0 = serviceweaver_dec_ptr_GetMetricsRequest_c478481d(dec)
+	a0 = serviceweaver_dec_ptr_GetMetricsRequest_ecd4d5f7(dec)
 
 	// TODO(rgrandl): The deferred function above will recover from panics in the
 	// user code: fix this.
@@ -1642,7 +1642,7 @@ func (s weaveletControl_server_stub) getMetrics(ctx context.Context, args []byte
 
 	// Encode the results.
 	enc := codegen.NewEncoder()
-	serviceweaver_enc_ptr_GetMetricsReply_54b1de7f(enc, r0)
+	serviceweaver_enc_ptr_GetMetricsReply_340e66b4(enc, r0)
 	enc.Error(appErr)
 	return enc.Data(), nil
 }
@@ -1658,7 +1658,7 @@ func (s weaveletControl_server_stub) getProfile(ctx context.Context, args []byte
 	// Decode arguments.
 	dec := codegen.NewDecoder(args)
 	var a0 *protos.GetProfileRequest
-	a0 = serviceweaver_dec_ptr_GetProfileRequest_b61a028a(dec)
+	a0 = serviceweaver_dec_ptr_GetProfileRequest_96f3c30d(dec)
 
 	// TODO(rgrandl): The deferred function above will recover from panics in the
 	// user code: fix this.
@@ -1667,7 +1667,7 @@ func (s weaveletControl_server_stub) getProfile(ctx context.Context, args []byte
 
 	// Encode the results.
 	enc := codegen.NewEncoder()
-	serviceweaver_enc_ptr_GetProfileReply_af394018(enc, r0)
+	serviceweaver_enc_ptr_GetProfileReply_c6dc161a(enc, r0)
 	enc.Error(appErr)
 	return enc.Data(), nil
 }
@@ -1683,7 +1683,7 @@ func (s weaveletControl_server_stub) initWeavelet(ctx context.Context, args []by
 	// Decode arguments.
 	dec := codegen.NewDecoder(args)
 	var a0 *protos.InitWeaveletRequest
-	a0 = serviceweaver_dec_ptr_InitWeaveletRequest_d7977b39(dec)
+	a0 = serviceweaver_dec_ptr_InitWeaveletRequest_16114ee6(dec)
 
 	// TODO(rgrandl): The deferred function above will recover from panics in the
 	// user code: fix this.
@@ -1692,7 +1692,7 @@ func (s weaveletControl_server_stub) initWeavelet(ctx context.Context, args []by
 
 	// Encode the results.
 	enc := codegen.NewEncoder()
-	serviceweaver_enc_ptr_InitWeaveletReply_78d29c1c(enc, r0)
+	serviceweaver_enc_ptr_InitWeaveletReply_ef1e60ed(enc, r0)
 	enc.Error(appErr)
 	return enc.Data(), nil
 }
@@ -1708,7 +1708,7 @@ func (s weaveletControl_server_stub) updateComponents(ctx context.Context, args 
 	// Decode arguments.
 	dec := codegen.NewDecoder(args)
 	var a0 *protos.UpdateComponentsRequest
-	a0 = serviceweaver_dec_ptr_UpdateComponentsRequest_f709e3cd(dec)
+	a0 = serviceweaver_dec_ptr_UpdateComponentsRequest_5e728367(dec)
 
 	// TODO(rgrandl): The deferred function above will recover from panics in the
 	// user code: fix this.
@@ -1717,7 +1717,7 @@ func (s weaveletControl_server_stub) updateComponents(ctx context.Context, args 
 
 	// Encode the results.
 	enc := codegen.NewEncoder()
-	serviceweaver_enc_ptr_UpdateComponentsReply_dbe1f570(enc, r0)
+	serviceweaver_enc_ptr_UpdateComponentsReply_07d4e4e3(enc, r0)
 	enc.Error(appErr)
 	return enc.Data(), nil
 }
@@ -1733,7 +1733,7 @@ func (s weaveletControl_server_stub) updateRoutingInfo(ctx context.Context, args
 	// Decode arguments.
 	dec := codegen.NewDecoder(args)
 	var a0 *protos.UpdateRoutingInfoRequest
-	a0 = serviceweaver_dec_ptr_UpdateRoutingInfoRequest_296c913e(dec)
+	a0 = serviceweaver_dec_ptr_UpdateRoutingInfoRequest_1a1198bc(dec)
 
 	// TODO(rgrandl): The deferred function above will recover from panics in the
 	// user code: fix this.
@@ -1742,7 +1742,7 @@ func (s weaveletControl_server_stub) updateRoutingInfo(ctx context.Context, args
 
 	// Encode the results.
 	enc := codegen.NewEncoder()
-	serviceweaver_enc_ptr_UpdateRoutingInfoReply_f7889ece(enc, r0)
+	serviceweaver_enc_ptr_UpdateRoutingInfoReply_7f3841c5(enc, r0)
 	enc.Error(appErr)
 	return enc.Data(), nil
 }
@@ -1845,7 +1845,7 @@ func (s weaveletControl_reflect_stub) UpdateRoutingInfo(ctx context.Context, a0 
 
 // Encoding/decoding implementations.
 
-func serviceweaver_enc_ptr_ActivateComponentRequest_c3e03861(enc *codegen.Encoder, arg *protos.ActivateComponentRequest) {
+func serviceweaver_enc_ptr_ActivateComponentRequest_5a679567(enc *codegen.Encoder, arg *protos.ActivateComponentRequest) {
 	if arg == nil {
 		enc.Bool(false)
 	} else {
@@ -1854,7 +1854,7 @@ func serviceweaver_enc_ptr_ActivateComponentRequest_c3e03861(enc *codegen.Encode
 	}
 }
 
-func serviceweaver_dec_ptr_ActivateComponentRequest_c3e03861(dec *codegen.Decoder) *protos.ActivateComponentRequest {
+func serviceweaver_dec_ptr_ActivateComponentRequest_5a679567(dec *codegen.Decoder) *protos.ActivateComponentRequest {
 	if !dec.Bool() {
 		return nil
 	}
@@ -1863,7 +1863,7 @@ func serviceweaver_dec_ptr_ActivateComponentRequest_c3e03861(dec *codegen.Decode
 	return &res
 }
 
-func serviceweaver_enc_ptr_ActivateComponentReply_7f24f708(enc *codegen.Encoder, arg *protos.ActivateComponentReply) {
+func serviceweaver_enc_ptr_ActivateComponentReply_c8006e70(enc *codegen.Encoder, arg *protos.ActivateComponentReply) {
 	if arg == nil {
 		enc.Bool(false)
 	} else {
@@ -1872,7 +1872,7 @@ func serviceweaver_enc_ptr_ActivateComponentReply_7f24f708(enc *codegen.Encoder,
 	}
 }
 
-func serviceweaver_dec_ptr_ActivateComponentReply_7f24f708(dec *codegen.Decoder) *protos.ActivateComponentReply {
+func serviceweaver_dec_ptr_ActivateComponentReply_c8006e70(dec *codegen.Decoder) *protos.ActivateComponentReply {
 	if !dec.Bool() {
 		return nil
 	}
@@ -1881,7 +1881,7 @@ func serviceweaver_dec_ptr_ActivateComponentReply_7f24f708(dec *codegen.Decoder)
 	return &res
 }
 
-func serviceweaver_enc_ptr_ExportListenerRequest_3683bbeb(enc *codegen.Encoder, arg *protos.ExportListenerRequest) {
+func serviceweaver_enc_ptr_ExportListenerRequest_ebf52349(enc *codegen.Encoder, arg *protos.ExportListenerRequest) {
 	if arg == nil {
 		enc.Bool(false)
 	} else {
@@ -1890,7 +1890,7 @@ func serviceweaver_enc_ptr_ExportListenerRequest_3683bbeb(enc *codegen.Encoder, 
 	}
 }
 
-func serviceweaver_dec_ptr_ExportListenerRequest_3683bbeb(dec *codegen.Decoder) *protos.ExportListenerRequest {
+func serviceweaver_dec_ptr_ExportListenerRequest_ebf52349(dec *codegen.Decoder) *protos.ExportListenerRequest {
 	if !dec.Bool() {
 		return nil
 	}
@@ -1899,7 +1899,7 @@ func serviceweaver_dec_ptr_ExportListenerRequest_3683bbeb(dec *codegen.Decoder) 
 	return &res
 }
 
-func serviceweaver_enc_ptr_ExportListenerReply_5fe4f6f2(enc *codegen.Encoder, arg *protos.ExportListenerReply) {
+func serviceweaver_enc_ptr_ExportListenerReply_2186e973(enc *codegen.Encoder, arg *protos.ExportListenerReply) {
 	if arg == nil {
 		enc.Bool(false)
 	} else {
@@ -1908,7 +1908,7 @@ func serviceweaver_enc_ptr_ExportListenerReply_5fe4f6f2(enc *codegen.Encoder, ar
 	}
 }
 
-func serviceweaver_dec_ptr_ExportListenerReply_5fe4f6f2(dec *codegen.Decoder) *protos.ExportListenerReply {
+func serviceweaver_dec_ptr_ExportListenerReply_2186e973(dec *codegen.Decoder) *protos.ExportListenerReply {
 	if !dec.Bool() {
 		return nil
 	}
@@ -1917,7 +1917,7 @@ func serviceweaver_dec_ptr_ExportListenerReply_5fe4f6f2(dec *codegen.Decoder) *p
 	return &res
 }
 
-func serviceweaver_enc_ptr_GetAntipodeAgentInfoRequest_de07f6bb(enc *codegen.Encoder, arg *protos.GetAntipodeAgentInfoRequest) {
+func serviceweaver_enc_ptr_GetAntipodeAgentInfoRequest_f0e7c1eb(enc *codegen.Encoder, arg *protos.GetAntipodeAgentInfoRequest) {
 	if arg == nil {
 		enc.Bool(false)
 	} else {
@@ -1926,7 +1926,7 @@ func serviceweaver_enc_ptr_GetAntipodeAgentInfoRequest_de07f6bb(enc *codegen.Enc
 	}
 }
 
-func serviceweaver_dec_ptr_GetAntipodeAgentInfoRequest_de07f6bb(dec *codegen.Decoder) *protos.GetAntipodeAgentInfoRequest {
+func serviceweaver_dec_ptr_GetAntipodeAgentInfoRequest_f0e7c1eb(dec *codegen.Decoder) *protos.GetAntipodeAgentInfoRequest {
 	if !dec.Bool() {
 		return nil
 	}
@@ -1935,7 +1935,7 @@ func serviceweaver_dec_ptr_GetAntipodeAgentInfoRequest_de07f6bb(dec *codegen.Dec
 	return &res
 }
 
-func serviceweaver_enc_ptr_GetAntipodeAgentInfoReply_80d3db5f(enc *codegen.Encoder, arg *protos.GetAntipodeAgentInfoReply) {
+func serviceweaver_enc_ptr_GetAntipodeAgentInfoReply_6b29e231(enc *codegen.Encoder, arg *protos.GetAntipodeAgentInfoReply) {
 	if arg == nil {
 		enc.Bool(false)
 	} else {
@@ -1944,7 +1944,7 @@ func serviceweaver_enc_ptr_GetAntipodeAgentInfoReply_80d3db5f(enc *codegen.Encod
 	}
 }
 
-func serviceweaver_dec_ptr_GetAntipodeAgentInfoReply_80d3db5f(dec *codegen.Decoder) *protos.GetAntipodeAgentInfoReply {
+func serviceweaver_dec_ptr_GetAntipodeAgentInfoReply_6b29e231(dec *codegen.Decoder) *protos.GetAntipodeAgentInfoReply {
 	if !dec.Bool() {
 		return nil
 	}
@@ -1953,7 +1953,7 @@ func serviceweaver_dec_ptr_GetAntipodeAgentInfoReply_80d3db5f(dec *codegen.Decod
 	return &res
 }
 
-func serviceweaver_enc_ptr_GetListenerAddressRequest_82370afc(enc *codegen.Encoder, arg *protos.GetListenerAddressRequest) {
+func serviceweaver_enc_ptr_GetListenerAddressRequest_52cc2571(enc *codegen.Encoder, arg *protos.GetListenerAddressRequest) {
 	if arg == nil {
 		enc.Bool(false)
 	} else {
@@ -1962,7 +1962,7 @@ func serviceweaver_enc_ptr_GetListenerAddressRequest_82370afc(enc *codegen.Encod
 	}
 }
 
-func serviceweaver_dec_ptr_GetListenerAddressRequest_82370afc(dec *codegen.Decoder) *protos.GetListenerAddressRequest {
+func serviceweaver_dec_ptr_GetListenerAddressRequest_52cc2571(dec *codegen.Decoder) *protos.GetListenerAddressRequest {
 	if !dec.Bool() {
 		return nil
 	}
@@ -1971,7 +1971,7 @@ func serviceweaver_dec_ptr_GetListenerAddressRequest_82370afc(dec *codegen.Decod
 	return &res
 }
 
-func serviceweaver_enc_ptr_GetListenerAddressReply_a9f3f6f3(enc *codegen.Encoder, arg *protos.GetListenerAddressReply) {
+func serviceweaver_enc_ptr_GetListenerAddressReply_132092dd(enc *codegen.Encoder, arg *protos.GetListenerAddressReply) {
 	if arg == nil {
 		enc.Bool(false)
 	} else {
@@ -1980,7 +1980,7 @@ func serviceweaver_enc_ptr_GetListenerAddressReply_a9f3f6f3(enc *codegen.Encoder
 	}
 }
 
-func serviceweaver_dec_ptr_GetListenerAddressReply_a9f3f6f3(dec *codegen.Decoder) *protos.GetListenerAddressReply {
+func serviceweaver_dec_ptr_GetListenerAddressReply_132092dd(dec *codegen.Decoder) *protos.GetListenerAddressReply {
 	if !dec.Bool() {
 		return nil
 	}
@@ -1989,7 +1989,7 @@ func serviceweaver_dec_ptr_GetListenerAddressReply_a9f3f6f3(dec *codegen.Decoder
 	return &res
 }
 
-func serviceweaver_enc_ptr_GetSelfCertificateRequest_d34f6dc5(enc *codegen.Encoder, arg *protos.GetSelfCertificateRequest) {
+func serviceweaver_enc_ptr_GetSelfCertificateRequest_298c9233(enc *codegen.Encoder, arg *protos.GetSelfCertificateRequest) {
 	if arg == nil {
 		enc.Bool(false)
 	} else {
@@ -1998,7 +1998,7 @@ func serviceweaver_enc_ptr_GetSelfCertificateRequest_d34f6dc5(enc *codegen.Encod
 	}
 }
 
-func serviceweaver_dec_ptr_GetSelfCertificateRequest_d34f6dc5(dec *codegen.Decoder) *protos.GetSelfCertificateRequest {
+func serviceweaver_dec_ptr_GetSelfCertificateRequest_298c9233(dec *codegen.Decoder) *protos.GetSelfCertificateRequest {
 	if !dec.Bool() {
 		return nil
 	}
@@ -2007,7 +2007,7 @@ func serviceweaver_dec_ptr_GetSelfCertificateRequest_d34f6dc5(dec *codegen.Decod
 	return &res
 }
 
-func serviceweaver_enc_ptr_GetSelfCertificateReply_92d3fba3(enc *codegen.Encoder, arg *protos.GetSelfCertificateReply) {
+func serviceweaver_enc_ptr_GetSelfCertificateReply_87752294(enc *codegen.Encoder, arg *protos.GetSelfCertificateReply) {
 	if arg == nil {
 		enc.Bool(false)
 	} else {
@@ -2016,7 +2016,7 @@ func serviceweaver_enc_ptr_GetSelfCertificateReply_92d3fba3(enc *codegen.Encoder
 	}
 }
 
-func serviceweaver_dec_ptr_GetSelfCertificateReply_92d3fba3(dec *codegen.Decoder) *protos.GetSelfCertificateReply {
+func serviceweaver_dec_ptr_GetSelfCertificateReply_87752294(dec *codegen.Decoder) *protos.GetSelfCertificateReply {
 	if !dec.Bool() {
 		return nil
 	}
@@ -2025,7 +2025,7 @@ func serviceweaver_dec_ptr_GetSelfCertificateReply_92d3fba3(dec *codegen.Decoder
 	return &res
 }
 
-func serviceweaver_enc_ptr_TraceSpans_ff643e67(enc *codegen.Encoder, arg *protos.TraceSpans) {
+func serviceweaver_enc_ptr_TraceSpans_86cf317d(enc *codegen.Encoder, arg *protos.TraceSpans) {
 	if arg == nil {
 		enc.Bool(false)
 	} else {
@@ -2034,7 +2034,7 @@ func serviceweaver_enc_ptr_TraceSpans_ff643e67(enc *codegen.Encoder, arg *protos
 	}
 }
 
-func serviceweaver_dec_ptr_TraceSpans_ff643e67(dec *codegen.Decoder) *protos.TraceSpans {
+func serviceweaver_dec_ptr_TraceSpans_86cf317d(dec *codegen.Decoder) *protos.TraceSpans {
 	if !dec.Bool() {
 		return nil
 	}
@@ -2043,7 +2043,7 @@ func serviceweaver_dec_ptr_TraceSpans_ff643e67(dec *codegen.Decoder) *protos.Tra
 	return &res
 }
 
-func serviceweaver_enc_ptr_LogEntryBatch_b68efcc8(enc *codegen.Encoder, arg *protos.LogEntryBatch) {
+func serviceweaver_enc_ptr_LogEntryBatch_90b2181c(enc *codegen.Encoder, arg *protos.LogEntryBatch) {
 	if arg == nil {
 		enc.Bool(false)
 	} else {
@@ -2052,7 +2052,7 @@ func serviceweaver_enc_ptr_LogEntryBatch_b68efcc8(enc *codegen.Encoder, arg *pro
 	}
 }
 
-func serviceweaver_dec_ptr_LogEntryBatch_b68efcc8(dec *codegen.Decoder) *protos.LogEntryBatch {
+func serviceweaver_dec_ptr_LogEntryBatch_90b2181c(dec *codegen.Decoder) *protos.LogEntryBatch {
 	if !dec.Bool() {
 		return nil
 	}
@@ -2061,7 +2061,7 @@ func serviceweaver_dec_ptr_LogEntryBatch_b68efcc8(dec *codegen.Decoder) *protos.
 	return &res
 }
 
-func serviceweaver_enc_ptr_VerifyClientCertificateRequest_ccc2096f(enc *codegen.Encoder, arg *protos.VerifyClientCertificateRequest) {
+func serviceweaver_enc_ptr_VerifyClientCertificateRequest_10a07b68(enc *codegen.Encoder, arg *protos.VerifyClientCertificateRequest) {
 	if arg == nil {
 		enc.Bool(false)
 	} else {
@@ -2070,7 +2070,7 @@ func serviceweaver_enc_ptr_VerifyClientCertificateRequest_ccc2096f(enc *codegen.
 	}
 }
 
-func serviceweaver_dec_ptr_VerifyClientCertificateRequest_ccc2096f(dec *codegen.Decoder) *protos.VerifyClientCertificateRequest {
+func serviceweaver_dec_ptr_VerifyClientCertificateRequest_10a07b68(dec *codegen.Decoder) *protos.VerifyClientCertificateRequest {
 	if !dec.Bool() {
 		return nil
 	}
@@ -2079,7 +2079,7 @@ func serviceweaver_dec_ptr_VerifyClientCertificateRequest_ccc2096f(dec *codegen.
 	return &res
 }
 
-func serviceweaver_enc_ptr_VerifyClientCertificateReply_6b9ae3fa(enc *codegen.Encoder, arg *protos.VerifyClientCertificateReply) {
+func serviceweaver_enc_ptr_VerifyClientCertificateReply_38a18f7b(enc *codegen.Encoder, arg *protos.VerifyClientCertificateReply) {
 	if arg == nil {
 		enc.Bool(false)
 	} else {
@@ -2088,7 +2088,7 @@ func serviceweaver_enc_ptr_VerifyClientCertificateReply_6b9ae3fa(enc *codegen.En
 	}
 }
 
-func serviceweaver_dec_ptr_VerifyClientCertificateReply_6b9ae3fa(dec *codegen.Decoder) *protos.VerifyClientCertificateReply {
+func serviceweaver_dec_ptr_VerifyClientCertificateReply_38a18f7b(dec *codegen.Decoder) *protos.VerifyClientCertificateReply {
 	if !dec.Bool() {
 		return nil
 	}
@@ -2097,7 +2097,7 @@ func serviceweaver_dec_ptr_VerifyClientCertificateReply_6b9ae3fa(dec *codegen.De
 	return &res
 }
 
-func serviceweaver_enc_ptr_VerifyServerCertificateRequest_9e210a97(enc *codegen.Encoder, arg *protos.VerifyServerCertificateRequest) {
+func serviceweaver_enc_ptr_VerifyServerCertificateRequest_c9dbdbe8(enc *codegen.Encoder, arg *protos.VerifyServerCertificateRequest) {
 	if arg == nil {
 		enc.Bool(false)
 	} else {
@@ -2106,7 +2106,7 @@ func serviceweaver_enc_ptr_VerifyServerCertificateRequest_9e210a97(enc *codegen.
 	}
 }
 
-func serviceweaver_dec_ptr_VerifyServerCertificateRequest_9e210a97(dec *codegen.Decoder) *protos.VerifyServerCertificateRequest {
+func serviceweaver_dec_ptr_VerifyServerCertificateRequest_c9dbdbe8(dec *codegen.Decoder) *protos.VerifyServerCertificateRequest {
 	if !dec.Bool() {
 		return nil
 	}
@@ -2115,7 +2115,7 @@ func serviceweaver_dec_ptr_VerifyServerCertificateRequest_9e210a97(dec *codegen.
 	return &res
 }
 
-func serviceweaver_enc_ptr_VerifyServerCertificateReply_6fc8c959(enc *codegen.Encoder, arg *protos.VerifyServerCertificateReply) {
+func serviceweaver_enc_ptr_VerifyServerCertificateReply_975794cc(enc *codegen.Encoder, arg *protos.VerifyServerCertificateReply) {
 	if arg == nil {
 		enc.Bool(false)
 	} else {
@@ -2124,7 +2124,7 @@ func serviceweaver_enc_ptr_VerifyServerCertificateReply_6fc8c959(enc *codegen.En
 	}
 }
 
-func serviceweaver_dec_ptr_VerifyServerCertificateReply_6fc8c959(dec *codegen.Decoder) *protos.VerifyServerCertificateReply {
+func serviceweaver_dec_ptr_VerifyServerCertificateReply_975794cc(dec *codegen.Decoder) *protos.VerifyServerCertificateReply {
 	if !dec.Bool() {
 		return nil
 	}
@@ -2133,7 +2133,7 @@ func serviceweaver_dec_ptr_VerifyServerCertificateReply_6fc8c959(dec *codegen.De
 	return &res
 }
 
-func serviceweaver_enc_ptr_GetHealthRequest_bbf579ea(enc *codegen.Encoder, arg *protos.GetHealthRequest) {
+func serviceweaver_enc_ptr_GetHealthRequest_675a143c(enc *codegen.Encoder, arg *protos.GetHealthRequest) {
 	if arg == nil {
 		enc.Bool(false)
 	} else {
@@ -2142,7 +2142,7 @@ func serviceweaver_enc_ptr_GetHealthRequest_bbf579ea(enc *codegen.Encoder, arg *
 	}
 }
 
-func serviceweaver_dec_ptr_GetHealthRequest_bbf579ea(dec *codegen.Decoder) *protos.GetHealthRequest {
+func serviceweaver_dec_ptr_GetHealthRequest_675a143c(dec *codegen.Decoder) *protos.GetHealthRequest {
 	if !dec.Bool() {
 		return nil
 	}
@@ -2151,7 +2151,7 @@ func serviceweaver_dec_ptr_GetHealthRequest_bbf579ea(dec *codegen.Decoder) *prot
 	return &res
 }
 
-func serviceweaver_enc_ptr_GetHealthReply_643539c1(enc *codegen.Encoder, arg *protos.GetHealthReply) {
+func serviceweaver_enc_ptr_GetHealthReply_789dfa54(enc *codegen.Encoder, arg *protos.GetHealthReply) {
 	if arg == nil {
 		enc.Bool(false)
 	} else {
@@ -2160,7 +2160,7 @@ func serviceweaver_enc_ptr_GetHealthReply_643539c1(enc *codegen.Encoder, arg *pr
 	}
 }
 
-func serviceweaver_dec_ptr_GetHealthReply_643539c1(dec *codegen.Decoder) *protos.GetHealthReply {
+func serviceweaver_dec_ptr_GetHealthReply_789dfa54(dec *codegen.Decoder) *protos.GetHealthReply {
 	if !dec.Bool() {
 		return nil
 	}
@@ -2169,7 +2169,7 @@ func serviceweaver_dec_ptr_GetHealthReply_643539c1(dec *codegen.Decoder) *protos
 	return &res
 }
 
-func serviceweaver_enc_ptr_GetLoadRequest_0717c809(enc *codegen.Encoder, arg *protos.GetLoadRequest) {
+func serviceweaver_enc_ptr_GetLoadRequest_c33d4a5b(enc *codegen.Encoder, arg *protos.GetLoadRequest) {
 	if arg == nil {
 		enc.Bool(false)
 	} else {
@@ -2178,7 +2178,7 @@ func serviceweaver_enc_ptr_GetLoadRequest_0717c809(enc *codegen.Encoder, arg *pr
 	}
 }
 
-func serviceweaver_dec_ptr_GetLoadRequest_0717c809(dec *codegen.Decoder) *protos.GetLoadRequest {
+func serviceweaver_dec_ptr_GetLoadRequest_c33d4a5b(dec *codegen.Decoder) *protos.GetLoadRequest {
 	if !dec.Bool() {
 		return nil
 	}
@@ -2187,7 +2187,7 @@ func serviceweaver_dec_ptr_GetLoadRequest_0717c809(dec *codegen.Decoder) *protos
 	return &res
 }
 
-func serviceweaver_enc_ptr_GetLoadReply_49f3ce4b(enc *codegen.Encoder, arg *protos.GetLoadReply) {
+func serviceweaver_enc_ptr_GetLoadReply_d30bf405(enc *codegen.Encoder, arg *protos.GetLoadReply) {
 	if arg == nil {
 		enc.Bool(false)
 	} else {
@@ -2196,7 +2196,7 @@ func serviceweaver_enc_ptr_GetLoadReply_49f3ce4b(enc *codegen.Encoder, arg *prot
 	}
 }
 
-func serviceweaver_dec_ptr_GetLoadReply_49f3ce4b(dec *codegen.Decoder) *protos.GetLoadReply {
+func serviceweaver_dec_ptr_GetLoadReply_d30bf405(dec *codegen.Decoder) *protos.GetLoadReply {
 	if !dec.Bool() {
 		return nil
 	}
@@ -2205,7 +2205,7 @@ func serviceweaver_dec_ptr_GetLoadReply_49f3ce4b(dec *codegen.Decoder) *protos.G
 	return &res
 }
 
-func serviceweaver_enc_ptr_GetMetricsRequest_c478481d(enc *codegen.Encoder, arg *protos.GetMetricsRequest) {
+func serviceweaver_enc_ptr_GetMetricsRequest_ecd4d5f7(enc *codegen.Encoder, arg *protos.GetMetricsRequest) {
 	if arg == nil {
 		enc.Bool(false)
 	} else {
@@ -2214,7 +2214,7 @@ func serviceweaver_enc_ptr_GetMetricsRequest_c478481d(enc *codegen.Encoder, arg 
 	}
 }
 
-func serviceweaver_dec_ptr_GetMetricsRequest_c478481d(dec *codegen.Decoder) *protos.GetMetricsRequest {
+func serviceweaver_dec_ptr_GetMetricsRequest_ecd4d5f7(dec *codegen.Decoder) *protos.GetMetricsRequest {
 	if !dec.Bool() {
 		return nil
 	}
@@ -2223,7 +2223,7 @@ func serviceweaver_dec_ptr_GetMetricsRequest_c478481d(dec *codegen.Decoder) *pro
 	return &res
 }
 
-func serviceweaver_enc_ptr_GetMetricsReply_54b1de7f(enc *codegen.Encoder, arg *protos.GetMetricsReply) {
+func serviceweaver_enc_ptr_GetMetricsReply_340e66b4(enc *codegen.Encoder, arg *protos.GetMetricsReply) {
 	if arg == nil {
 		enc.Bool(false)
 	} else {
@@ -2232,7 +2232,7 @@ func serviceweaver_enc_ptr_GetMetricsReply_54b1de7f(enc *codegen.Encoder, arg *p
 	}
 }
 
-func serviceweaver_dec_ptr_GetMetricsReply_54b1de7f(dec *codegen.Decoder) *protos.GetMetricsReply {
+func serviceweaver_dec_ptr_GetMetricsReply_340e66b4(dec *codegen.Decoder) *protos.GetMetricsReply {
 	if !dec.Bool() {
 		return nil
 	}
@@ -2241,7 +2241,7 @@ func serviceweaver_dec_ptr_GetMetricsReply_54b1de7f(dec *codegen.Decoder) *proto
 	return &res
 }
 
-func serviceweaver_enc_ptr_GetProfileRequest_b61a028a(enc *codegen.Encoder, arg *protos.GetProfileRequest) {
+func serviceweaver_enc_ptr_GetProfileRequest_96f3c30d(enc *codegen.Encoder, arg *protos.GetProfileRequest) {
 	if arg == nil {
 		enc.Bool(false)
 	} else {
@@ -2250,7 +2250,7 @@ func serviceweaver_enc_ptr_GetProfileRequest_b61a028a(enc *codegen.Encoder, arg 
 	}
 }
 
-func serviceweaver_dec_ptr_GetProfileRequest_b61a028a(dec *codegen.Decoder) *protos.GetProfileRequest {
+func serviceweaver_dec_ptr_GetProfileRequest_96f3c30d(dec *codegen.Decoder) *protos.GetProfileRequest {
 	if !dec.Bool() {
 		return nil
 	}
@@ -2259,7 +2259,7 @@ func serviceweaver_dec_ptr_GetProfileRequest_b61a028a(dec *codegen.Decoder) *pro
 	return &res
 }
 
-func serviceweaver_enc_ptr_GetProfileReply_af394018(enc *codegen.Encoder, arg *protos.GetProfileReply) {
+func serviceweaver_enc_ptr_GetProfileReply_c6dc161a(enc *codegen.Encoder, arg *protos.GetProfileReply) {
 	if arg == nil {
 		enc.Bool(false)
 	} else {
@@ -2268,7 +2268,7 @@ func serviceweaver_enc_ptr_GetProfileReply_af394018(enc *codegen.Encoder, arg *p
 	}
 }
 
-func serviceweaver_dec_ptr_GetProfileReply_af394018(dec *codegen.Decoder) *protos.GetProfileReply {
+func serviceweaver_dec_ptr_GetProfileReply_c6dc161a(dec *codegen.Decoder) *protos.GetProfileReply {
 	if !dec.Bool() {
 		return nil
 	}
@@ -2277,7 +2277,7 @@ func serviceweaver_dec_ptr_GetProfileReply_af394018(dec *codegen.Decoder) *proto
 	return &res
 }
 
-func serviceweaver_enc_ptr_InitWeaveletRequest_d7977b39(enc *codegen.Encoder, arg *protos.InitWeaveletRequest) {
+func serviceweaver_enc_ptr_InitWeaveletRequest_16114ee6(enc *codegen.Encoder, arg *protos.InitWeaveletRequest) {
 	if arg == nil {
 		enc.Bool(false)
 	} else {
@@ -2286,7 +2286,7 @@ func serviceweaver_enc_ptr_InitWeaveletRequest_d7977b39(enc *codegen.Encoder, ar
 	}
 }
 
-func serviceweaver_dec_ptr_InitWeaveletRequest_d7977b39(dec *codegen.Decoder) *protos.InitWeaveletRequest {
+func serviceweaver_dec_ptr_InitWeaveletRequest_16114ee6(dec *codegen.Decoder) *protos.InitWeaveletRequest {
 	if !dec.Bool() {
 		return nil
 	}
@@ -2295,7 +2295,7 @@ func serviceweaver_dec_ptr_InitWeaveletRequest_d7977b39(dec *codegen.Decoder) *p
 	return &res
 }
 
-func serviceweaver_enc_ptr_InitWeaveletReply_78d29c1c(enc *codegen.Encoder, arg *protos.InitWeaveletReply) {
+func serviceweaver_enc_ptr_InitWeaveletReply_ef1e60ed(enc *codegen.Encoder, arg *protos.InitWeaveletReply) {
 	if arg == nil {
 		enc.Bool(false)
 	} else {
@@ -2304,7 +2304,7 @@ func serviceweaver_enc_ptr_InitWeaveletReply_78d29c1c(enc *codegen.Encoder, arg 
 	}
 }
 
-func serviceweaver_dec_ptr_InitWeaveletReply_78d29c1c(dec *codegen.Decoder) *protos.InitWeaveletReply {
+func serviceweaver_dec_ptr_InitWeaveletReply_ef1e60ed(dec *codegen.Decoder) *protos.InitWeaveletReply {
 	if !dec.Bool() {
 		return nil
 	}
@@ -2313,7 +2313,7 @@ func serviceweaver_dec_ptr_InitWeaveletReply_78d29c1c(dec *codegen.Decoder) *pro
 	return &res
 }
 
-func serviceweaver_enc_ptr_UpdateComponentsRequest_f709e3cd(enc *codegen.Encoder, arg *protos.UpdateComponentsRequest) {
+func serviceweaver_enc_ptr_UpdateComponentsRequest_5e728367(enc *codegen.Encoder, arg *protos.UpdateComponentsRequest) {
 	if arg == nil {
 		enc.Bool(false)
 	} else {
@@ -2322,7 +2322,7 @@ func serviceweaver_enc_ptr_UpdateComponentsRequest_f709e3cd(enc *codegen.Encoder
 	}
 }
 
-func serviceweaver_dec_ptr_UpdateComponentsRequest_f709e3cd(dec *codegen.Decoder) *protos.UpdateComponentsRequest {
+func serviceweaver_dec_ptr_UpdateComponentsRequest_5e728367(dec *codegen.Decoder) *protos.UpdateComponentsRequest {
 	if !dec.Bool() {
 		return nil
 	}
@@ -2331,7 +2331,7 @@ func serviceweaver_dec_ptr_UpdateComponentsRequest_f709e3cd(dec *codegen.Decoder
 	return &res
 }
 
-func serviceweaver_enc_ptr_UpdateComponentsReply_dbe1f570(enc *codegen.Encoder, arg *protos.UpdateComponentsReply) {
+func serviceweaver_enc_ptr_UpdateComponentsReply_07d4e4e3(enc *codegen.Encoder, arg *protos.UpdateComponentsReply) {
 	if arg == nil {
 		enc.Bool(false)
 	} else {
@@ -2340,7 +2340,7 @@ func serviceweaver_enc_ptr_UpdateComponentsReply_dbe1f570(enc *codegen.Encoder, 
 	}
 }
 
-func serviceweaver_dec_ptr_UpdateComponentsReply_dbe1f570(dec *codegen.Decoder) *protos.UpdateComponentsReply {
+func serviceweaver_dec_ptr_UpdateComponentsReply_07d4e4e3(dec *codegen.Decoder) *protos.UpdateComponentsReply {
 	if !dec.Bool() {
 		return nil
 	}
@@ -2349,7 +2349,7 @@ func serviceweaver_dec_ptr_UpdateComponentsReply_dbe1f570(dec *codegen.Decoder) 
 	return &res
 }
 
-func serviceweaver_enc_ptr_UpdateRoutingInfoRequest_296c913e(enc *codegen.Encoder, arg *protos.UpdateRoutingInfoRequest) {
+func serviceweaver_enc_ptr_UpdateRoutingInfoRequest_1a1198bc(enc *codegen.Encoder, arg *protos.UpdateRoutingInfoRequest) {
 	if arg == nil {
 		enc.Bool(false)
 	} else {
@@ -2358,7 +2358,7 @@ func serviceweaver_enc_ptr_UpdateRoutingInfoRequest_296c913e(enc *codegen.Encode
 	}
 }
 
-func serviceweaver_dec_ptr_UpdateRoutingInfoRequest_296c913e(dec *codegen.Decoder) *protos.UpdateRoutingInfoRequest {
+func serviceweaver_dec_ptr_UpdateRoutingInfoRequest_1a1198bc(dec *codegen.Decoder) *protos.UpdateRoutingInfoRequest {
 	if !dec.Bool() {
 		return nil
 	}
@@ -2367,7 +2367,7 @@ func serviceweaver_dec_ptr_UpdateRoutingInfoRequest_296c913e(dec *codegen.Decode
 	return &res
 }
 
-func serviceweaver_enc_ptr_UpdateRoutingInfoReply_f7889ece(enc *codegen.Encoder, arg *protos.UpdateRoutingInfoReply) {
+func serviceweaver_enc_ptr_UpdateRoutingInfoReply_7f3841c5(enc *codegen.Encoder, arg *protos.UpdateRoutingInfoReply) {
 	if arg == nil {
 		enc.Bool(false)
 	} else {
@@ -2376,7 +2376,7 @@ func serviceweaver_enc_ptr_UpdateRoutingInfoReply_f7889ece(enc *codegen.Encoder,
 	}
 }
 
-func serviceweaver_dec_ptr_UpdateRoutingInfoReply_f7889ece(dec *codegen.Decoder) *protos.UpdateRoutingInfoReply {
+func serviceweaver_dec_ptr_UpdateRoutingInfoReply_7f3841c5(dec *codegen.Decoder) *protos.UpdateRoutingInfoReply {
 	if !dec.Bool() {
 		return nil
 	}

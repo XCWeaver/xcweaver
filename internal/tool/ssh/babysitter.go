@@ -23,9 +23,9 @@ import (
 
 var babysitterCmd = tool.Command{
 	Name:        "babysitter",
-	Description: "The weaver ssh babysitter",
+	Description: "The xcweaver ssh babysitter",
 	Help: `Usage:
-  weaver ssh babysitter
+  xcweaver ssh babysitter
 
 Flags:
   -h, --help   Print this help message.`,

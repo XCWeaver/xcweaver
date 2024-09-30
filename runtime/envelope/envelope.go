@@ -38,7 +38,7 @@ import (
 	"go.opentelemetry.io/otel/trace"
 	"golang.org/x/sync/errgroup"
 
-	// We rely on the weaver.controller component registrattion entry.
+	// We rely on the xcweaver.controller component registrattion entry.
 	_ "github.com/XCWeaver/xcweaver"
 )
 
@@ -54,8 +54,8 @@ type EnvelopeHandler interface {
 	// a particular listener.
 	GetListenerAddress(context.Context, *protos.GetListenerAddressRequest) (*protos.GetListenerAddressReply, error)
 
-	// GetAntipodeAgentInfo returns the parameters to initialize
-	// a particular antipode agent.
+	// GetAntipodeAgentInfo returns the arguments the weavelet needs to initialize
+	// a particular Antipode agent.
 	GetAntipodeAgentInfo(context.Context, *protos.GetAntipodeAgentInfoRequest) (*protos.GetAntipodeAgentInfoReply, error)
 
 	// ExportListener exports the provided listener. Exporting a listener
@@ -313,12 +313,12 @@ func (e *Envelope) WeaveletAddress() string {
 }
 
 // GetHealth returns the health status of the weavelet.
-func (e *Envelope) GetHealth() protos.HealthStatus {
+func (e *Envelope) GetHealth() *protos.GetHealthReply {
 	reply, err := e.controller.GetHealth(context.TODO(), &protos.GetHealthRequest{})
 	if err != nil {
-		return protos.HealthStatus_UNKNOWN
+		return &protos.GetHealthReply{Status: protos.HealthStatus_UNKNOWN}
 	}
-	return reply.Status
+	return reply
 }
 
 // GetProfile gets a profile from the weavelet.

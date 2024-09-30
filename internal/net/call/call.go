@@ -388,10 +388,11 @@ func (rc *reconnectingConnection) Call(ctx context.Context, h MethodKey, arg []b
 }
 
 func (rc *reconnectingConnection) callOnce(ctx context.Context, h MethodKey, arg []byte, opts CallOptions) ([]byte, error) {
-
 	//extract lineage from context
 	lineage, err := antipode.GetLineage(ctx)
 	if err != nil {
+		//if developers change the context after the xcweaver.Run function it may not
+		//contain the lineage, so we initialize a new one
 		lineage = []antipode.WriteIdentifier{}
 		//return nil, err
 	}
@@ -840,7 +841,6 @@ func (c *clientConnection) connectOnce(ctx context.Context) bool {
 
 // exchangeVersions sends client version to server and waits for the server version.
 func (c *clientConnection) exchangeVersions() error {
-
 	nc, buf := c.c, c.cbuf
 
 	// Do not hold mutex while reading from the network.
@@ -867,7 +867,6 @@ func (c *clientConnection) exchangeVersions() error {
 
 // readAndProcessMessage reads and handles one message sent from the server.
 func (c *clientConnection) readAndProcessMessage() error {
-
 	buf := c.cbuf
 
 	// Do not hold mutex while reading from the network.
@@ -909,7 +908,6 @@ func (c *clientConnection) readAndProcessMessage() error {
 
 // readRequests runs on the server side reading messages sent over a connection by the client.
 func (c *serverConnection) readRequests(ctx context.Context, hmap *HandlerMap, onDone func()) {
-
 	for ctx.Err() == nil {
 		mt, id, msg, err := readMessage(c.cbuf)
 		if err != nil {
@@ -967,7 +965,6 @@ func (c *serverConnection) readRequests(ctx context.Context, hmap *HandlerMap, o
 // runHandler runs an application specified RPC handler at the server side.
 // The result (or error) from the handler is sent back to the client over c.
 func (c *serverConnection) runHandler(hmap *HandlerMap, id uint64, msg []byte) {
-
 	// Extract request header from front of payload.
 	if len(msg) < msgHeaderSize {
 		c.shutdown("server handler", fmt.Errorf("missing request header"))
@@ -1005,7 +1002,6 @@ func (c *serverConnection) runHandler(hmap *HandlerMap, id uint64, msg []byte) {
 	er := json.Unmarshal(lineageBytes, &lineage)
 	if er != nil {
 		fmt.Println(er)
-		//think on how to send the error
 		return
 	}
 
@@ -1014,7 +1010,6 @@ func (c *serverConnection) runHandler(hmap *HandlerMap, id uint64, msg []byte) {
 	ctx, er = antipode.Transfer(ctx, lineage)
 	if er != nil {
 		fmt.Println(er)
-		//think on how to send the error
 		return
 	}
 

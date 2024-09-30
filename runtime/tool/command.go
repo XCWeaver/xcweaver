@@ -13,7 +13,7 @@
 // limitations under the License.
 
 // Package tool contains utilities for creating Service Weaver tools similar to
-// weaver-multi, weaver-gke, and weaver-gke-local.
+// xcweaver-multi, xcweaver-gke, and xcweaver-gke-local.
 package tool
 
 import (

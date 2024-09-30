@@ -28,7 +28,7 @@ import (
 
 // PurgeSpec configures the command returned by PurgeCmd.
 type PurgeSpec struct {
-	Tool  string   // tool name (e.g., "weaver multi")
+	Tool  string   // tool name (e.g., "xcweaver multi")
 	Kill  string   // regex of processes to kill, or empty
 	Paths []string // paths to delete
 

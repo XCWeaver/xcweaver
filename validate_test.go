@@ -38,8 +38,8 @@ func TestValidateValidRegistrations(t *testing.T) {
 	type bar interface{}
 	type fooImpl struct {
 		Ref[bar]
-		Listener `weaver:"lis1"`
-		_        Listener `weaver:"lis2"`
+		Listener `xcweaver:"lis1"`
+		_        Listener `xcweaver:"lis2"`
 		lis3     Listener //lint:ignore U1000 Present for code generation.
 	}
 	type barImpl struct{ Ref[foo] }
@@ -62,7 +62,7 @@ func TestValidateValidRegistrations(t *testing.T) {
 }
 
 // TestValidateUnregisteredRef tests that validateRegistrations fails when a
-// component has a weaver.Ref on an unregistered component.
+// component has a xcweaver.Ref on an unregistered component.
 func TestValidateUnregisteredRef(t *testing.T) {
 	type foo interface{}
 	type fooImpl struct{ Ref[io.Reader] }
@@ -88,11 +88,11 @@ func TestValidateUnregisteredRef(t *testing.T) {
 func TestValidateInvalidListenerNames(t *testing.T) {
 	type foo interface{}
 	type fooImpl struct {
-		_ Listener `weaver:""`             // empty name
-		_ Listener `weaver:" "`            // whitespace name
-		_ Listener `weaver:"foo bar"`      // whitespace in name
-		_ Listener `weaver:"1foo"`         // starts with a digit
-		_ Listener `weaver:".!@#$%^&*()-"` // punctuation
+		_ Listener `xcweaver:""`             // empty name
+		_ Listener `xcweaver:" "`            // whitespace name
+		_ Listener `xcweaver:"foo bar"`      // whitespace in name
+		_ Listener `xcweaver:"1foo"`         // starts with a digit
+		_ Listener `xcweaver:".!@#$%^&*()-"` // punctuation
 	}
 	regs := []*codegen.Registration{
 		{

@@ -24,6 +24,7 @@ import (
 	"runtime/debug"
 	"time"
 
+	imetrics "github.com/XCWeaver/xcweaver/internal/metrics"
 	"github.com/XCWeaver/xcweaver/metrics"
 	"google.golang.org/protobuf/proto"
 )
@@ -40,22 +41,25 @@ var (
 	httpRequestLatencyMicros = metrics.NewHistogramMap[handlerLabels](
 		"serviceweaver_system_http_request_latency_micros",
 		"Duration, in microseconds, of Service Weaver HTTP request execution",
-		metrics.NonNegativeBuckets,
+		imetrics.GeneratedBuckets,
 	)
 	httpRequestBytesReceived = metrics.NewHistogramMap[handlerLabels](
 		"serviceweaver_system_http_request_bytes_received",
 		"Number of bytes received by Service Weaver HTTP request handlers",
-		metrics.NonNegativeBuckets,
+		imetrics.GeneratedBuckets,
 	)
 	httpRequestBytesReturned = metrics.NewHistogramMap[handlerLabels](
 		"serviceweaver_system_http_request_bytes_returned",
 		"Number of bytes returned by Service Weaver HTTP request handlers",
-		metrics.NonNegativeBuckets,
+		imetrics.GeneratedBuckets,
 	)
 )
 
 type handlerLabels struct {
 	Path string // HTTP request URL path (e.g., "/manager/start_process")
+
+	// Is this a metric implicitly created by the framework?
+	Generated bool `xcweaver:"serviceweaver_generated"`
 }
 
 type errorLabels struct {
@@ -70,6 +74,9 @@ type errorLabels struct {
 	//   4. Marshaling the response.
 	//   5. Writing the response.
 	Error string
+
+	// Is this a metric implicitly created by the framework?
+	Generated bool `xcweaver:"serviceweaver_generated"`
 }
 
 // ProtoPointer[T] is an interface which asserts that *T is a proto.Message.
@@ -96,7 +103,7 @@ func HandlerFunc[I, O any, IP ProtoPointer[I], OP ProtoPointer[O]](logger *slog.
 		}
 		out, err := handler(r.Context(), &in)
 		if err != nil {
-			httpRequestErrorCounts.Get(errorLabels{r.URL.Path, "execute request"}).Add(1.0)
+			httpRequestErrorCounts.Get(errorLabels{Path: r.URL.Path, Error: "execute request", Generated: true}).Add(1.0)
 			logger.Error("handle http RPC", "err", err, "method", r.Method, "url", r.URL)
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
@@ -116,7 +123,7 @@ func HandlerThunk[O any, OP ProtoPointer[O]](logger *slog.Logger, handler func(c
 	f := func(w http.ResponseWriter, r *http.Request) {
 		out, err := handler(r.Context())
 		if err != nil {
-			httpRequestErrorCounts.Get(errorLabels{r.URL.Path, "execute request"}).Add(1.0)
+			httpRequestErrorCounts.Get(errorLabels{Path: r.URL.Path, Error: "execute request", Generated: true}).Add(1.0)
 			logger.Error("handle http RPC", "err", err, "method", r.Method, "url", r.URL)
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
@@ -140,7 +147,7 @@ func HandlerDo[I any, IP ProtoPointer[I]](logger *slog.Logger, handler func(cont
 			return
 		}
 		if err := handler(r.Context(), &in); err != nil {
-			httpRequestErrorCounts.Get(errorLabels{r.URL.Path, "execute request"}).Add(1.0)
+			httpRequestErrorCounts.Get(errorLabels{Path: r.URL.Path, Error: "execute request", Generated: true}).Add(1.0)
 			logger.Error("handle http RPC", "err", err, "method", r.Method, "url", r.URL)
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
@@ -170,7 +177,7 @@ func panicHandler(logger *slog.Logger, handler http.HandlerFunc) http.HandlerFun
 func metricHandler(handler http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		start := time.Now()
-		labels := handlerLabels{r.URL.Path}
+		labels := handlerLabels{Path: r.URL.Path, Generated: true}
 		httpRequestCounts.Get(labels).Add(1)
 		defer func() {
 			duration := float64(time.Since(start).Microseconds())
@@ -185,14 +192,14 @@ func metricHandler(handler http.HandlerFunc) http.HandlerFunc {
 func toHTTP(w http.ResponseWriter, r *http.Request, msgs ...proto.Message) {
 	out, err := toWire(msgs...)
 	if err != nil {
-		httpRequestErrorCounts.Get(errorLabels{r.URL.Path, "marshal response"}).Add(1.0)
+		httpRequestErrorCounts.Get(errorLabels{Path: r.URL.Path, Error: "marshal response", Generated: true}).Add(1.0)
 		msg := fmt.Sprintf("cannot marshal response protos: %v", err)
 		http.Error(w, msg, http.StatusBadRequest)
 		return
 	}
-	httpRequestBytesReturned.Get(handlerLabels{r.URL.Path}).Put(float64(len(out)))
+	httpRequestBytesReturned.Get(handlerLabels{Path: r.URL.Path, Generated: true}).Put(float64(len(out)))
 	if _, err = w.Write(out); err != nil {
-		httpRequestErrorCounts.Get(errorLabels{r.URL.Path, "write response"}).Add(1.0)
+		httpRequestErrorCounts.Get(errorLabels{Path: r.URL.Path, Error: "write response", Generated: true}).Add(1.0)
 		msg := fmt.Sprintf("cannot write responses: %v", err)
 		http.Error(w, msg, http.StatusBadRequest)
 		return
@@ -205,14 +212,14 @@ func toHTTP(w http.ResponseWriter, r *http.Request, msgs ...proto.Message) {
 func fromHTTP(w http.ResponseWriter, r *http.Request, msgs ...proto.Message) error {
 	in, err := io.ReadAll(r.Body)
 	if err != nil {
-		httpRequestErrorCounts.Get(errorLabels{r.URL.Path, "read request"}).Add(1.0)
+		httpRequestErrorCounts.Get(errorLabels{Path: r.URL.Path, Error: "read request", Generated: true}).Add(1.0)
 		msg := "cannot read request body"
 		http.Error(w, msg, http.StatusBadRequest)
 		return errors.New(msg)
 	}
-	httpRequestBytesReceived.Get(handlerLabels{r.URL.Path}).Put(float64(len(in)))
+	httpRequestBytesReceived.Get(handlerLabels{Path: r.URL.Path, Generated: true}).Put(float64(len(in)))
 	if err := fromWire(in, msgs...); err != nil {
-		httpRequestErrorCounts.Get(errorLabels{r.URL.Path, "unmarshal request"}).Add(1.0)
+		httpRequestErrorCounts.Get(errorLabels{Path: r.URL.Path, Error: "unmarshal request", Generated: true}).Add(1.0)
 		msg := fmt.Sprintf("cannot unmarshal request protos from %q: %v", in, err)
 		http.Error(w, msg, http.StatusBadRequest)
 		return errors.New(msg)

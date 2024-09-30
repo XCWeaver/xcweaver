@@ -49,23 +49,23 @@ func init() {
 
 go 1.21
 
-require github.com/ServiceWeaver/weaver v0.0.0
-replace github.com/ServiceWeaver/weaver => %s
+require github.com/XCWeaver/xcweaver v0.0.0
+replace github.com/XCWeaver/xcweaver => %s
 `, weaverSrcDir)
 }
 
-// runGenerator runs "weaver generate" on the provided file contents---originally
+// runGenerator runs "xcweaver generate" on the provided file contents---originally
 // in a file with the provided filename and directory---and returns the
-// directory in which the code was compiled, the output of "weaver generate",
+// directory in which the code was compiled, the output of "xcweaver generate",
 // and any errors. All provided subdirectories are also included in the call to
-// "weaver generate".
+// "xcweaver generate".
 //
-// If "weaver generate" succeeds, the produced weaver_gen.go file is written in
+// If "xcweaver generate" succeeds, the produced weaver_gen.go file is written in
 // the provided directory with name ${filename}_weaver_gen.go.
 func runGenerator(t *testing.T, directory, filename, contents string, subdirs []string) (string, error) {
 	// runGenerator creates a temporary directory, copies the file and all
 	// subdirs into it, writes a go.mod file, runs "go mod tidy", and finally
-	// runs "weaver generate".
+	// runs "xcweaver generate".
 	//
 	// TODO(mwhittaker): Double check paths are handled properly. What if we
 	// run this test in another directory?
@@ -100,7 +100,7 @@ func runGenerator(t *testing.T, directory, filename, contents string, subdirs []
 		t.Fatalf("go mod tidy: %v", err)
 	}
 
-	// Run "weaver generate".
+	// Run "xcweaver generate".
 	opt := Options{
 		Warn: func(err error) { t.Log(err) },
 	}
@@ -155,7 +155,7 @@ func printOutput(t *testing.T, output []byte) {
 	}
 }
 
-// TestGenerator runs "weaver generate" on all of the files in testdata/. Every
+// TestGenerator runs "xcweaver generate" on all of the files in testdata/. Every
 // file in testdata/ must begin with a header that looks like this:
 //
 //	// EXPECTED
@@ -166,7 +166,7 @@ func printOutput(t *testing.T, output []byte) {
 //	// don't expect this
 //	// what a surprise
 //
-// This test runs "weaver generate" on the file and checks that every expected
+// This test runs "xcweaver generate" on the file and checks that every expected
 // string appears in the generated weaver_gen.go file and that every unexpected
 // string doesn't.
 func TestGenerator(t *testing.T) {
@@ -217,7 +217,7 @@ func TestGenerator(t *testing.T) {
 				t.Fatalf("error reading %q: %v", filename, err)
 			}
 
-			// Run "weaver generate".
+			// Run "xcweaver generate".
 			output, err := runGenerator(t, dir, filename, contents, []string{"sub1", "sub2"})
 			if err != nil {
 				t.Fatalf("error running generator: %v", err)
@@ -237,14 +237,14 @@ func TestGenerator(t *testing.T) {
 	}
 }
 
-// TestGeneratorErrors runs "weaver generate" on all of the files in
+// TestGeneratorErrors runs "xcweaver generate" on all of the files in
 // testdata/errors.
 // Every file in testdata/errors must begin with a single line header that looks
 // like this:
 //
 //	// ERROR: bad file
 //
-// This test runs "weaver generate" on the file and checks that "weaver generate"
+// This test runs "xcweaver generate" on the file and checks that "xcweaver generate"
 // produces an error that contains the provided string.
 func TestGeneratorErrors(t *testing.T) {
 	const dir = "testdata/errors"
@@ -285,7 +285,7 @@ func TestGeneratorErrors(t *testing.T) {
 				t.Fatalf(`"ERROR: " annotation not found`)
 			}
 
-			// Run "weaver generate".
+			// Run "xcweaver generate".
 			output, err := runGenerator(t, dir, filename, contents, []string{})
 			errfile := strings.TrimSuffix(filename, ".go") + "_error.txt"
 			if err == nil {
@@ -459,7 +459,7 @@ func TestExampleVersion(t *testing.T) {
 	got := fmt.Sprintf("%x", h.Sum(nil))
 
 	// If weaver_gen.go has changed, the codegen version may need updating.
-	const want = "872c34c2f9a62ebcb5085494bbdc92e127d1188b5e171e4f95a8d2f87518c5d6"
+	const want = "fdc14ac425413ea0f80ea42d3c8d1bc555d57c511135b5639720f233668f4fe7"
 	if got != want {
 		t.Fatalf(`Unexpected SHA-256 hash of examples/weaver_gen.go: got %s, want %s. If this change is meaningful, REMEMBER TO UPDATE THE CODEGEN VERSION in runtime/version/version.go.`, got, want)
 	}

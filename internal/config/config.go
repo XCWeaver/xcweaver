@@ -27,7 +27,7 @@ import (
 //
 // Config panics if the provided value is not a pointer to a struct.
 func Config(v reflect.Value) any {
-	// TODO(mwhittaker): Delete this function and use weaver.GetConfig instead.
+	// TODO(mwhittaker): Delete this function and use xcweaver.GetConfig instead.
 	// Right now, there are some cyclic dependencies preventing us from doing
 	// this.
 	if v.Kind() != reflect.Pointer || v.Elem().Kind() != reflect.Struct {
@@ -36,7 +36,7 @@ func Config(v reflect.Value) any {
 	s := v.Elem()
 	t := s.Type()
 	for i := 0; i < t.NumField(); i++ {
-		// Check that f is an embedded field of type weaver.WithConfig[T].
+		// Check that f is an embedded field of type xcweaver.WithConfig[T].
 		f := t.Field(i)
 		if !f.Anonymous ||
 			f.Type.PkgPath() != "github.com/XCWeaver/xcweaver" ||

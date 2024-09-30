@@ -28,8 +28,8 @@ import (
 	"strings"
 	"time"
 
+	metrics2 "github.com/XCWeaver/xcweaver/internal/metrics"
 	"github.com/XCWeaver/xcweaver/internal/traceio"
-	"github.com/XCWeaver/xcweaver/runtime/codegen"
 	"github.com/XCWeaver/xcweaver/runtime/logging"
 	"github.com/XCWeaver/xcweaver/runtime/metrics"
 	"github.com/XCWeaver/xcweaver/runtime/perfetto"
@@ -54,12 +54,20 @@ var (
 	deploymentHTML     string
 	deploymentTemplate = template.Must(template.New("deployment").Funcs(template.FuncMap{
 		"shorten": logging.ShortenComponent,
-		"pidjoin": func(pids []int64) string {
-			s := make([]string, len(pids))
-			for i, x := range pids {
-				s[i] = fmt.Sprint(x)
+		"pidjoin": func(replicas []*Replica) string {
+			s := make([]string, len(replicas))
+			for i, x := range replicas {
+				s[i] = fmt.Sprint(x.Pid)
 			}
 			return strings.Join(s, ", ")
+		},
+		"widjoin": func(replicas []*Replica) string {
+			s := make([]string, len(replicas))
+			for i, x := range replicas {
+				s[i] = x.WeaveletId[0:8]
+			}
+			return strings.Join(s, ", ")
+
 		},
 		"age": func(t *timestamppb.Timestamp) string {
 			return time.Since(t.AsTime()).Truncate(time.Second).String()
@@ -85,12 +93,12 @@ var (
 // commands on the dashboard so that users can copy and run them.
 type Command struct {
 	Label   string // e.g., cat logs
-	Command string // e.g., weaver single logs '--version=="12345678"'
+	Command string // e.g., xcweaver single logs '--version=="12345678"'
 }
 
 // DashboardSpec configures the command returned by DashboardCommand.
 type DashboardSpec struct {
-	Tool         string                                   // tool name (e.g., "weaver single")
+	Tool         string                                   // tool name (e.g., "xcweaver single")
 	PerfettoFile string                                   // perfetto database file
 	Registry     func(context.Context) (*Registry, error) // registry of deployments
 	Commands     func(deploymentId string) []Command      // commands for a deployment
@@ -149,9 +157,9 @@ Flags:
 	}
 }
 
-// dashboard implements the "weaver dashboard" HTTP server.
+// dashboard implements the "xcweaver dashboard" HTTP server.
 type dashboard struct {
-	spec     *DashboardSpec // e.g., "weaver multi" or "weaver single"
+	spec     *DashboardSpec // e.g., "xcweaver multi" or "xcweaver single"
 	registry *Registry      // registry of deployments
 	traceDB  *traces.DB     // database that stores trace data
 }
@@ -259,7 +267,7 @@ func computeTraffic(status *Status, metrics []*protos.MetricSnapshot) []edge {
 	}
 	byPair := map[pair]int{}
 	for _, metric := range metrics {
-		if metric.Name != codegen.MethodCountsName {
+		if metric.Name != metrics2.MethodCountsName {
 			continue
 		}
 		call := pair{
